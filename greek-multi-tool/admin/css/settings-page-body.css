@@ -1,0 +1,69 @@
+body{
+    text-align: left;  
+    color: #8e9194;
+    background-color: #f4f6f9;
+}
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.grmlt-title {
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #091D70;
+}
+.main-body {
+    padding: 15px;
+}
+.welcotitle {
+    display: inline-block;
+    font-size: 32px;
+    line-height: 32px;
+    color: #091D70;
+    margin-left: 8px;  
+}
+.card {
+    border: 0 solid rgba(0,0,0,.125);
+    max-width: 100%;
+    padding: .7em;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+.grmlt-js-btn,
+.grmlt-js-btn:hover {
+    background: none;
+    color: #b32d2e;
+    font-size: 16px;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    text-decoration: none;
+}
+.grmlt-js-btn {
+    display: none;
+}
+.desktop-grmlt-js-btn-hvr:hover .grmlt-js-btn,
+.desktop-grmlt-js-btn-hvr:focus .grmlt-js-btn {
+    display: block;
+}
+#grmlt_detail .grmlt_hidden_row {
+    display: none;
+}
+.arrow-down::after {
+  content: "\f347";
+  color: #333;
+  top: -2px;
+  right: 0px;
+  position: relative;
+  font-family: "Dashicons";
+}
+.arrow-up::after {
+  content: "\f343";
+  color: #333;
+  top: -2px;
+  right: 0px;
+  position: relative;
+  font-family: "Dashicons";
+}

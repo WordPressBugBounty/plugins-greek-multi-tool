@@ -1,0 +1,339 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-27 11:40+0300\n"
+"PO-Revision-Date: 2023-09-27 11:57+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: admin/partials/settings-page/301-redirect.php:7
+msgid "301 REDIRECT SETTINGS"
+msgstr "Ρυθμίσεις Μόνιμων Συνδέσμων"
+
+#: admin/partials/settings-page/301-redirect.php:12
+msgid "Enable Automatic 301 Redirect"
+msgstr "Ενεργοποίηση αυτόματης ανακατεύθυνσης 301"
+
+#: admin/partials/settings-page/301-redirect.php:13
+msgid ""
+"Enabling the automatic 301 redirect option setting will create dynamic "
+"redirects for every old permalink being converted via the `Convert Old "
+"Permalinks` functionality."
+msgstr ""
+"Η ενεργοποίηση της ρύθμισης της επιλογής αυτόματης ανακατεύθυνσης 301 θα "
+"δημιουργήσει δυναμικές ανακατευθύνσεις για κάθε παλιό permalink που "
+"μετατρέπεται μέσω της λειτουργίας \"Μετατροπή παλαιών Permalinks\"."
+
+#: admin/partials/settings-page/convert-old-permalinks.php:3
+msgid "MANAGE OLD PERMALINKS"
+msgstr "ΔΙΑΧΕΙΡΙΣΗ ΠΑΛΑΙΩΝ ΜΟΝΙΜΩΝ ΣΥΝΔΕΣΜΩΝ"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:5
+msgid "Convert All Old Permalinks"
+msgstr "Μετατροπή όλων των παλαιών μόνιμων συνδέσμων"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:6
+msgid ""
+"Press the button bellow to initialize the conversion of all old permalinks"
+msgstr ""
+"Πατήστε το παρακάτω κουμπί για να αρχικοποιήσετε τη μετατροπή όλων των "
+"παλιών μόνιμων συνδέσμων"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:9
+msgid "CONVERT"
+msgstr "ΜΕΤΑΤΡΟΠΗ"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:13
+msgid "List of old permalinks"
+msgstr "Λίστα παλαιών permalinks"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:14
+msgid "In the list below you can view/manage the old converted permalinks"
+msgstr ""
+"Στην παρακάτω λίστα μπορείτε να δείτε/διαχειριστείτε τους παλιούς μόνιμους "
+"σύνδεσμους που έχουν μετατραπεί"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:46
+#: admin/partials/settings-page/convert-old-permalinks.php:92
+msgid "ID:"
+msgstr "ID:"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:52
+#: admin/partials/settings-page/convert-old-permalinks.php:98
+msgid "Post ID:"
+msgstr "ID Άρθρου:"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:60
+#: admin/partials/settings-page/convert-old-permalinks.php:108
+#: admin/partials/settings-page/convert-old-permalinks.php:150
+msgid "Old Permalink:"
+msgstr "Παλιό Permalink:"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:66
+#: admin/partials/settings-page/convert-old-permalinks.php:114
+#: admin/partials/settings-page/convert-old-permalinks.php:154
+msgid "New Permalink:"
+msgstr "Νέο Permalink:"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:137
+msgid "Edit Redirection"
+msgstr "Επεξεργασία Ανακατεύθυνσης"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:145
+msgid ""
+"Make sure you are making the correct changes, as editting redirection "
+"permalinks while redirection is still active may result in broken URLs or "
+"Loops"
+msgstr ""
+"Βεβαιωθείτε ότι κάνετε τις σωστές αλλαγές, καθώς η επεξεργασία των μόνιμων "
+"συνδέσμων ανακατεύθυνσης ενώ η ανακατεύθυνση είναι ακόμα ενεργή μπορεί να "
+"οδηγήσει σε κατεστραμμένα URL ή βρόχους"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:161
+#: admin/partials/settings-page/convert-old-permalinks.php:184
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:162
+msgid "Save Changes"
+msgstr "Αποθήκευση Αλλαγών"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:176
+msgid "Delete Redirection"
+msgstr "Διαγραφή Ανακατεύθυνσης"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:183
+msgid "Are you sure you want to delete this redirect record?"
+msgstr ""
+"Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την εγγραφή ανακατεύθυνσης;"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:185
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: admin/partials/settings-page/convert-old-permalinks.php:248
+msgid "No Permalinks Found"
+msgstr "Δεν βρέθηκαν σύνδεσμοι"
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:103
+msgid "Greek Multi Tool Settings Page"
+msgstr "Σελίδα Ρυθμίσεων Greek Multi Tool"
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:115
+msgid "Welcome, "
+msgstr "Καλώς ήρθατε, "
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:117
+msgid ""
+"Congratulations! You are about to use the most powerful WordPress plugin for "
+"Greek Language Users -  Greek Multi Tool is designed to make the process of "
+"using the Greek Language in WordPress as ease as possible."
+msgstr ""
+"Συγχαρητήρια! Είστε έτοιμοι να χρησιμοποιήσετε το πιο ισχυρό WordPress "
+"plugin για χρήστες της ελληνικής γλώσσας - το Greek Multi Tool έχει "
+"σχεδιαστεί για να κάνει τη διαδικασία χρήσης της ελληνικής γλώσσας στο "
+"WordPress όσο το δυνατόν πιο εύκολη."
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:119
+msgid "Support Forum"
+msgstr "Φόρουμ υποστήριξης"
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:121
+msgid "Review the Plugin on WordPress Repository"
+msgstr "Ελέγξτε την προσθήκη στο αποθετήριο του WordPress"
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:138
+msgid "Permalinks Settings"
+msgstr "Ρυθμίσεις Μόνιμων Συνδέσμων"
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:143
+msgid "Uppercase Accent Remover Settings"
+msgstr "Ρυθμίσεις Αφαίρεσης Προφοράς Κεφαλαίων"
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:148
+msgid "Manage Old Permalinks"
+msgstr "Μετατροπή Παλαιών Μόνιμων Συνδέσμων"
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:153
+msgid "301 Redirect Settings"
+msgstr "Ρυθμίσεις Συνδέσμων Ανακατεύθυνσης"
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:158
+msgid "Menu Builder"
+msgstr "Δημιουργία Μενού"
+
+#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:196
+msgid "Save Settings"
+msgstr "Αποθήκευση Αλλαγών"
+
+#: admin/partials/settings-page/menu-builder.php:9
+msgid "MENU BUILDER"
+msgstr "ΔΗΜΙΟΥΡΓΙΑ ΜΕΝΟΥ"
+
+#: admin/partials/settings-page/menu-builder.php:17
+msgid "Woocomerce Products Category Menu"
+msgstr "Μενού Κατηγοριών Προϊόντων Woocommerce"
+
+#: admin/partials/settings-page/menu-builder.php:18
+msgid ""
+"To create a custom menu for your WooCommerce store effortlessly, simply "
+"enter your preferred menu name in the form below. Click 'Create,' and voilà! "
+"A new menu with the name you specified will be automatically generated. This "
+"menu will intuitively organize all your WooCommerce product categories, "
+"following their existing hierarchy."
+msgstr ""
+"Για να δημιουργήσετε εύκολα ένα μενού για το κατάστημά σας στο WooCommerce, "
+"απλά εισάγετε το επιθυμητό όνομα του μενού στη φόρμα παρακάτω. Κάντε κλικ "
+"στο κουμπί 'Δημιουργία' και voilà! Ένα νέο μενού με το όνομα που καθορίσατε "
+"θα δημιουργηθεί αυτόματα. Αυτό το μενού θα περιέχει όλες τις κατηγορίες "
+"προϊόντων σας στο WooCommerce, ακολουθώντας την υπάρχουσα ιεραρχία τους."
+
+#: admin/partials/settings-page/menu-builder.php:21
+#: admin/partials/settings-page/menu-builder.php:33
+msgid "Enter a name for the Menu..."
+msgstr "Πληκτρολογήστε ένα όνομα για το Μενού σας..."
+
+#: admin/partials/settings-page/menu-builder.php:22
+#: admin/partials/settings-page/menu-builder.php:34
+msgid "Create Menu"
+msgstr "Δημιουργία Μενού"
+
+#: admin/partials/settings-page/menu-builder.php:29
+msgid "Posts Category Menu"
+msgstr "Μενού Άρθρων"
+
+#: admin/partials/settings-page/menu-builder.php:30
+msgid ""
+"To effortlessly create a custom menu for your WordPress blog, simply enter "
+"your preferred menu name in the form below. Click 'Create,' and voilà! A new "
+"menu with the name you specified will be automatically generated. This menu "
+"will intuitively organize all your WordPress post categories, following "
+"their existing hierarchy."
+msgstr ""
+"Για να δημιουργήσετε εύκολα ένα μενού για το ιστολόγιο σας στο WordPress, "
+"απλά εισάγετε το επιθυμητό όνομα του μενού στη φόρμα παρακάτω. Κάντε κλικ "
+"στο κουμπί 'Δημιουργία' και voilà! Ένα νέο μενού με το όνομα που καθορίσατε "
+"θα δημιουργηθεί αυτόματα. Αυτό το μενού θα περιέχει όλες τις κατηγορίες "
+"αναρτήσεων σας στο WordPress, ακολουθώντας την υπάρχουσα ιεραρχία τους."
+
+#: admin/partials/settings-page/permalinks-settings.php:10
+msgid "PERMALINK SETTINGS"
+msgstr "Σελίδα ρυθμίσεων Greeklish Multi Tool"
+
+#: admin/partials/settings-page/permalinks-settings.php:12
+msgid "Convert the permalinks"
+msgstr "Μετατροπή Ελληνικών Πέρμαλινκς"
+
+#: admin/partials/settings-page/permalinks-settings.php:13
+msgid "Enable the permalinks convert sitewide"
+msgstr "Ενεργοποίηση global μετατροπής permalink"
+
+#: admin/partials/settings-page/permalinks-settings.php:18
+msgid "Enable Greeklish Permalinks Convert: "
+msgstr "Ενεργοποίηση του μετατροπέα permalink "
+
+#: admin/partials/settings-page/permalinks-settings.php:19
+msgid ""
+"Automatically convert the greek characters to latin in all permalinks in "
+"posts, pages, custom post type and terms."
+msgstr ""
+"Αυτόματη μετατροπή των ελληνικών χαρακτήρων σε λατινικούς σε όλους τους "
+"υπερσυνδέσμους σε αναρτήσεις, σελίδες, προσαρμοσμένους τύπους αναρτήσεων και "
+"όρους."
+
+#: admin/partials/settings-page/permalinks-settings.php:47
+msgid "Diphthongs Settings"
+msgstr "Ρυθμίσεις διφθόγγων"
+
+#: admin/partials/settings-page/permalinks-settings.php:48
+msgid "Select how you want the dipthongs to be converted"
+msgstr "Επιλέξτε πώς θέλετε να μετατραπούν οι δίφθογγοι"
+
+#: admin/partials/settings-page/permalinks-settings.php:53
+msgid "Simple Conversion"
+msgstr "Απλή Μετατροπή"
+
+#: admin/partials/settings-page/permalinks-settings.php:54
+msgid ""
+"For example \"ει\" becomes \"ei\", \"οι\" becomes \"οi\", \"μπ\" becomes \"mp"
+"\" etc"
+msgstr ""
+"Για παράδειγμα το \"ει\" γίνεται \"ei\", το \"οι\" γίνεται \"oi\", το \"μπ\" "
+"γίνεται \"mp\" κτλπ"
+
+#: admin/partials/settings-page/permalinks-settings.php:66
+msgid "Advance  Conversion"
+msgstr "Ειδική Μετατροπή"
+
+#: admin/partials/settings-page/permalinks-settings.php:67
+msgid "For example \"ει\", \"οι\" becomes \"i\", \"μπ\" becomes \"b\" etc"
+msgstr ""
+"Για παράδειγμα το \"ει\", \"οι\" γίνεται \"i\", το \"μπ\" γίνεται \"b\" κτλπ"
+
+#: admin/partials/settings-page/permalinks-settings.php:80
+msgid "Remove One/Two Letter Words"
+msgstr "Αφαίρεση λέξεων με ένα γράμμα"
+
+#: admin/partials/settings-page/permalinks-settings.php:81
+msgid ""
+"Select which of the following word options you want to remove from the posts "
+"urls"
+msgstr ""
+"Επιλέξτε ποιες από τις παρακάτω λέξεις θέλετε να αφαιρέσετε από τους "
+"συνδέσμους των άρθρων"
+
+#: admin/partials/settings-page/permalinks-settings.php:93
+msgid "Remove One Letter Words"
+msgstr "Αφαίρεση λέξεων με ένα γράμμα"
+
+#: admin/partials/settings-page/permalinks-settings.php:113
+msgid "Remove Two Letter Words"
+msgstr "Αφαίρεση λέξεων με δύο γράμματα"
+
+#: admin/partials/settings-page/permalinks-settings.php:132
+msgid "Exclude Stopwords From Permalinks"
+msgstr "ΑΠΟΚΡΥΨΤΕ ΕΝΔΙΑΜΕΣΕΣ ΛΕΞΕΙΣ ΑΠΟ ΤΟΥΣ ΣΥΝΔΕΣΜΟΥΣ"
+
+#: admin/partials/settings-page/permalinks-settings.php:133
+msgid ""
+"Type the words you want to exclude from permalinks seperated by a comma!"
+msgstr ""
+"Πληκτρολογήστε τις λέξεις που θέλετε να εξαιρέσετε από τους μόνιμους "
+"συνδέσμους που χωρίζονται με κόμμα!"
+
+#: admin/partials/settings-page/uppercase-accent-remover-settings.php:9
+msgid "UPPERCASE ACCENT REMOVER SETTINGS"
+msgstr "ΡΥΘΜΙΣΕΙΣ ΑΦΑΙΡΕΣΗΣ ΤΟΝΙΣΜΟΥ ΚΕΦΑΛΑΙΩΝ"
+
+#: admin/partials/settings-page/uppercase-accent-remover-settings.php:11
+msgid "Remove Uppercase Accents"
+msgstr "Αφαίρεση Τονισμού Κεφαλαίων"
+
+#: admin/partials/settings-page/uppercase-accent-remover-settings.php:12
+msgid "Enable the uppercase accent remover sitewide"
+msgstr ""
+"Ενεργοποιήστε το εργαλείο αφαίρεσης κεφαλαίων τονισμού σε όλο τον ιστότοπο"
+
+#: admin/partials/settings-page/uppercase-accent-remover-settings.php:17
+msgid "Enable Uppercase Accents Remover: "
+msgstr "Ενεργοποίηση την αφαίρεση κεφαλαίων τονισμών: "
+
+#: admin/partials/settings-page/uppercase-accent-remover-settings.php:18
+msgid ""
+"Automatically remove accented characters from elements having their text "
+"content uppercase transformed through CSS."
+msgstr ""
+"Καταργήστε αυτόματα τους τονισμένους χαρακτήρες από στοιχεία με κεφαλαία "
+"μετατροπή του περιεχομένου κειμένου τους μέσω CSS."

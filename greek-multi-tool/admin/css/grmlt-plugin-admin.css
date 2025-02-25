@@ -1,0 +1,47 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+.red-square-delete {
+  width: 30px;
+  height: 30px;
+  background-color: #D2122E;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+}
+
+.red-square-delete:hover,
+.blue-square-edit:hover,
+.red-square-delete:focus,
+.blue-square-edit:focus {
+    color: white;
+}
+
+.blue-square-edit {
+  width: 30px;
+  height: 30px;
+  background-color: #7CB9E8;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+}
+
+@media (max-width: 992px) {
+  .modal-backdrop {
+    z-index: -1; /* or higher if needed */
+  }
+  .modal {
+    z-index: 100000;
+  }
+  .modal-header {
+    width: 100%;
+  }
+}
