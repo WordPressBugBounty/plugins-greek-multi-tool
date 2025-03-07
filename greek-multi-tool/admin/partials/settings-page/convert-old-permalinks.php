@@ -200,19 +200,28 @@
                         var record__newPermalinkValue = jQuery(this).closest('.row').prev('.row').find('.new-permalink-el input').val();
                         var action = 'grmlt_database_301_redirect_edit_handler';
 
-                        // Send an AJAX request to the PHP file for database deletion
+                        // Send an AJAX request to the PHP file for database update
                         $.ajax({
                             url: <?= "'".admin_url('admin-ajax.php')."'"; ?>,
                             method: 'POST',
                             data: {
-                              action: action, // The action to identify the request in the PHP file
-                              record_id: record__id, // ID of DB record
-                              record_newPermalinkValue: record__newPermalinkValue, // Value of new permalink text to update
-                              record_oldPermalinkValue: record__oldPermalinkValue // Value of old permalink text to update 
+                                action: action, // The action to identify the request in PHP
+                                record_id: record__id, // ID of DB record
+                                record_oldPermalinkValue: record__oldPermalinkValue, // Value of old permalink
+                                record_newPermalinkValue: record__newPermalinkValue, // Value of new permalink
+                                security_nonce: grmlt_vars.permalink_edit_nonce // Security nonce
                             },
                             success: function(response) {
-                              // Handle the success response
-                              location.reload();
+                                // Handle the success response
+                                if (response.success) {
+                                    alert('Permalink updated successfully');
+                                    location.reload();
+                                } else {
+                                    alert('Error: ' + (response.data || 'Failed to update permalink'));
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                alert('Error: ' + error);
                             }
                         });
                     });
@@ -228,12 +237,20 @@
                             url: <?= "'".admin_url('admin-ajax.php')."'"; ?>,
                             method: 'POST',
                             data: {
-                              action: action, // The action to identify the request in the PHP file
-                              record_id: record__id // Replace with the appropriate record ID
+                                action: action, // The action to identify the request in PHP
+                                record_id: record__id, // ID of DB record
+                                security_nonce: grmlt_vars.permalink_delete_nonce // Security nonce
                             },
                             success: function(response) {
-                              // Handle the success response
-                              location.reload();
+                                // Handle the success response
+                                if (response.success) {
+                                    location.reload();
+                                } else {
+                                    alert('Error: ' + (response.data || 'Failed to delete permalink'));
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                alert('Error: ' + error);
                             }
                         });
                     });

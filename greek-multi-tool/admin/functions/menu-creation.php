@@ -4,11 +4,24 @@
  */
 
 // Check if the button was clicked
-if (isset($_POST['create_woo_menu_button'])) {
-    create_woocommerce_menu($_POST['name_of_woo_menu']);
+if (isset($_POST['create_woo_menu_button']) && current_user_can('manage_options')) {
+    // Verify nonce would be ideal here
+    create_woocommerce_menu(sanitize_text_field($_POST['name_of_woo_menu']));
 }
 
 function create_woocommerce_menu($name_of_menu) {
+    // Check user permissions
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+
+    // Sanitize menu name
+    $name_of_menu = sanitize_text_field($name_of_menu);
+    
+    if (empty($name_of_menu)) {
+        return;
+    }
+
     // Fetch all product categories
     $args = array(
         'taxonomy'   => 'product_cat',
@@ -19,11 +32,14 @@ function create_woocommerce_menu($name_of_menu) {
     $top_level_categories = get_categories($args);
 
     // Create a new menu if it doesn't exist
-    $menu_name = "$name_of_menu";
+    $menu_name = $name_of_menu;
     $menu_exists = wp_get_nav_menu_object($menu_name);
 
     if (!$menu_exists) {
         $menu_id = wp_create_nav_menu($menu_name);
+        if (is_wp_error($menu_id)) {
+            return;
+        }
     } else {
         $menu_id = $menu_exists->term_id;
     }
@@ -35,6 +51,14 @@ function create_woocommerce_menu($name_of_menu) {
 }
 
 function add_category_to_menu($menu_id, $parent_menu_item_id, $category) {
+    // Validate inputs
+    $menu_id = absint($menu_id);
+    $parent_menu_item_id = absint($parent_menu_item_id);
+    
+    if (!$category || !isset($category->term_id)) {
+        return;
+    }
+
     // Add the category to the menu
     $menu_item_data = array(
         'menu-item-object' => 'product_cat',
@@ -47,6 +71,9 @@ function add_category_to_menu($menu_id, $parent_menu_item_id, $category) {
     );
 
     $menu_item_id = wp_update_nav_menu_item($menu_id, 0, $menu_item_data);
+    if (is_wp_error($menu_item_id)) {
+        return;
+    }
 
     // Fetch child categories of the current category
     $child_args = array(
@@ -68,11 +95,24 @@ function add_category_to_menu($menu_id, $parent_menu_item_id, $category) {
  */
 
 // Check if the button was clicked
-if (isset($_POST['create_posts_menu_button'])) {
-    create_post_categories_menu($_POST['name_of_posts_menu']);
+if (isset($_POST['create_posts_menu_button']) && current_user_can('manage_options')) {
+    // Verify nonce would be ideal here
+    create_post_categories_menu(sanitize_text_field($_POST['name_of_posts_menu']));
 }
 
 function create_post_categories_menu($name_of_menu) {
+    // Check user permissions
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    
+    // Sanitize menu name
+    $name_of_menu = sanitize_text_field($name_of_menu);
+    
+    if (empty($name_of_menu)) {
+        return;
+    }
+
     // Fetch all top-level post categories
     $args = array(
         'taxonomy'   => 'category',
@@ -83,11 +123,14 @@ function create_post_categories_menu($name_of_menu) {
     $top_level_categories = get_categories($args);
 
     // Create a new menu if it doesn't exist
-    $menu_name = "$name_of_menu";
+    $menu_name = $name_of_menu;
     $menu_exists = wp_get_nav_menu_object($menu_name);
 
     if (!$menu_exists) {
         $menu_id = wp_create_nav_menu($menu_name);
+        if (is_wp_error($menu_id)) {
+            return;
+        }
     } else {
         $menu_id = $menu_exists->term_id;
     }
@@ -99,6 +142,14 @@ function create_post_categories_menu($name_of_menu) {
 }
 
 function add_post_category_to_menu($menu_id, $parent_menu_item_id, $category) {
+    // Validate inputs
+    $menu_id = absint($menu_id);
+    $parent_menu_item_id = absint($parent_menu_item_id);
+    
+    if (!$category || !isset($category->term_id)) {
+        return;
+    }
+
     // Add the category to the menu
     $menu_item_data = array(
         'menu-item-object' => 'category',
@@ -111,6 +162,9 @@ function add_post_category_to_menu($menu_id, $parent_menu_item_id, $category) {
     );
 
     $menu_item_id = wp_update_nav_menu_item($menu_id, 0, $menu_item_data);
+    if (is_wp_error($menu_item_id)) {
+        return;
+    }
 
     // Fetch child categories of the current category
     $child_args = array(

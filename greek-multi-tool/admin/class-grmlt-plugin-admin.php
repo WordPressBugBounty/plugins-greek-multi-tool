@@ -107,35 +107,46 @@ class Grmlt_Plugin_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Grmlt_Plugin_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Grmlt_Plugin_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-		$current_screen = get_current_screen();
+	    /**
+	     * This function is provided for demonstration purposes only.
+	     *
+	     * An instance of this class should be passed to the run() function
+	     * defined in Grmlt_Plugin_Loader as all of the hooks are defined
+	     * in that particular class.
+	     *
+	     * The Grmlt_Plugin_Loader will then create the relationship
+	     * between the defined hooks and the functions defined in this
+	     * class.
+	     */
+	    $current_screen = get_current_screen();
 
 	    if ( strpos($current_screen->base, 'grmlt-main-settings') === false) {
 	        return;
 	    } else {
-			
-			// Enqueque Popper.min.js (Used for Settings Page of the Plugin for TAB-PANE)
-			wp_enqueue_script( 'grmlt_popper_js', plugins_url( 'admin/js/popper.min.js', dirname(__FILE__) ) );
+	        
+	        // Enqueque Popper.min.js (Used for Settings Page of the Plugin for TAB-PANE)
+	        wp_enqueue_script( 'grmlt_popper_js', plugins_url( 'admin/js/popper.min.js', dirname(__FILE__) ) );
 
-			// Enqueque Bootstrap.min.js
-			wp_enqueue_script( 'grmlt_bootstrap_js', plugins_url( 'admin/js/bootstrap.min.js', dirname(__FILE__) ) );
+	        // Enqueque Bootstrap.min.js
+	        wp_enqueue_script( 'grmlt_bootstrap_js', plugins_url( 'admin/js/bootstrap.min.js', dirname(__FILE__) ) );
 
-			// Enqueue Javascript for Custom JS Scripts in Admin area
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/grmlt-plugin-admin.js', array( 'jquery' ), $this->version, false );
+	        // Enqueue Javascript for Custom JS Scripts in Admin area
+	        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/grmlt-plugin-admin.js', array( 'jquery' ), $this->version, false );
 
-		}
+	        // Add security nonces for AJAX operations
+	        wp_localize_script(
+	            $this->plugin_name,
+	            'grmlt_vars',
+	            array(
+	                'ajaxurl' => admin_url( 'admin-ajax.php' ),
+	                'permalink_delete_nonce' => wp_create_nonce( 'grmlt_permalink_delete_nonce' ),
+	                'permalink_edit_nonce' => wp_create_nonce( 'grmlt_permalink_edit_nonce' ),
+	                'delete_confirm_text' => __( 'Are you sure you want to delete this permalink?', 'greek-multi-tool' )
+	            )
+	        );
+	    }
 	}
-
+	
 	/**
 	 * Register plugin menu for the admin area
 	 *
@@ -213,8 +224,8 @@ class Grmlt_Plugin_Admin {
 	    /**
 		 * Call old permalink conversion function
 		 */
-		if ( array_key_exists('oldpermalinks',$_POST) ){
-			@require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/functions/oldtranslator.php';
+		if (array_key_exists('oldpermalinks', $_POST) && current_user_can('manage_options')) {
+		    require_once plugin_dir_path(dirname(__FILE__)) . 'admin/functions/oldtranslator.php';
 		}
 
 	}
