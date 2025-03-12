@@ -8,7 +8,7 @@
  * Plugin Name:       Greek Multi Tool
  * Plugin URI:        https://bigdrop.gr/greek-multi-tool
  * Description:       This plugin provides a handful of tools and key functionalities to simplify and fix the greek language used in your webpage. For example it change the greek character urls to latin, remove the uppercase accents.
- * Version:           2.3.2
+ * Version:           3.0.0
  * Author:            BigDrop.gr
  * Author URI:        https://bigdrop.gr
  * Tags: greek, permalinks, accent remover, accent remover, multi tool
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'GRMLT_PLUGIN_VERSION', '2.3.2' );
+define( 'GRMLT_PLUGIN_VERSION', '2.4.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -203,3 +203,21 @@ function grmlt_database_301_redirect_edit_handler() {
 // Only register for logged-in users with appropriate permissions
 add_action('wp_ajax_grmlt_database_301_redirect_edit_handler', 'grmlt_database_301_redirect_edit_handler');
 // Removed: add_action('wp_ajax_nopriv_grmlt_database_301_redirect_edit_handler', 'grmlt_database_301_redirect_edit_handler');
+
+// Load the Greek Text Analysis functionality
+if (is_admin()) {
+    require_once plugin_dir_path(__FILE__) . 'admin/functions/text-analysis.php';
+}
+
+// Load the Enhanced Greek Search functionality
+require_once plugin_dir_path(__FILE__) . 'public/grmlt-enhanced-search.php';
+
+// Load the Greek Date Localization functionality
+require_once plugin_dir_path(__FILE__) . 'public/grmlt-date-localization.php';
+
+// Load the Greek-Friendly Excerpt Generator functionality
+require_once plugin_dir_path(__FILE__) . 'admin/functions/greek-excerpts.php';
+
+// Load the Feedback tab
+require_once plugin_dir_path(__FILE__) . 'admin/functions/feedback.php';
+

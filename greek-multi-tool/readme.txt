@@ -1,127 +1,148 @@
-=== Greek Multi Tool - Fix peralinks, accents, auto create menus and more ===
+=== Greek Multi Tool - Ultimate Greek Language Toolkit for WordPress ===
 Contributors: bigdropgr, aivazidis
-Tags: greek, greeklish, permalinks, accent remover, multi tool
+Tags: greek, greeklish, permalinks, accent remover, seo
 Requires at least: 6.2
-Stable tag: 2.3.2
+Stable tag: 3.0.0
 Tested up to: 6.7.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin makes Greek language usage easier and more stable with specialized functionalities designed for Greek websites.
+The comprehensive WordPress plugin for Greek websites - fixes permalinks, handles accents, enhances search, localizes dates and more!
 
 == Description ==
-Introducing the <strong>Greek Multi Tool</strong>, the ultimate WordPress plugin designed to enhance your Greek language websites effortlessly. Say goodbye to those pesky, cryptic characters in your post and page permalinks – our plugin has got you covered!
+**Greek Multi Tool 3.0** transforms how WordPress handles the Greek language. This all-in-one solution tackles every Greek-specific challenge your website faces - from URL structure to search functionality to content optimization.
 
-Whether you're grappling with those perplexing characters in your permalinks or seeking to polish your content by removing uppercase accents, our plugin has got you covered. Plus, it doesn't stop there – we've also streamlined the process of automatically building menus, saving you even more time and effort!
+Our plugin is meticulously designed for Greek website owners who need professional-grade tools that understand the unique characteristics of the Greek language. Whether you're running a blog, business site, or e-commerce store, Greek Multi Tool solves problems other plugins can't even detect.
 
-And the best part? Our plugin boasts a straightforward structure and is incredibly lightweight, guaranteeing it won't slow down your site's performance. Get ready to transform your Greek language website with the Greek Multi Tool – the smart and efficient choice for WordPress users!
+= Why Greek Multi Tool Is Essential for Your Greek Website =
+
+* **Solve Greek URL Problems Once and For All** - Convert complicated Greek character URLs to clean, SEO-friendly Latin permalinks automatically
+* **Enhance Greek Content SEO** - Our specialized tools ensure search engines properly understand and index your Greek content
+* **Create Professional Greek Typography** - Remove unsightly uppercase accents and ensure consistent, beautiful Greek text display
+* **Boost Greek Search Accuracy** - Improve internal search with accent-insensitive, diphthong-aware algorithms built specifically for Greek
+* **Display Proper Greek Dates** - Show dates in proper Greek format with correct month and day names
+* **Generate Perfect Greek Excerpts** - Create proper excerpts that respect Greek word boundaries and linguistic rules
+* **Analyze Greek Text Quality** - Check for proper accent usage and text readability with our Greek-specific analysis tools
+
+Unlike generic WordPress plugins, Greek Multi Tool was built from the ground up specifically for Greek language websites, addressing peculiarities and challenges that non-specialized tools simply can't handle.
+
+And it does all this while maintaining excellent performance - our lightweight, optimized code ensures your site stays fast and responsive.
 
 == Features ==
-1. <strong>Effortless Greek to Greeklish Conversion</strong>
-Tired of struggling with Greek characters in your permalinks? Activate our Greeklish Permalink Converter, and watch those complicated URLs magically transform into user-friendly Latin characters.
 
-2. <strong>Uppercase Accent Removal</strong>
-We've smoothed out the edges by removing uppercase accents from CSS-transformed characters, ensuring your content looks polished and professional.
+= Core Features =
 
-3. <strong>One-Click URL Conversion</strong>
-Need to update URLs for older posts, pages, products, and terms? With a simple click, our plugin effortlessly converts them all, saving you valuable time and effort.
+1. **Automatic Greek to Latin URL Conversion** - Transform Greek characters in permalinks to clean, SEO-friendly Latin characters with our intuitive Greeklish converter.
+2. **Smart Greek Diphthong Handling** - Choose between simple and advanced diphthong conversion methods to create the most readable URLs.
+3. **Uppercase Accent Removal** - Automatically remove accents from uppercase Greek text for professional typography.
+4. **Legacy URL Management** - Convert existing permalinks with a single click and manage 301 redirects to maintain SEO value.
+5. **Automatic Menu Builder** - Generate menus following the hierarchy of WordPress Post and WooCommerce Product categories with a single click.
+6. **Custom URL Optimization** - Remove one- and two-letter words from slugs and exclude custom stopwords for cleaner URLs.
 
-4. <strong>Greek Diphthongs Made Simple</strong>
-Our Greek Diphthongs feature is split into two categories: simple and advanced. Both provide clean, user-friendly options that effortlessly elevate your website.
+= New in Version 3.0.0 =
 
-5. <strong>Customize Diphthong Conversion</strong>
-You're in control – choose how you want diphthongs to be converted, tailoring the experience to your preferences.
-
-6. <strong>Retroactively Convert Old Permalinks</strong>
-Don't worry about your existing content – our plugin can retroactively convert old permalinks from preexisting posts and pages.
-
-7. <strong>Streamlined Slug Management</strong>
-Remove those pesky one- and two-letter words from your slugs, ensuring they're concise and impactful.
-
-8. <strong>Seamless 301 Redirects</strong>
-Our plugin takes care of 301 redirects for converted permalinks automatically, preserving your SEO and ensuring a smooth transition.
-
-9. <strong>Effortless Category Menus</strong>
-Automatically generate menus following the hierarchy of your WordPress Post and WooCommerce Product categories. It's never been easier to organize your content.
+7. **Greek Text Analysis** - Analyze your content for proper Greek accent rules and ensure linguistic correctness.
+8. **Enhanced Greek Excerpts** - Generate proper excerpts for Greek content that respect word boundaries and provide better reading flow.
+9. **Greek-Optimized Search** - Dramatically improve WordPress search for Greek content by handling accents, diphthongs, and Greek-specific linguistic variations.
+10. **Greek Date Localization** - Display dates in proper Greek format with correct month and day names throughout your site.
+11. **User Feedback System** - Help us improve with the integrated feedback system.
+12. **Full Internationalization** - Complete internationalization with Greek translations included.
 
 == Compatibility ==
-The Greek Multi Tool plugin is compatible with many other plugins and themes.
-It will not cause any conflicts or errors.
+Greek Multi Tool is compatible with:
+* WordPress core (tested up to 6.7.2)
+* WooCommerce
+* Major SEO plugins (Yoast SEO, Rank Math, All in One SEO)
+* Popular page builders (Elementor, Gutenberg, WP Bakery)
+* Most WordPress themes
+
+The plugin has been extensively tested for compatibility issues and will not conflict with other well-coded plugins.
 
 == Translations ==
+Greek Multi Tool is fully translatable with included translations for:
+* English – default
+* Greek – complete
 
-The Greek Multi Tool is localized/ translatable by default, we added translation to the following languages:
-English – default, Greek
-
-If your language is not in this list and you want us to include it in the plugin, you can send us on our <a href="https://bigdrop.gr/contact-us/">contact page</a> the translation files (po/mo) and we will add them to the plugin files.
+Want to see your language included? Send us your translation files (po/mo) via our <a href="https://bigdrop.gr/contact-us/">contact page</a> and we'll include them in the next update.
 
 == Installation ==
+**AUTOMATIC INSTALLATION (RECOMMENDED)**
+1. Visit the plugins page within your dashboard and select 'Add New'
+2. Search for 'Greek Multi Tool'
+3. Activate Greek Multi Tool from your Plugins page
+4. That's it! The plugin works out of the box with recommended settings
 
-<strong>INSTALL GREEK MULTI TOOL FROM WITHIN WORDPRESS</strong>
+**MANUAL INSTALLATION**
+1. Upload the 'greek-multi-tool' folder to the /wp-content/plugins/ directory
+2. Activate the Greek Multi Tool plugin through the 'Plugins' menu in WordPress
+3. No additional setup needed - the plugin works with optimal default settings
 
-Visit the plugins page within your dashboard and select 'Add New';
-Search for 'Greek Multi Tool';
-Activate Greek Multi Tool from your Plugins page;
-Go to 'after activation' below.
-
-<strong>INSTALL GREEK MULTI TOOL MANUALLY</strong>
-
-Upload the 'greek-multi-tool' folder to the /wp-content/plugins/ directory;
-Activate the Greek Multi Tool plugin through the 'Plugins' menu in WordPress;
-Go to 'after activation' below.
-
-<strong>AFTER ACTIVATION</strong>
-
-The plugin works out of the box. This means that you do not have to go through any settings or any activation process. 
-But in case you want to disable some of the plugin features you can do so from Greek Multi Tool (Located on left sidebar), to setup your desired functionalities of the plugin.
-
+**CONFIGURATION (OPTIONAL)**
+While Greek Multi Tool works perfectly with default settings, you can customize its behavior through the dedicated settings page:
+1. Navigate to "Greek Multi Tool" in your WordPress admin sidebar
+2. Configure individual features to match your specific needs
+3. Save your settings to apply changes
 
 == Frequently Asked Questions ==
-
-= How do I install it? =
-  
-You just follow the typical WordPress installation process. For more information please read the <a href="#installation">Installation Tab</a>
-
 = Is this plugin free? =
-  
-Yes! This plugin is completely free.
-  
+Yes! Greek Multi Tool is completely free with all features available at no cost.
+
 = Does this plugin work with WooCommerce? =
-  
-Yes, it does. This plugin works with permalink url's and accented characters on product pages.
+Absolutely! Greek Multi Tool seamlessly integrates with WooCommerce to handle Greek permalinks, accents, and all other features on your product pages.
 
-= How do I convert the old permalinks? =
-  
-Converting permalinks from posts that pre existed the plugin's installation is as simple as a click of a button, simply navigate to Dashboard > Greek Multi Tool (Located on left sidebar) > Convert Old Permalinks. Then use the "CONVERT" button to initialize the permalinks conversion.
+= Will this plugin slow down my website? =
+No. Greek Multi Tool is built with performance in mind, using efficient code that makes minimal database queries. The impact on site speed is negligible.
 
-= How do I contribute to Greek Multi Tool? =
-  
-You can send us your ideas about new features that we could implement in future updates. 
-If you have found any bug please contact us through our <a href="https://bigdrop.gr/contact-us/">contact page</a> 
+= How do I convert old permalinks? =
+Simply navigate to Greek Multi Tool → Convert Old Permalinks in your WordPress dashboard and click the "CONVERT" button. The plugin handles everything automatically, including setting up proper 301 redirects.
 
-= What version of PHP do I need? =
-  
-Sites must be built on PHP 7.4 or greater, but Greek Multi Tool always supports the latest version of PHP.
+= Will this break my SEO? =
+Not at all! In fact, Greek Multi Tool enhances your SEO by creating more search-engine friendly URLs while maintaining proper 301 redirects from old URLs. Your search rankings should improve, not decline.
 
-= What does the One/Two Letter Word Remove function do? =
+= How do the Greek search enhancements work? =
+Our plugin implements specialized search algorithms that understand Greek linguistic patterns, including handling accented characters, diphthongs, and various word forms. This dramatically improves the accuracy of internal WordPress searches.
 
-The One/Two Letter Word Remove functionality works on WordPress post/page slug creation where it will remove words according to your selected options.
+= Is the Text Analysis tool compatible with Gutenberg and Classic Editor? =
+Yes, our Text Analysis tool works perfectly with both Gutenberg and Classic Editor.
 
-= How do redirects work? =
+= What PHP version do I need? =
+Greek Multi Tool requires PHP 7.4 or greater, but we recommend using the latest PHP version for optimal performance.
 
-Converting an old permalink with the `Convert Old Permalinks` function located at SETTINGS > Greek Multi Tool (Located on left sidebar) > "Convert Old Permalinks" TAB. The plugin automatically creates all the required changes and fields inside of WordPress database to achieve the redirection.
+= How can I report bugs or suggest features? =
+Use our new integrated feedback system on the Feedback tab in the plugin settings, or contact us through our <a href="https://bigdrop.gr/contact-us/">website</a>.
+
+= Can I use this plugin on non-Greek websites? =
+While designed specifically for Greek language websites, some features like the menu builder are language-agnostic and can be useful for any site.
 
 == Screenshots ==
-1. Plugin's Settings Page
-2. Greeklish Permalink Switch
-3. Remove Uppercase Accents Switch
-4. Greek Diphthongs Options
-5. Convert Old Permalinks
-6. Remove One/Two Letter Words
-7. Exclude Stop words from permalinks
+1. Plugin's Main Settings Dashboard
+2. Greeklish Permalink Configuration
+3. Remove Uppercase Accents Option
+4. Convert Old Permalinks Tool
+5. 301 Redirect Settings
+6. Menu Builder Tool
+7. Greek Text Analysis Tool
+8. Enhanced Greek Excerpts Generator
+9. Greek-Optimized Search Configuration
+10. Greek Date Localization Settings
+11. Enhanced Greek Excerpts And Greek Text Analysis Tool On Post Page
+12. Enhanced Greek Excerpts Generator Settings On Writtings Settings Page
+13. Feedback System
 
 == Changelog ==
+= 3.0.0 =
+* **Major Update**: Comprehensive overhaul with five powerful new features
+* Added Greek Text Analysis tool for accent rule compliance checking
+* Added Enhanced Greek Excerpts generator for proper Greek word boundary handling
+* Added Greek-Optimized Search with accent and diphthong awareness
+* Added Greek Date Localization for proper display of Greek dates
+* Added Feedback system for easier feature requests and bug reports
+* Improved plugin architecture with better separation of concerns
+* Enhanced internationalization with updated translations
+* Fixed various minor bugs and performance issues
+* Improved compatibility with latest WordPress version
+
 = 2.3.2 =
 * Critical security update: Fixed a vulnerability related to broken access control.
 * Added proper user permission verification to all administrative actions.
@@ -227,5 +248,5 @@ Converting an old permalink with the `Convert Old Permalinks` function located a
 * Plugin released. 
 
 == Upgrade Notice ==
-= 2.3.2 =
-Critical security update that addresses a vulnerability related to broken access control. All users should update immediately.
+= 3.0.0 =
+Major update with five powerful new features: Greek Text Analysis, Enhanced Excerpts, Greek-Optimized Search, Date Localization, and Feedback System. All existing functionality has been improved and optimized.

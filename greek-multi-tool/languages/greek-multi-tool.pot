@@ -1,300 +1,667 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Copyright (C) 2025 BigDrop.gr
+# This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-27 11:40+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Project-Id-Version: Greek Multi Tool 2.4.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/greek-multi-tool\n"
+"POT-Creation-Date: 2025-03-12T00:00:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: greek-multi-tool\n"
 
-#: admin/partials/settings-page/301-redirect.php:7
+#. Plugin Name of the plugin
+msgid "Greek Multi Tool"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://bigdrop.gr/greek-multi-tool"
+msgstr ""
+
+#. Description of the plugin
+msgid "This plugin provides a handful of tools and key functionalities to simplify and fix the greek language used in your webpage. For example it change the greek character urls to latin, remove the uppercase accents."
+msgstr ""
+
+#. Author of the plugin
+msgid "BigDrop.gr"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://bigdrop.gr"
+msgstr ""
+
+#: 301-redirect.php:7
 msgid "301 REDIRECT SETTINGS"
 msgstr ""
 
-#: admin/partials/settings-page/301-redirect.php:12
+#: 301-redirect.php:12
 msgid "Enable Automatic 301 Redirect"
 msgstr ""
 
-#: admin/partials/settings-page/301-redirect.php:13
-msgid ""
-"Enabling the automatic 301 redirect option setting will create dynamic "
-"redirects for every old permalink being converted via the `Convert Old "
-"Permalinks` functionality."
+#: 301-redirect.php:13
+msgid "Enabling the automatic 301 redirect option setting will create dynamic redirects for every old permalink being converted via the `Convert Old Permalinks` functionality."
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:3
+#: convert-old-permalinks.php:3
 msgid "MANAGE OLD PERMALINKS"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:5
+#: convert-old-permalinks.php:5
 msgid "Convert All Old Permalinks"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:6
-msgid ""
-"Press the button bellow to initialize the conversion of all old permalinks"
+#: convert-old-permalinks.php:6
+msgid "Press the button bellow to initialize the conversion of all old permalinks"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:9
+#: convert-old-permalinks.php:9
 msgid "CONVERT"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:13
+#: convert-old-permalinks.php:13
 msgid "List of old permalinks"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:14
+#: convert-old-permalinks.php:14
 msgid "In the list below you can view/manage the old converted permalinks"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:46
-#: admin/partials/settings-page/convert-old-permalinks.php:92
+#: convert-old-permalinks.php:59
 msgid "ID:"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:52
-#: admin/partials/settings-page/convert-old-permalinks.php:98
+#: convert-old-permalinks.php:65
 msgid "Post ID:"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:60
-#: admin/partials/settings-page/convert-old-permalinks.php:108
-#: admin/partials/settings-page/convert-old-permalinks.php:150
+#: convert-old-permalinks.php:73
 msgid "Old Permalink:"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:66
-#: admin/partials/settings-page/convert-old-permalinks.php:114
-#: admin/partials/settings-page/convert-old-permalinks.php:154
+#: convert-old-permalinks.php:79
 msgid "New Permalink:"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:137
+#: convert-old-permalinks.php:121
 msgid "Edit Redirection"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:145
-msgid ""
-"Make sure you are making the correct changes, as editting redirection "
-"permalinks while redirection is still active may result in broken URLs or "
-"Loops"
+#: convert-old-permalinks.php:129
+msgid "Make sure you are making the correct changes, as editting redirection permalinks while redirection is still active may result in broken URLs or Loops"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:161
-#: admin/partials/settings-page/convert-old-permalinks.php:184
+#: convert-old-permalinks.php:147
 msgid "Cancel"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:162
+#: convert-old-permalinks.php:148
 msgid "Save Changes"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:176
+#: convert-old-permalinks.php:166
 msgid "Delete Redirection"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:183
+#: convert-old-permalinks.php:174
 msgid "Are you sure you want to delete this redirect record?"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:185
+#: convert-old-permalinks.php:176
 msgid "Delete"
 msgstr ""
 
-#: admin/partials/settings-page/convert-old-permalinks.php:248
+#: convert-old-permalinks.php:262
 msgid "No Permalinks Found"
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:103
+#: feedback.php:18
+msgid "Feedback"
+msgstr ""
+
+#: feedback.php:25
+msgid "FEEDBACK & SUGGESTIONS"
+msgstr ""
+
+#: feedback.php:27
+msgid "Help Us Improve Greek Multi-Tool"
+msgstr ""
+
+#: feedback.php:28
+msgid "We value your feedback and suggestions for enhancing our tools for Greek websites."
+msgstr ""
+
+#: feedback.php:33
+msgid "We'd Love to Hear From You!"
+msgstr ""
+
+#: feedback.php:34
+msgid "Have ideas for new features? Found a bug? Have suggestions for improving existing tools? Let us know!"
+msgstr ""
+
+#: feedback.php:38
+msgid "Contact Options"
+msgstr ""
+
+#: feedback.php:40
+msgid "Contact Us via Our Website"
+msgstr ""
+
+#: greek-excerpts.php:31
+msgid "Greek Excerpt Settings"
+msgstr ""
+
+#: greek-excerpts.php:38
+msgid "Enable Greek Excerpts"
+msgstr ""
+
+#: greek-excerpts.php:46
+msgid "Greek Excerpt Length"
+msgstr ""
+
+#: greek-excerpts.php:54
+msgid "Greek Read More Text"
+msgstr ""
+
+#: greek-excerpts.php:81
+msgid "Configure how excerpts are generated for Greek text."
+msgstr ""
+
+#: greek-excerpts.php:89
+msgid "Enable Greek-friendly excerpt generation. When disabled, WordPress will use its default excerpt generation."
+msgstr ""
+
+#: greek-excerpts.php:98
+msgid "Number of words to show in Greek excerpts (default WordPress value is 55)."
+msgstr ""
+
+#: greek-excerpts.php:107
+msgid "Text to append after truncated excerpts (default is "…")."
+msgstr ""
+
+#: greek-excerpts.php:261
+msgid "Greek-Friendly Excerpt"
+msgstr ""
+
+#: greek-excerpts.php:278
+msgid "Greek-friendly excerpt generator creates proper excerpts for Greek text, ensuring words are not cut off incorrectly."
+msgstr ""
+
+#: greek-excerpts.php:281
+msgid "Current Excerpt:"
+msgstr ""
+
+#: greek-excerpts.php:287
+msgid "Generated Greek-Friendly Excerpt:"
+msgstr ""
+
+#: greek-excerpts.php:292
+msgid "Manual Edit:"
+msgstr ""
+
+#: greek-excerpts.php:293
+msgid "Edit excerpt manually..."
+msgstr ""
+
+#: greek-excerpts.php:298
+msgid "Refresh Generated Excerpt"
+msgstr ""
+
+#: greek-excerpts.php:299
+msgid "Use Generated Excerpt"
+msgstr ""
+
+#: greek-excerpts.php:300
+msgid "Save Manual Excerpt"
+msgstr ""
+
+#: greek-excerpts.php:303
+msgid "Custom Length:"
+msgstr ""
+
+#: greek-excerpts.php:305
+msgid "Apply"
+msgstr ""
+
+#: greek-excerpts.php:343
+msgid "Error refreshing excerpt"
+msgstr ""
+
+#: greek-excerpts.php:352
+msgid "Generated excerpt successfully applied to post!"
+msgstr ""
+
+#: greek-excerpts.php:363
+msgid "Error applying excerpt"
+msgstr ""
+
+#: greek-excerpts.php:384
+msgid "Manual excerpt successfully saved!"
+msgstr ""
+
+#: greek-excerpts.php:395
+msgid "Error saving excerpt"
+msgstr ""
+
+#: greek-excerpts.php:420
+msgid "Invalid post ID"
+msgstr ""
+
+#: greek-excerpts.php:427
+msgid "Post not found"
+msgstr ""
+
+#: greek-excerpts.php:453
+msgid "Invalid post ID"
+msgstr ""
+
+#: greek-excerpts.php:462
+msgid "Error updating post excerpt"
+msgstr ""
+
+#: greek-excerpts.php:479
+msgid "Invalid field"
+msgstr ""
+
+#: greek-excerpts.php:498
+msgid "Excerpts"
+msgstr ""
+
+#: greek-excerpts.php:519
+msgid "Settings saved."
+msgstr ""
+
+#: greek-excerpts.php:529
+msgid "GREEK EXCERPT GENERATOR"
+msgstr ""
+
+#: greek-excerpts.php:531
+msgid "Greek-Friendly Excerpt Generator"
+msgstr ""
+
+#: greek-excerpts.php:532
+msgid "Fix WordPress excerpt issues with Greek text"
+msgstr ""
+
+#: greek-excerpts.php:541
+msgid "Enable Greek Excerpts"
+msgstr ""
+
+#: greek-excerpts.php:546
+msgid "Enable Greek-friendly excerpt generation"
+msgstr ""
+
+#: greek-excerpts.php:547
+msgid "When disabled, WordPress will use its default excerpt generation."
+msgstr ""
+
+#: greek-excerpts.php:552
+msgid "Greek Excerpt Length"
+msgstr ""
+
+#: greek-excerpts.php:555
+msgid "Number of words to show in Greek excerpts (default WordPress value is 55)."
+msgstr ""
+
+#: greek-excerpts.php:559
+msgid "Greek Read More Text"
+msgstr ""
+
+#: greek-excerpts.php:562
+msgid "Text to append after truncated excerpts (default is "…")."
+msgstr ""
+
+#: greek-excerpts.php:568
+msgid "Features:"
+msgstr ""
+
+#: greek-excerpts.php:569
+msgid "This feature fixes how WordPress generates excerpts for Greek text."
+msgstr ""
+
+#: greek-excerpts.php:571
+msgid "Properly handles Greek word boundaries"
+msgstr ""
+
+#: greek-excerpts.php:572
+msgid "Ensures Greek words are not cut off mid-character"
+msgstr ""
+
+#: greek-excerpts.php:573
+msgid "Removes shortcodes and page builder elements"
+msgstr ""
+
+#: greek-excerpts.php:574
+msgid "Customizable excerpt length specifically for Greek text"
+msgstr ""
+
+#: greek-excerpts.php:575
+msgid "Custom "read more" text"
+msgstr ""
+
+#: greek-excerpts.php:576
+msgid "Adds a meta box in the post editor for generating and previewing excerpts"
+msgstr ""
+
+#: greek-excerpts.php:577
+msgid "Manual editing capability for fine-tuning excerpts"
+msgstr ""
+
+#: grmlt-plugin-admin-main-settings-page.php:226
 msgid "Greek Multi Tool Settings Page"
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:115
+#: grmlt-plugin-admin-main-settings-page.php:236
 msgid "Welcome, "
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:117
-msgid ""
-"Congratulations! You are about to use the most powerful WordPress plugin for "
-"Greek Language Users -  Greek Multi Tool is designed to make the process of "
-"using the Greek Language in WordPress as ease as possible."
+#: grmlt-plugin-admin-main-settings-page.php:239
+msgid "Congratulations! You are about to use the most powerful WordPress plugin for Greek Language Users -  Greek Multi Tool is designed to make the process of using the Greek Language in WordPress as ease as possible."
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:119
+#: grmlt-plugin-admin-main-settings-page.php:241
 msgid "Support Forum"
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:121
+#: grmlt-plugin-admin-main-settings-page.php:243
 msgid "Review the Plugin on WordPress Repository"
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:138
+#: grmlt-plugin-admin-main-settings-page.php:260
 msgid "Permalinks Settings"
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:143
+#: grmlt-plugin-admin-main-settings-page.php:261
 msgid "Uppercase Accent Remover Settings"
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:148
+#: grmlt-plugin-admin-main-settings-page.php:262
 msgid "Manage Old Permalinks"
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:153
+#: grmlt-plugin-admin-main-settings-page.php:263
 msgid "301 Redirect Settings"
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:158
+#: grmlt-plugin-admin-main-settings-page.php:264
 msgid "Menu Builder"
 msgstr ""
 
-#: admin/partials/settings-page/grmlt-plugin-admin-main-settings-page.php:196
+#: grmlt-plugin-admin-main-settings-page.php:333
 msgid "Save Settings"
 msgstr ""
 
-#: admin/partials/settings-page/menu-builder.php:9
+#: menu-builder.php:7
 msgid "MENU BUILDER"
 msgstr ""
 
-#: admin/partials/settings-page/menu-builder.php:17
+#: menu-builder.php:13
 msgid "Woocomerce Products Category Menu"
 msgstr ""
 
-#: admin/partials/settings-page/menu-builder.php:18
-msgid ""
-"To create a custom menu for your WooCommerce store effortlessly, simply "
-"enter your preferred menu name in the form below. Click 'Create,' and voilà! "
-"A new menu with the name you specified will be automatically generated. This "
-"menu will intuitively organize all your WooCommerce product categories, "
-"following their existing hierarchy."
+#: menu-builder.php:14
+msgid "To create a custom menu for your WooCommerce store effortlessly, simply enter your preferred menu name in the form below. Click 'Create,' and voilà! A new menu with the name you specified will be automatically generated. This menu will intuitively organize all your WooCommerce product categories, following their existing hierarchy."
 msgstr ""
 
-#: admin/partials/settings-page/menu-builder.php:21
-#: admin/partials/settings-page/menu-builder.php:33
+#: menu-builder.php:17
 msgid "Enter a name for the Menu..."
 msgstr ""
 
-#: admin/partials/settings-page/menu-builder.php:22
-#: admin/partials/settings-page/menu-builder.php:34
+#: menu-builder.php:18
 msgid "Create Menu"
 msgstr ""
 
-#: admin/partials/settings-page/menu-builder.php:29
+#: menu-builder.php:25
 msgid "Posts Category Menu"
 msgstr ""
 
-#: admin/partials/settings-page/menu-builder.php:30
-msgid ""
-"To effortlessly create a custom menu for your WordPress blog, simply enter "
-"your preferred menu name in the form below. Click 'Create,' and voilà! A new "
-"menu with the name you specified will be automatically generated. This menu "
-"will intuitively organize all your WordPress post categories, following "
-"their existing hierarchy."
+#: menu-builder.php:26
+msgid "To effortlessly create a custom menu for your WordPress blog, simply enter your preferred menu name in the form below. Click 'Create,' and voilà! A new menu with the name you specified will be automatically generated. This menu will intuitively organize all your WordPress post categories, following their existing hierarchy."
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:10
+#: menu-builder.php:29
+msgid "Enter a name for the Menu..."
+msgstr ""
+
+#: menu-builder.php:30
+msgid "Create Menu"
+msgstr ""
+
+#: oldtranslator.php:9
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: permalinks-settings.php:7
 msgid "PERMALINK SETTINGS"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:12
+#: permalinks-settings.php:9
 msgid "Convert the permalinks"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:13
+#: permalinks-settings.php:10
 msgid "Enable the permalinks convert sitewide"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:18
+#: permalinks-settings.php:15
 msgid "Enable Greeklish Permalinks Convert: "
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:19
-msgid ""
-"Automatically convert the greek characters to latin in all permalinks in "
-"posts, pages, custom post type and terms."
+#: permalinks-settings.php:16
+msgid "Automatically convert the greek characters to latin in all permalinks in posts, pages, custom post type and terms."
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:47
+#: permalinks-settings.php:43
 msgid "Diphthongs Settings"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:48
+#: permalinks-settings.php:44
 msgid "Select how you want the dipthongs to be converted"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:53
+#: permalinks-settings.php:49
 msgid "Simple Conversion"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:54
-msgid ""
-"For example \"ει\" becomes \"ei\", \"οι\" becomes \"οi\", \"μπ\" becomes \"mp"
-"\" etc"
+#: permalinks-settings.php:50
+msgid "For example \"ει\" becomes \"ei\", \"οι\" becomes \"οi\", \"μπ\" becomes \"mp\" etc"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:66
+#: permalinks-settings.php:61
 msgid "Advance  Conversion"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:67
+#: permalinks-settings.php:62
 msgid "For example \"ει\", \"οι\" becomes \"i\", \"μπ\" becomes \"b\" etc"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:80
+#: permalinks-settings.php:75
 msgid "Remove One/Two Letter Words"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:81
-msgid ""
-"Select which of the following word options you want to remove from the posts "
-"urls"
+#: permalinks-settings.php:76
+msgid "Select which of the following word options you want to remove from the posts urls"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:93
+#: permalinks-settings.php:86
 msgid "Remove One Letter Words"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:113
+#: permalinks-settings.php:105
 msgid "Remove Two Letter Words"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:132
+#: permalinks-settings.php:125
 msgid "Exclude Stopwords From Permalinks"
 msgstr ""
 
-#: admin/partials/settings-page/permalinks-settings.php:133
-msgid ""
-"Type the words you want to exclude from permalinks seperated by a comma!"
+#: permalinks-settings.php:126
+msgid "Type the words you want to exclude from permalinks seperated by a comma!"
 msgstr ""
 
-#: admin/partials/settings-page/uppercase-accent-remover-settings.php:9
+#: text-analysis.php:180
+msgid "Word \"%s\" is all-caps and should not have accents"
+msgstr ""
+
+#: text-analysis.php:215
+msgid "Word \"%s\" should not have an accent"
+msgstr ""
+
+#: text-analysis.php:304
+msgid "Multi-syllable word \"%s\" should have an accent"
+msgstr ""
+
+#: text-analysis.php:374
+msgid "Word \"%s\" should have an accent in this context"
+msgstr ""
+
+#: text-analysis.php:387
+msgid "Monosyllabic word \"%s\" should not have an accent"
+msgstr ""
+
+#: text-analysis.php:427
+msgid "Greek Text Analysis"
+msgstr ""
+
+#: text-analysis.php:444
+msgid "Analyze your content for proper Greek accent rules."
+msgstr ""
+
+#: text-analysis.php:445
+msgid "Analyze Text"
+msgstr ""
+
+#: text-analysis.php:475
+msgid "Analyzing..."
+msgstr ""
+
+#: text-analysis.php:479
+msgid "Text Statistics"
+msgstr ""
+
+#: text-analysis.php:480
+msgid "Characters:"
+msgstr ""
+
+#: text-analysis.php:481
+msgid "Words:"
+msgstr ""
+
+#: text-analysis.php:482
+msgid "Greek characters:"
+msgstr ""
+
+#: text-analysis.php:484
+msgid "Accented characters:"
+msgstr ""
+
+#: text-analysis.php:487
+msgid "Accent Rule Issues"
+msgstr ""
+
+#: text-analysis.php:495
+msgid "No accent rule issues found!"
+msgstr ""
+
+#: text-analysis.php:506
+msgid "Error analyzing text."
+msgstr ""
+
+#: text-analysis.php:518
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: text-analysis.php:524
+msgid "No content to analyze."
+msgstr ""
+
+#: text-analysis.php:538
+msgid "Text Analysis"
+msgstr ""
+
+#: text-analysis.php:547
+msgid "TEXT ANALYSIS SETTINGS"
+msgstr ""
+
+#: text-analysis.php:549
+msgid "Greek Accent Rules Analysis"
+msgstr ""
+
+#: text-analysis.php:550
+msgid "Analyze your content for proper Greek accent rule usage"
+msgstr ""
+
+#: text-analysis.php:555
+msgid "Accent Rules Checked:"
+msgstr ""
+
+#: text-analysis.php:556
+msgid "This feature adds a metabox to your post and page editor that analyzes Greek text for accent rule compliance."
+msgstr ""
+
+#: text-analysis.php:558
+msgid "All words with two or more syllables must have an accent"
+msgstr ""
+
+#: text-analysis.php:559
+msgid "Words that appear monosyllabic after elision or apocope keep their accent"
+msgstr ""
+
+#: text-analysis.php:560
+msgid "Words that have lost their accent through aphaeresis are exceptions"
+msgstr ""
+
+#: text-analysis.php:561
+msgid "Monosyllabic words generally do not take accents, with specific exceptions"
+msgstr ""
+
+#: text-analysis.php:562
+msgid "Common Greek words like \"Όλα\", \"Ένα\", \"Όταν\" are recognized as correctly accented"
+msgstr ""
+
+#: text-analysis.php:563
+msgid "Certain words like \"μου\", \"σου\", \"του\", \"το\", \"τα\", \"για\", \"πιο\", \"ναι\", \"και\", \"οι\", etc. never take accents"
+msgstr ""
+
+#: text-analysis.php:564
+msgid "The disjunctive conjunction \"ή\" always takes an accent"
+msgstr ""
+
+#: text-analysis.php:565
+msgid "Interrogative \"πού\" and \"πώς\" always take accents in questions"
+msgstr ""
+
+#: text-analysis.php:566
+msgid "Special cases for \"πού\" and \"πώς\" in specific phrases"
+msgstr ""
+
+#: text-analysis.php:567
+msgid "All-caps words should not have accents (except for \"Ή\")"
+msgstr ""
+
+#: text-analysis.php:569
+msgid "The text analysis metabox will appear in the sidebar of your post and page editors."
+msgstr ""
+
+#: uppercase-accent-remover-settings.php:10
 msgid "UPPERCASE ACCENT REMOVER SETTINGS"
 msgstr ""
 
-#: admin/partials/settings-page/uppercase-accent-remover-settings.php:11
+#: uppercase-accent-remover-settings.php:12
 msgid "Remove Uppercase Accents"
 msgstr ""
 
-#: admin/partials/settings-page/uppercase-accent-remover-settings.php:12
+#: uppercase-accent-remover-settings.php:13
 msgid "Enable the uppercase accent remover sitewide"
 msgstr ""
 
-#: admin/partials/settings-page/uppercase-accent-remover-settings.php:17
+#: uppercase-accent-remover-settings.php:18
 msgid "Enable Uppercase Accents Remover: "
 msgstr ""
 
-#: admin/partials/settings-page/uppercase-accent-remover-settings.php:18
-msgid ""
-"Automatically remove accented characters from elements having their text "
-"content uppercase transformed through CSS."
+#: uppercase-accent-remover-settings.php:19
+msgid "Automatically remove accented characters from elements having their text content uppercase transformed through CSS."
 msgstr ""

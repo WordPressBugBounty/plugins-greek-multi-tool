@@ -65,6 +65,47 @@ register_setting(
     'sanitize_text_field' // sanitization function
 );
 
+// Settings for enhanced search
+register_setting(
+    'grmlt_settings',
+    'grmlt_enhance_search',
+    'sanitize_text_field'
+);
+
+register_setting(
+    'grmlt_settings', 
+    'grmlt_search_post_types', 
+    array(
+        'type' => 'array',
+        'sanitize_callback' => function($post_types) {
+            if (!is_array($post_types)) {
+                return array('post', 'page');
+            }
+            return array_map('sanitize_text_field', $post_types);
+        },
+        'default' => array('post', 'page'),
+    )
+);
+
+// Settings for date localization
+register_setting(
+    'grmlt_settings',
+    'grmlt_localize_dates',
+    'sanitize_text_field'
+);
+
+register_setting(
+    'grmlt_settings',
+    'grmlt_date_format',
+    'sanitize_text_field'
+);
+
+register_setting(
+    'grmlt_settings',
+    'grmlt_custom_date_format',
+    'sanitize_text_field'
+);
+
 add_settings_section(
     'grmlt-settings-section', // section ID
     '', // title (if needed)
@@ -133,31 +174,33 @@ function grmlt_text_field_html() {
                 <div class="card">
                     <div class="card-body">
                         <ul class="nav nav-pills flex-column">
-                            <li class="nav-item">
-                                <a href="#permalinks" data-toggle="tab" class="fs-5 nav-link nav-link-faded active"><?php
-                                    _e('Permalinks Settings', 'greek-multi-tool');
-                                ?></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#uppercaseaccents" data-toggle="tab" class="fs-5 nav-link nav-link-faded"><?php
-                                  _e('Uppercase Accent Remover Settings', 'greek-multi-tool');
-                                ?></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#oldpermalinks" data-toggle="tab" class="fs-5 nav-link nav-link-faded"><?php
-                                  _e('Manage Old Permalinks', 'greek-multi-tool');
-                                ?></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#grmlt_redirect" data-toggle="tab" class="fs-5 nav-link nav-link-faded"><?php
-                                  _e('301 Redirect Settings', 'greek-multi-tool');
-                                ?></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#menu_builder" data-toggle="tab" class="fs-5 nav-link nav-link-faded"><?php
-                                  _e('Menu Builder', 'greek-multi-tool');
-                                ?></a>
-                            </li>
+                            <?php
+                            // Define default tabs
+                            $default_tabs = array(
+                                'permalinks' => __('Permalinks Settings', 'greek-multi-tool'),
+                                'uppercaseaccents' => __('Uppercase Accent Remover Settings', 'greek-multi-tool'),
+                                'oldpermalinks' => __('Manage Old Permalinks', 'greek-multi-tool'),
+                                'grmlt_redirect' => __('301 Redirect Settings', 'greek-multi-tool'),
+                                'menu_builder' => __('Menu Builder', 'greek-multi-tool')
+                            );
+                            
+                            // Allow other features to add tabs
+                            $tabs = apply_filters('grmlt_settings_tabs', $default_tabs);
+                            
+                            // Output tabs
+                            $first_tab = true;
+                            foreach ($tabs as $tab_id => $tab_name) :
+                            ?>
+                                <li class="nav-item">
+                                    <a href="#<?php echo esc_attr($tab_id); ?>" data-toggle="tab" 
+                                       class="fs-5 nav-link nav-link-faded<?php echo ($first_tab ? ' active' : ''); ?>">
+                                        <?php echo esc_html($tab_name); ?>
+                                    </a>
+                                </li>
+                            <?php
+                                if ($first_tab) $first_tab = false;
+                            endforeach;
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -189,6 +232,15 @@ function grmlt_text_field_html() {
                         <div class="tab-pane" id="menu_builder">
                             <?php require_once plugin_dir_path( dirname( __FILE__ ) ) . 'settings-page/menu-builder.php'; ?>
                         </div>
+                        
+                        <!-- Dynamic tabs from other features -->
+                        <?php foreach ($tabs as $tab_id => $tab_name) : ?>
+                            <?php if (!array_key_exists($tab_id, $default_tabs)) : ?>
+                                <div class="tab-pane" id="<?php echo esc_attr($tab_id); ?>">
+                                    <?php do_action('grmlt_settings_tab_' . $tab_id); ?>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div> <!-- /CARDS -->
