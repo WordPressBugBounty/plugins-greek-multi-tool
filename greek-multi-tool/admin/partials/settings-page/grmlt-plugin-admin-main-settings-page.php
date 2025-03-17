@@ -158,8 +158,8 @@ function grmlt_text_field_html() {
                                 <p class="wpdt-text wpdt-font"> <?php _e( 'Congratulations! You are about to use the most powerful WordPress plugin for Greek Language Users -  Greek Multi Tool is designed to make the process of using the Greek Language in WordPress as ease as possible.', 'greek-multi-tool'); ?></p>
                                 <a href="https://wordpress.org/support/plugin/greek-multi-tool/" class="btn btn-primary mt-4">
                                     <?php _e( 'Support Forum', 'greek-multi-tool'); ?></a>
-                                <a href="https://wordpress.org/support/plugin/greek-multi-tool/reviews/#new-post" style="display: block;margin-top: 4px;width: max-content;">
-                                    <?php _e( 'Review the Plugin on WordPress Repository', 'greek-multi-tool'); ?></a>
+                                <a href="https://wordpress.org/support/plugin/greek-multi-tool/reviews/#new-post" class="btn btn-outline-primary mt-4 ms-2">
+                                        <?php _e( 'Review Plugin', 'greek-multi-tool'); ?></a>
                             </div>
                             <div class="col-sm-5 float-end order-1 order-md-2">
                                 <img src="<?php echo plugins_url( 'images/grmlt-welcome.png', dirname(__DIR__)); ?>" class="img-fluid float-end wdt-welcome-img" alt="Welcome message">
@@ -175,8 +175,8 @@ function grmlt_text_field_html() {
                     <div class="card-body">
                         <ul class="nav nav-pills flex-column">
                             <?php
-                            // Define default tabs
-                            $default_tabs = array(
+                            // Define original core tabs - these have direct file includes
+                            $core_tabs = array(
                                 'permalinks' => __('Permalinks Settings', 'greek-multi-tool'),
                                 'uppercaseaccents' => __('Uppercase Accent Remover Settings', 'greek-multi-tool'),
                                 'oldpermalinks' => __('Manage Old Permalinks', 'greek-multi-tool'),
@@ -185,7 +185,7 @@ function grmlt_text_field_html() {
                             );
                             
                             // Allow other features to add tabs
-                            $tabs = apply_filters('grmlt_settings_tabs', $default_tabs);
+                            $tabs = apply_filters('grmlt_settings_tabs', $core_tabs);
                             
                             // Output tabs
                             $first_tab = true;
@@ -235,7 +235,7 @@ function grmlt_text_field_html() {
                         
                         <!-- Dynamic tabs from other features -->
                         <?php foreach ($tabs as $tab_id => $tab_name) : ?>
-                            <?php if (!array_key_exists($tab_id, $default_tabs)) : ?>
+                            <?php if (!array_key_exists($tab_id, $core_tabs)) : ?>
                                 <div class="tab-pane" id="<?php echo esc_attr($tab_id); ?>">
                                     <?php do_action('grmlt_settings_tab_' . $tab_id); ?>
                                 </div>
@@ -257,4 +257,52 @@ function grmlt_text_field_html() {
                 jQuery( ".btn-primary" ).removeClass( "button" );
             });
         </script>';
+    echo '<script>
+    jQuery(document).ready(function($) {
+        // Store original tab click handler
+        var originalTabClick = $(".nav-link").attr("onclick");
+        
+        // Override tab behavior to use our custom approach
+        $(".nav-link").on("click", function(e) {
+            e.preventDefault();
+            
+            // Get the tab ID
+            var tabId = $(this).attr("href").substring(1);
+            
+            // Hide all tab panes
+            $(".tab-pane").removeClass("active").css("display", "none");
+            
+            // Show the selected tab pane
+            $("#" + tabId).addClass("active").css("display", "block");
+            
+            // Remove active class from all tabs
+            $(".nav-link").removeClass("active");
+            
+            // Add active class to clicked tab
+            $(this).addClass("active");
+            
+            // Call original handler if it exists
+            if (originalTabClick) {
+                eval(originalTabClick);
+            }
+            
+            return false;
+        });
+        
+        // When the form is submitted, make all form fields visible
+        $("form").on("submit", function() {
+            // Show all tab panes before submission to ensure all fields are included
+            $(".tab-pane").css({"visibility": "hidden", "display": "block", "height": "0", "overflow": "hidden", "position": "absolute"});
+            
+            // After a short delay to allow the form to be processed, restore the tabs
+            setTimeout(function() {
+                // Hide non-active tab panes
+                $(".tab-pane:not(.active)").css({"display": "none", "visibility": "visible", "height": "auto", "overflow": "visible", "position": "static"});
+                
+                // Show active tab pane properly
+                $(".tab-pane.active").css({"visibility": "visible", "height": "auto", "overflow": "visible", "position": "static"});
+            }, 100);
+        });
+    });
+</script>';
 }

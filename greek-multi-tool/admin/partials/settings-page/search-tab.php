@@ -3,7 +3,7 @@
  * Search Settings Tab UI
  *
  * @link       https://bigdrop.gr
- * @since      2.4.0
+ * @since      3.1.0
  *
  * @package    Grmlt_Plugin
  * @subpackage Grmlt_Plugin/admin/partials/settings-page
@@ -16,7 +16,8 @@ if (!defined('ABSPATH')) {
 
 // Get current settings
 $search_enabled = get_option('grmlt_enhance_search', 'on');
-$selected_post_types = get_option('grmlt_search_post_types', array('post', 'page'));
+$accent_insensitive_enabled = get_option('grmlt_accent_insensitive_search', 'on');
+$selected_post_types = get_option('grmlt_search_post_types', array('post', 'page', 'product'));
 
 // Get available post types
 $post_types = get_post_types(array('public' => true), 'objects');
@@ -47,6 +48,24 @@ $post_types = get_post_types(array('public' => true), 'objects');
     </div>
     
     <div class="list-group-item">
+        <div class="row align-items-center">
+            <div class="col">
+                <strong class="mb-0"><?php _e('Enable Accent-Insensitive Search:', 'greek-multi-tool'); ?></strong>
+                <p class="text-muted mb-0"><?php _e('Allow searching for Greek words regardless of accent marks (e.g., searching for "πενσα" will match "πένσα").', 'greek-multi-tool'); ?></p>
+            </div>
+            <div class="col-auto">
+                <div class="custom-control custom-switch">
+                    <label class="switch">
+                        <input type="checkbox" id="grmlt_accent_insensitive_search" name="grmlt_accent_insensitive_search" 
+                            <?php checked($accent_insensitive_enabled, 'on'); ?> />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="list-group-item">
         <div class="row">
             <div class="col">
                 <strong class="mb-0"><?php _e('Post Types to Include in Search:', 'greek-multi-tool'); ?></strong>
@@ -63,6 +82,22 @@ $post_types = get_post_types(array('public' => true), 'objects');
                             </label>
                         </div>
                     <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="list-group-item">
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-info">
+                    <h6><?php _e('Greek Search Features', 'greek-multi-tool'); ?></h6>
+                    <p><?php _e('The enhanced Greek search improves the default WordPress search for Greek content.', 'greek-multi-tool'); ?></p>
+                    <ul>
+                        <li><?php _e('Accent-insensitive search: Find results regardless of accent marks', 'greek-multi-tool'); ?></li>
+                        <li><?php _e('Extended search: Search in post titles, content, excerpts, and meta fields', 'greek-multi-tool'); ?></li>
+                        <li><?php _e('Improved product search: Better results for WooCommerce products', 'greek-multi-tool'); ?></li>
+                    </ul>
                 </div>
             </div>
         </div>

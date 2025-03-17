@@ -2,7 +2,7 @@
 Contributors: bigdropgr, aivazidis
 Tags: greek, greeklish, permalinks, accent remover, seo
 Requires at least: 6.2
-Stable tag: 3.0.0
+Stable tag: 3.1.0
 Tested up to: 6.7.2
 Requires PHP: 7.4
 License: GPLv2 or later
@@ -48,6 +48,11 @@ And it does all this while maintaining excellent performance - our lightweight, 
 10. **Greek Date Localization** - Display dates in proper Greek format with correct month and day names throughout your site.
 11. **User Feedback System** - Help us improve with the integrated feedback system.
 12. **Full Internationalization** - Complete internationalization with Greek translations included.
+
+= New in Version 3.1.0 =
+13. **Accent-Insensitive Seach** - Improve search accuracy by ignoring accents on Greek characters. This ensures users can find content regardless of whether they type accented or unaccented Greek letters.
+14. **Advanced Greek Search Options** - Now with separate toggles for enhanced search and accent-insensitive search, giving you full control over how search works for Greek text.
+15. **Added Toggle Control for enabling/disabling Greek Text Analysis** - Analyze your content for proper Greek accent rules with easy on/off control. Ensure linguistic correctness with just a click.
 
 == Compatibility ==
 Greek Multi Tool is compatible with:
@@ -131,6 +136,14 @@ While designed specifically for Greek language websites, some features like the 
 13. Feedback System
 
 == Changelog ==
+= 3.1.0 =
+* Added toggle control for Greek Text Analysis tool
+* Improved search functionality with separate toggles for enhanced search and accent-insensitive search
+* Enhanced user control over how searches handle Greek accents
+* Optimized settings UI for a more intuitive experience
+* Fixed various minor bugs and performance issues
+* Updated language translations with new feature strings
+
 = 3.0.0 =
 * **Major Update**: Comprehensive overhaul with five powerful new features
 * Added Greek Text Analysis tool for accent rule compliance checking
@@ -248,5 +261,8 @@ While designed specifically for Greek language websites, some features like the 
 * Plugin released. 
 
 == Upgrade Notice ==
+= 3.1.0 =
+Major enhancement: New accent-insensitive search allows finding content without exact accent matching (e.g., "πενσα" will match "πένσα"). Also adds convenient toggle switches for both search features and text analysis. Essential update for Greek websites!
+
 = 3.0.0 =
 Major update with five powerful new features: Greek Text Analysis, Enhanced Excerpts, Greek-Optimized Search, Date Localization, and Feedback System. All existing functionality has been improved and optimized.

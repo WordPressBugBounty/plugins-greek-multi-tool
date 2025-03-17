@@ -665,3 +665,155 @@ msgstr ""
 #: uppercase-accent-remover-settings.php:19
 msgid "Automatically remove accented characters from elements having their text content uppercase transformed through CSS."
 msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:19
+msgid "GREEK SEARCH SETTINGS"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:21
+msgid "Enhanced Greek Search"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:22
+msgid "Improve WordPress search for Greek content by handling accents and diphthongs"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:28
+msgid "Enable Enhanced Greek Search:"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:29
+msgid "Improve search results for Greek content by handling accents and diphthongs."
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:42
+msgid "Post Types to Include in Search:"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:43
+msgid "Select which post types should be included in the enhanced search."
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:62
+msgid "Greek Accent-Insensitive Search"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:63
+msgid "The enhanced Greek search allows users to find content regardless of accent marks. For example, searching for \"πενσα\" will also match \"πένσα\"."
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:67
+msgid "Save Search Settings"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:105
+msgid "Error saving settings"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:233
+msgid "Settings saved successfully"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:205
+msgid "Security check failed"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:210
+msgid "Permission denied"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:180
+msgid "Enable enhanced Greek search"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:190
+msgid "Post types to include in enhanced search"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:167
+msgid "Search"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:19
+msgid "GREEK SEARCH SETTINGS"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:21
+msgid "Enhanced Greek Search"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:22
+msgid "Improve WordPress search for Greek content by handling accents and diphthongs"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:28
+msgid "Enable Enhanced Greek Search:"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:29
+msgid "Improve search results for Greek content by handling accents and diphthongs."
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:41
+msgid "Enable Accent-Insensitive Search:"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:42
+msgid "Allow searching for Greek words regardless of accent marks (e.g., searching for \"πενσα\" will match \"πένσα\")."
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:55
+msgid "Post Types to Include in Search:"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:56
+msgid "Select which post types should be included in the enhanced search."
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:75
+msgid "Greek Search Features"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:76
+msgid "The enhanced Greek search improves the default WordPress search for Greek content."
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:78
+msgid "Accent-insensitive search: Find results regardless of accent marks"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:79
+msgid "Extended search: Search in post titles, content, excerpts, and meta fields"
+msgstr ""
+
+#: admin/partials/settings-page/search-tab.php:80
+msgid "Improved product search: Better results for WooCommerce products"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:205
+msgid "Security check failed"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:210
+msgid "Permission denied"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:233
+msgid "Settings saved successfully"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:180
+msgid "Enable enhanced Greek search"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:190
+msgid "Enable accent-insensitive Greek search"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:200
+msgid "Post types to include in enhanced search"
+msgstr ""
+
+#: public/grmlt-enhanced-search.php:167
+msgid "Search"
+msgstr ""

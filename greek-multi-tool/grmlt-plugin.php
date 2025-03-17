@@ -8,7 +8,7 @@
  * Plugin Name:       Greek Multi Tool
  * Plugin URI:        https://bigdrop.gr/greek-multi-tool
  * Description:       This plugin provides a handful of tools and key functionalities to simplify and fix the greek language used in your webpage. For example it change the greek character urls to latin, remove the uppercase accents.
- * Version:           3.0.0
+ * Version:           3.1.0
  * Author:            BigDrop.gr
  * Author URI:        https://bigdrop.gr
  * Tags: greek, permalinks, accent remover, accent remover, multi tool
