@@ -1,5 +1,7 @@
 === Greek Multi Tool - Ultimate Greek Language Toolkit for WordPress ===
 Contributors: bigdropgr, aivazidis
+Author: bigdropgr, aivazidis
+Committers: bigdropgr, aivazidis
 Tags: greek, greeklish, permalinks, accent remover, seo
 Requires at least: 6.2
 Stable tag: 3.1.0
