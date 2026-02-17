@@ -1,8 +1,6 @@
 <?php
-
 /**
  * Fired when the plugin is uninstalled.
- *
  *
  * @link       https://bigdrop.gr
  * @since      2.1.0
@@ -15,24 +13,27 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-// Delete Plugin's Database.
+// Delete Plugin's Database Table.
 global $wpdb;
-$table_name = $wpdb->prefix."grmlt";
-$wpdb->query( "DROP TABLE $table_name" );
+$table_name = $wpdb->prefix . 'grmlt';
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
+$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS `%1s`', $table_name ) );
 
-// Delete Options
-
-    // Global Transliteration Option
-    delete_option('grmlt_text');
-    // Dipthong Option
-    delete_option('grmlt_diphthongs');
-    // One Letter Words Option
-    delete_option('grmlt_one_letter_words');
-    // Two Letter Words Option
-    delete_option('grmlt_two_letter_words');
-    // Stop Words Option
-    delete_option('grmlt_stwords');
-    // Remove Uppercase Accents Option
-    delete_option('grmlt_uar_js');
-    // Redirect 301 Option
-    delete_option('grmlt_redirect');
+// Delete Options.
+delete_option( 'grmlt_text' );
+delete_option( 'grmlt_diphthongs' );
+delete_option( 'grmlt_one_letter_words' );
+delete_option( 'grmlt_two_letter_words' );
+delete_option( 'grmlt_stwords' );
+delete_option( 'grmlt_uar_js' );
+delete_option( 'grmlt_redirect' );
+delete_option( 'grmlt_enhance_search' );
+delete_option( 'grmlt_accent_insensitive_search' );
+delete_option( 'grmlt_search_post_types' );
+delete_option( 'grmlt_localize_dates' );
+delete_option( 'grmlt_date_format' );
+delete_option( 'grmlt_custom_date_format' );
+delete_option( 'grmlt_enable_text_analysis' );
+delete_option( 'grmlt_enable_excerpts' );
+delete_option( 'grmlt_excerpt_length' );
+delete_option( 'grmlt_excerpt_more' );

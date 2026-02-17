@@ -498,13 +498,12 @@ add_filter('grmlt_settings_tabs', 'grmlt_add_text_analysis_tab');
  * Display Text Analysis settings tab content
  */
 function grmlt_display_text_analysis_tab_content() {
-    $tab_path = WP_PLUGIN_DIR . '/greek-multi-tool/admin/partials/settings-page/text-analysis-tab.php';
-    
-    // Include the tab content file
-    if (file_exists($tab_path)) {
+    $tab_path = plugin_dir_path( dirname( dirname( __FILE__ ) ) ) . 'admin/partials/settings-page/text-analysis-tab.php';
+
+    if ( file_exists( $tab_path ) ) {
         include $tab_path;
     } else {
-        echo "<p>" . __('Error: Text analysis tab content file not found', 'greek-multi-tool') . "</p>";
+        echo '<p>' . esc_html__( 'Error: Text analysis tab content file not found', 'greek-multi-tool' ) . '</p>';
     }
 }
 add_action('grmlt_settings_tab_textanalysis', 'grmlt_display_text_analysis_tab_content');

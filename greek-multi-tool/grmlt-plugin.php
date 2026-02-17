@@ -8,14 +8,15 @@
  * Plugin Name:       Greek Multi Tool
  * Plugin URI:        https://bigdrop.gr/greek-multi-tool
  * Description:       This plugin provides a handful of tools and key functionalities to simplify and fix the greek language used in your webpage. For example it change the greek character urls to latin, remove the uppercase accents.
- * Version:           3.1.0
+ * Version:           3.2.0
  * Author:            BigDrop.gr
  * Author URI:        https://bigdrop.gr
  * Tags: greek, permalinks, accent remover, accent remover, multi tool
- * Tested up to:      6.7.2
+ * Tested up to:      6.9.1
+ * Requires PHP:      7.4
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       grmlt-plugin
+ * Text Domain:       greek-multi-tool
  * Domain Path:       /languages
  */
 
@@ -27,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'GRMLT_PLUGIN_VERSION', '2.4.0' );
+define( 'GRMLT_PLUGIN_VERSION', '3.2.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -77,10 +78,8 @@ add_filter( "plugin_action_links_". plugin_basename(__FILE__), 'grmlt_settings_l
 
 // This is the settings_link method which is responsible for creating the settings page button along with the url used for it.
 function grmlt_settings_link( $links ) {
-    $settings_link = '<a href="admin.php?page=grmlt-main-settings">Settings</a>';
-    
-    array_push( $links, $settings_link );
-    
+    $settings_link = '<a href="' . esc_url( admin_url( 'admin.php?page=grmlt-main-settings' ) ) . '">' . esc_html__( 'Settings', 'greek-multi-tool' ) . '</a>';
+    $links[] = $settings_link;
     return $links;
 }
 

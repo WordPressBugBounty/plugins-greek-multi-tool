@@ -3,10 +3,14 @@
  * WOOCOMMERCE
  */
 
-// Check if the button was clicked
-if (isset($_POST['create_woo_menu_button']) && current_user_can('manage_options')) {
-    // Verify nonce would be ideal here
-    create_woocommerce_menu(sanitize_text_field($_POST['name_of_woo_menu']));
+// Check if the button was clicked (with nonce verification).
+if (
+	isset( $_POST['create_woo_menu_button'] )
+	&& current_user_can( 'manage_options' )
+	&& isset( $_POST['grmlt_menu_builder_nonce'] )
+	&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['grmlt_menu_builder_nonce'] ) ), 'grmlt_menu_builder_action' )
+) {
+	create_woocommerce_menu( sanitize_text_field( wp_unslash( $_POST['name_of_woo_menu'] ) ) );
 }
 
 function create_woocommerce_menu($name_of_menu) {
@@ -94,10 +98,14 @@ function add_category_to_menu($menu_id, $parent_menu_item_id, $category) {
  * POSTS
  */
 
-// Check if the button was clicked
-if (isset($_POST['create_posts_menu_button']) && current_user_can('manage_options')) {
-    // Verify nonce would be ideal here
-    create_post_categories_menu(sanitize_text_field($_POST['name_of_posts_menu']));
+// Check if the button was clicked (with nonce verification).
+if (
+	isset( $_POST['create_posts_menu_button'] )
+	&& current_user_can( 'manage_options' )
+	&& isset( $_POST['grmlt_menu_builder_nonce'] )
+	&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['grmlt_menu_builder_nonce'] ) ), 'grmlt_menu_builder_action' )
+) {
+	create_post_categories_menu( sanitize_text_field( wp_unslash( $_POST['name_of_posts_menu'] ) ) );
 }
 
 function create_post_categories_menu($name_of_menu) {

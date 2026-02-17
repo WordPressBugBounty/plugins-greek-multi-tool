@@ -153,7 +153,10 @@ function grmlt_text_field_html() {
                             <div class="col-sm-7 float-start order-2 order-md-1">
                                 <img class="d-none d-md-inline-block" src="<?php echo plugins_url( 'images/grmlt-wave.png', dirname(__DIR__)); ?>" style="width: 32px;height: 32px;vertical-align: sub;" alt="Welcome waving hand">
                                 <h1 class="p-0 welcotitle">
-                                    <?php _e("Welcome, ". wp_get_current_user()->nickname ."!", 'greek-multi-tool'); ?>
+                                    <?php
+                                    /* translators: %s: user display name */
+                                    printf( esc_html__( 'Welcome, %s!', 'greek-multi-tool' ), esc_html( wp_get_current_user()->nickname ) );
+                                    ?>
                                 </h1>
                                 <p class="wpdt-text wpdt-font"> <?php _e( 'Congratulations! You are about to use the most powerful WordPress plugin for Greek Language Users -  Greek Multi Tool is designed to make the process of using the Greek Language in WordPress as ease as possible.', 'greek-multi-tool'); ?></p>
                                 <a href="https://wordpress.org/support/plugin/greek-multi-tool/" class="btn btn-primary mt-4">

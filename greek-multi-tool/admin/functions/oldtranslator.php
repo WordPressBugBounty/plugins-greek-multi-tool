@@ -126,7 +126,12 @@ function grmlt_trans_old_call() {
     }
 }
 
-// Check user permissions before execution - for direct access case
-if (isset($_POST['oldpermalinks']) && current_user_can('manage_options')) {
-    grmlt_trans_old_call();
+// Check user permissions and nonce before execution.
+if (
+	isset( $_POST['oldpermalinks'] )
+	&& current_user_can( 'manage_options' )
+	&& isset( $_POST['grmlt_convert_nonce'] )
+	&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['grmlt_convert_nonce'] ) ), 'grmlt_convert_old_permalinks' )
+) {
+	grmlt_trans_old_call();
 }

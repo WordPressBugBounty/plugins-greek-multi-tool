@@ -4,8 +4,8 @@ Author: bigdropgr, aivazidis
 Committers: bigdropgr, aivazidis
 Tags: greek, greeklish, permalinks, accent remover, seo
 Requires at least: 6.2
-Stable tag: 3.1.0
-Tested up to: 6.7.2
+Stable tag: 3.2.0
+Tested up to: 6.9.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -138,6 +138,24 @@ While designed specifically for Greek language websites, some features like the 
 13. Feedback System
 
 == Changelog ==
+= 3.2.0 =
+* **Critical Fix**: Fixed 301 redirect feature not working (redirect was hooked incorrectly to `init` inside an `init` callback and never fired)
+* **Security**: Added nonce verification to old permalink conversion and menu builder forms
+* **Security**: Fixed XSS vulnerabilities — all database output is now properly escaped with `esc_html()` / `esc_attr()`
+* **Security**: Replaced raw `header()` redirect with `wp_redirect()` for proper WordPress redirect handling
+* **Security**: Fixed SQL injection risk in database table creation and uninstall routines
+* **Security**: Removed inline CDN loading of Font Awesome — now properly enqueued via `wp_enqueue_style()`
+* **Compatibility**: Fixed PHP 8.2+ fatal error caused by nested function declaration in uppercase accent remover
+* **Compatibility**: Fixed `strpos()` null deprecation warnings on PHP 8.1+ when screen object is null
+* **Compatibility**: Fixed version constant mismatch (was stuck at 2.4.0, now correctly reflects plugin version)
+* **Compliance**: Fixed Text Domain mismatch (`grmlt-plugin` vs `greek-multi-tool`) — i18n now loads correctly
+* **Compliance**: Replaced short PHP open tags (`<?`) with full `<?php` tags for server compatibility
+* **Compliance**: Fixed dynamic string passed to `_e()` — now uses `printf()` with `esc_html__()` for proper i18n
+* **Compliance**: Settings link is now translatable and uses `esc_url()` / `esc_html__()`
+* **Compliance**: Removed hardcoded `WP_PLUGIN_DIR` paths — now uses `plugin_dir_path()` for portability
+* **Compliance**: Added version parameters to all enqueued scripts and styles
+* **Cleanup**: Complete uninstall now removes all plugin options including search, date, excerpt, and analysis settings
+
 = 3.1.0 =
 * Added toggle control for Greek Text Analysis tool
 * Improved search functionality with separate toggles for enhanced search and accent-insensitive search
@@ -263,6 +281,9 @@ While designed specifically for Greek language websites, some features like the 
 * Plugin released. 
 
 == Upgrade Notice ==
+= 3.2.0 =
+Critical security and bug fix release. Fixes 301 redirects not working, XSS vulnerabilities, SQL injection risks, and PHP 8.2+ compatibility issues. All users should update immediately.
+
 = 3.1.0 =
 Major enhancement: New accent-insensitive search allows finding content without exact accent matching (e.g., "πενσα" will match "πένσα"). Also adds convenient toggle switches for both search features and text analysis. Essential update for Greek websites!
 

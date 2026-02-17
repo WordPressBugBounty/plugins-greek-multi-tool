@@ -352,13 +352,12 @@ $grmlt_date_localization = new GRMLT_Date_Localization();
  * Add date localization settings to plugin settings page
  */
 function grmlt_add_date_localization_settings_tab() {
-    $tab_path = WP_PLUGIN_DIR . '/greek-multi-tool/admin/partials/settings-page/date-localization-tab.php';
-    
-    // Include the tab content file
-    if (file_exists($tab_path)) {
+    $tab_path = plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/settings-page/date-localization-tab.php';
+
+    if ( file_exists( $tab_path ) ) {
         include $tab_path;
     } else {
-        echo "<p>" . __('Error: Date localization tab content file not found', 'greek-multi-tool') . "</p>";
+        echo '<p>' . esc_html__( 'Error: Date localization tab content file not found', 'greek-multi-tool' ) . '</p>';
     }
 }
 

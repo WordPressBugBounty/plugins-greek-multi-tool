@@ -35,7 +35,7 @@ class Grmlt_Plugin_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'grmlt-plugin',
+			'greek-multi-tool',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

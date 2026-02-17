@@ -77,26 +77,24 @@ class Grmlt_Plugin_Admin {
 		 */
 		$current_screen = get_current_screen();
 
-	    if ( strpos($current_screen->base, 'grmlt-main-settings') === false) {
-	        return;
-	    } else {
-			/**
-			 * Check if the page currently being displayed is grmlt-settings
-			 * if true then load css 
-			 */
-
-			// Enqueue stylesheet of bootstrap V5.2.2
-			wp_enqueue_style( 'grmlt_bootstrap_css', plugins_url( 'admin/css/bootstrap.min.css', dirname(__FILE__) ) );
-
-			// Enqueue stylesheet of settings-page-body
-			wp_enqueue_style( 'grmlt_settings_page_body_css', plugins_url( 'admin/css/settings-page-body.css', dirname(__FILE__) ) );
-
-			// Enqueue stylesheet of settings-page-switches
-			wp_enqueue_style( 'grmlt_settings_page_switches_css', plugins_url( 'admin/css/settings-page-switches.css', dirname(__FILE__) ) );
-
-			// Enqueue stylesheet of Custom CSS for grmlt plugin admin area
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/grmlt-plugin-admin.css', array(), $this->version, 'all' );
+		if ( ! $current_screen || strpos( $current_screen->base, 'grmlt-main-settings' ) === false ) {
+			return;
 		}
+
+		// Enqueue stylesheet of bootstrap V5.2.2
+		wp_enqueue_style( 'grmlt_bootstrap_css', plugins_url( 'admin/css/bootstrap.min.css', dirname( __FILE__ ) ), array(), '5.2.2' );
+
+		// Enqueue stylesheet of settings-page-body
+		wp_enqueue_style( 'grmlt_settings_page_body_css', plugins_url( 'admin/css/settings-page-body.css', dirname( __FILE__ ) ), array(), $this->version );
+
+		// Enqueue stylesheet of settings-page-switches
+		wp_enqueue_style( 'grmlt_settings_page_switches_css', plugins_url( 'admin/css/settings-page-switches.css', dirname( __FILE__ ) ), array(), $this->version );
+
+		// Enqueue stylesheet of Custom CSS for grmlt plugin admin area
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/grmlt-plugin-admin.css', array(), $this->version, 'all' );
+
+		// Enqueue Font Awesome (moved from inline CDN link)
+		wp_enqueue_style( 'grmlt_fontawesome_css', plugins_url( 'admin/css/fontawesome.min.css', dirname( __FILE__ ) ), array(), '5.15.4' );
     
 	}
 
@@ -120,31 +118,30 @@ class Grmlt_Plugin_Admin {
 	     */
 	    $current_screen = get_current_screen();
 
-	    if ( strpos($current_screen->base, 'grmlt-main-settings') === false) {
-	        return;
-	    } else {
-	        
-	        // Enqueque Popper.min.js (Used for Settings Page of the Plugin for TAB-PANE)
-	        wp_enqueue_script( 'grmlt_popper_js', plugins_url( 'admin/js/popper.min.js', dirname(__FILE__) ) );
+		if ( ! $current_screen || strpos( $current_screen->base, 'grmlt-main-settings' ) === false ) {
+			return;
+		}
 
-	        // Enqueque Bootstrap.min.js
-	        wp_enqueue_script( 'grmlt_bootstrap_js', plugins_url( 'admin/js/bootstrap.min.js', dirname(__FILE__) ) );
+		// Enqueue Popper.min.js (Used for Settings Page of the Plugin for TAB-PANE)
+		wp_enqueue_script( 'grmlt_popper_js', plugins_url( 'admin/js/popper.min.js', dirname( __FILE__ ) ), array(), '2.11.6', true );
 
-	        // Enqueue Javascript for Custom JS Scripts in Admin area
-	        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/grmlt-plugin-admin.js', array( 'jquery' ), $this->version, false );
+		// Enqueue Bootstrap.min.js
+		wp_enqueue_script( 'grmlt_bootstrap_js', plugins_url( 'admin/js/bootstrap.min.js', dirname( __FILE__ ) ), array( 'grmlt_popper_js' ), '5.2.2', true );
 
-	        // Add security nonces for AJAX operations
-	        wp_localize_script(
-	            $this->plugin_name,
-	            'grmlt_vars',
-	            array(
-	                'ajaxurl' => admin_url( 'admin-ajax.php' ),
-	                'permalink_delete_nonce' => wp_create_nonce( 'grmlt_permalink_delete_nonce' ),
-	                'permalink_edit_nonce' => wp_create_nonce( 'grmlt_permalink_edit_nonce' ),
-	                'delete_confirm_text' => __( 'Are you sure you want to delete this permalink?', 'greek-multi-tool' )
-	            )
-	        );
-	    }
+		// Enqueue Javascript for Custom JS Scripts in Admin area
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/grmlt-plugin-admin.js', array( 'jquery' ), $this->version, true );
+
+		// Add security nonces for AJAX operations
+		wp_localize_script(
+			$this->plugin_name,
+			'grmlt_vars',
+			array(
+				'ajaxurl'                => admin_url( 'admin-ajax.php' ),
+				'permalink_delete_nonce' => wp_create_nonce( 'grmlt_permalink_delete_nonce' ),
+				'permalink_edit_nonce'   => wp_create_nonce( 'grmlt_permalink_edit_nonce' ),
+				'delete_confirm_text'    => __( 'Are you sure you want to delete this permalink?', 'greek-multi-tool' ),
+			)
+		);
 	}
 	
 	/**
@@ -170,28 +167,28 @@ class Grmlt_Plugin_Admin {
 	 */
 	public function init_db_myplugin() {
 
-		// WP Globals
-		global $table_prefix, $wpdb;
+		global $wpdb;
 
-		// Customer Table
-		$permalinks_tbl = $table_prefix . 'grmlt';
+		$table_name = $wpdb->prefix . 'grmlt';
+		$charset_collate = $wpdb->get_charset_collate();
 
-		// Create Customer Table if not exist
-		if( $wpdb->get_var( "show tables like '$permalinks_tbl'" ) != $permalinks_tbl ) {
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$table_exists = $wpdb->get_var(
+			$wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
+		);
 
-			// Query - Create Table
-			$sql = "CREATE TABLE `$permalinks_tbl` (";
-			$sql .= " `permalink_id` int(11) NOT NULL auto_increment, ";
-			$sql .= " `post_id` int(25) NOT NULL,";
-			$sql .= "`redirect_type` varchar(255) NOT NULL,";
-			$sql .= " `old_permalink` text(2048) NOT NULL, ";
-			$sql .= " `new_permalink` text(2048) NOT NULL, ";
-			$sql .= "PRIMARY KEY (`permalink_id`)) ENGINE = InnoDB;";
+		if ( $table_exists !== $table_name ) {
 
-			// Include Upgrade Script
-			require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
-		
-			// Create Table
+			$sql = "CREATE TABLE `{$table_name}` (
+				`permalink_id` int(11) NOT NULL AUTO_INCREMENT,
+				`post_id` int(25) NOT NULL,
+				`redirect_type` varchar(255) NOT NULL,
+				`old_permalink` text NOT NULL,
+				`new_permalink` text NOT NULL,
+				PRIMARY KEY (`permalink_id`)
+			) {$charset_collate};";
+
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
 		}
 
@@ -221,11 +218,14 @@ class Grmlt_Plugin_Admin {
 	        add_filter('sanitize_title', 'grmlt_title_sanitizer', 1);
 	    }
 
-	    /**
-		 * Call old permalink conversion function
-		 */
-		if (array_key_exists('oldpermalinks', $_POST) && current_user_can('manage_options')) {
-		    require_once plugin_dir_path(dirname(__FILE__)) . 'admin/functions/oldtranslator.php';
+	    // Call old permalink conversion function (with nonce verification).
+		if (
+			isset( $_POST['oldpermalinks'] )
+			&& current_user_can( 'manage_options' )
+			&& isset( $_POST['grmlt_convert_nonce'] )
+			&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['grmlt_convert_nonce'] ) ), 'grmlt_convert_old_permalinks' )
+		) {
+		    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/functions/oldtranslator.php';
 		}
 
 	}
@@ -238,34 +238,50 @@ class Grmlt_Plugin_Admin {
 	public static function register_grmlt_option_trigger_uppercase_accent_remover() {
 
 		// Check if grmlt_uar_js is set to on ( The Remove Uppercase Accents Switch in settings page ).
-	    if  (get_option( 'grmlt_uar_js' ) == 'on'){
-	        function grmlt_my_load_scripts($hook) {
-	            wp_enqueue_script( 'grmlt_custom_js', plugins_url( 'admin/functions/function.js', dirname(__FILE__) ) );
-	        }
-	        add_action('wp_enqueue_scripts', 'grmlt_my_load_scripts');
-	    }
+		if ( get_option( 'grmlt_uar_js' ) === 'on' ) {
+			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_uppercase_accent_remover_script' ) );
+		}
 
+	}
+
+	/**
+	 * Enqueue the uppercase accent remover front-end script.
+	 *
+	 * @since 3.2.0
+	 */
+	public static function enqueue_uppercase_accent_remover_script() {
+		wp_enqueue_script(
+			'grmlt_custom_js',
+			plugins_url( 'admin/functions/function.js', dirname( __FILE__ ) ),
+			array(),
+			GRMLT_PLUGIN_VERSION,
+			true
+		);
 	}
 
 	/**
 	 * Function Caller for Redirect 301
 	 *
+	 * Hooks the redirect logic into template_redirect so it fires
+	 * on the front-end before any output is sent.
+	 *
 	 * @since    1.0.0
 	 */
 	public static function call_grmlt_redirect_301() {
 
-		// Check if Redirect 301 option is set to on
-		if ( get_option( 'grmlt_redirect' ) == '1' ){
+		// Only run on the front-end, never in admin or AJAX/cron contexts.
+		if ( is_admin() || wp_doing_ajax() || wp_doing_cron() ) {
+			return;
+		}
 
-			// Call Redirect 301 Function
-	        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/functions/greek-multi-tool-redirect.php';
+		// Check if Redirect 301 option is set to on.
+		if ( get_option( 'grmlt_redirect' ) == '1' ) {
 
-	        add_filter( 'init', "grmlt_redirect" );
+			// Load the redirect function file.
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/functions/greek-multi-tool-redirect.php';
 
-		} else {
-
-			remove_filter( 'init', "grmlt_redirect" );
-
+			// Hook into template_redirect which fires before output on front-end.
+			add_action( 'template_redirect', 'grmlt_redirect', 1 );
 		}
 
 	}
