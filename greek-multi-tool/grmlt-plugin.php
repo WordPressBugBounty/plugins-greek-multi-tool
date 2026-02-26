@@ -8,7 +8,7 @@
  * Plugin Name:       Greek Multi Tool
  * Plugin URI:        https://bigdrop.gr/greek-multi-tool
  * Description:       The comprehensive WordPress plugin for Greek websites. Converts Greek URLs and media file names to SEO-friendly Latin, removes uppercase accents, enhances search, localizes dates, and much more. Fully compatible with ACF, WooCommerce, and all major plugins.
- * Version:           3.3.0
+ * Version:           3.3.1
  * Author:            BigDrop.gr
  * Author URI:        https://bigdrop.gr
  * Tags: greek, permalinks, accent remover, accent remover, multi tool
@@ -204,22 +204,40 @@ add_action('wp_ajax_grmlt_database_301_redirect_edit_handler', 'grmlt_database_3
 // Removed: add_action('wp_ajax_nopriv_grmlt_database_301_redirect_edit_handler', 'grmlt_database_301_redirect_edit_handler');
 
 // Load the Page Builder Compatibility Layer (WP Bakery, Elementor, Gutenberg, Yoast SEO)
-require_once plugin_dir_path(__FILE__) . 'admin/functions/page-builder-compat.php';
+$grmlt_page_builder_compat = plugin_dir_path(__FILE__) . 'admin/functions/page-builder-compat.php';
+if (file_exists($grmlt_page_builder_compat)) {
+    require_once $grmlt_page_builder_compat;
+}
 
 // Load the Greek Text Analysis functionality
 if (is_admin()) {
-    require_once plugin_dir_path(__FILE__) . 'admin/functions/text-analysis.php';
+    $grmlt_text_analysis = plugin_dir_path(__FILE__) . 'admin/functions/text-analysis.php';
+    if (file_exists($grmlt_text_analysis)) {
+        require_once $grmlt_text_analysis;
+    }
 }
 
 // Load the Enhanced Greek Search functionality
-require_once plugin_dir_path(__FILE__) . 'public/grmlt-enhanced-search.php';
+$grmlt_enhanced_search = plugin_dir_path(__FILE__) . 'public/grmlt-enhanced-search.php';
+if (file_exists($grmlt_enhanced_search)) {
+    require_once $grmlt_enhanced_search;
+}
 
 // Load the Greek Date Localization functionality
-require_once plugin_dir_path(__FILE__) . 'public/grmlt-date-localization.php';
+$grmlt_date_localization = plugin_dir_path(__FILE__) . 'public/grmlt-date-localization.php';
+if (file_exists($grmlt_date_localization)) {
+    require_once $grmlt_date_localization;
+}
 
 // Load the Greek-Friendly Excerpt Generator functionality
-require_once plugin_dir_path(__FILE__) . 'admin/functions/greek-excerpts.php';
+$grmlt_greek_excerpts = plugin_dir_path(__FILE__) . 'admin/functions/greek-excerpts.php';
+if (file_exists($grmlt_greek_excerpts)) {
+    require_once $grmlt_greek_excerpts;
+}
 
 // Load the Feedback tab
-require_once plugin_dir_path(__FILE__) . 'admin/functions/feedback.php';
+$grmlt_feedback = plugin_dir_path(__FILE__) . 'admin/functions/feedback.php';
+if (file_exists($grmlt_feedback)) {
+    require_once $grmlt_feedback;
+}
 

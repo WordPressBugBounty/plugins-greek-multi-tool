@@ -4,7 +4,7 @@ Author: bigdropgr, aivazidis
 Committers: bigdropgr, aivazidis
 Tags: greek, greeklish, permalinks, accent remover, seo
 Requires at least: 6.2
-Stable tag: 3.3.0
+Stable tag: 3.3.1
 Tested up to: 6.9.1
 Requires PHP: 7.4
 License: GPLv2 or later
