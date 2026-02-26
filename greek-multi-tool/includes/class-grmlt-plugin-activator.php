@@ -43,6 +43,9 @@ class Grmlt_Plugin_Activator {
         // Redirect 301 Option
         add_option('grmlt_redirect', 1);
 
+        // Media File Name Conversion Option
+        add_option('grmlt_media_file_name', 'on');
+
         // flush rewrite rules
         flush_rewrite_rules();
 

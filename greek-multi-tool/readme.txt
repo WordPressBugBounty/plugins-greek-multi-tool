@@ -4,28 +4,43 @@ Author: bigdropgr, aivazidis
 Committers: bigdropgr, aivazidis
 Tags: greek, greeklish, permalinks, accent remover, seo
 Requires at least: 6.2
-Stable tag: 3.2.0
+Stable tag: 3.3.0
 Tested up to: 6.9.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The comprehensive WordPress plugin for Greek websites - fixes permalinks, handles accents, enhances search, localizes dates and more!
+The comprehensive WordPress plugin for Greek websites - fixes permalinks, converts media file names, handles accents, enhances search, localizes dates and more! Fully compatible with WP Bakery, Elementor, Gutenberg, and Yoast SEO.
 
 == Description ==
-**Greek Multi Tool 3.0** transforms how WordPress handles the Greek language. This all-in-one solution tackles every Greek-specific challenge your website faces - from URL structure to search functionality to content optimization.
+**Greek Multi Tool 3.3** transforms how WordPress handles the Greek language. This all-in-one solution tackles every Greek-specific challenge your website faces - from URL structure to media file names to search functionality to content optimization.
 
 Our plugin is meticulously designed for Greek website owners who need professional-grade tools that understand the unique characteristics of the Greek language. Whether you're running a blog, business site, or e-commerce store, Greek Multi Tool solves problems other plugins can't even detect.
+
+= Full Page Builder & SEO Plugin Compatibility =
+
+Greek Multi Tool works seamlessly with the most popular WordPress page builders and SEO plugins:
+
+* **WP Bakery Page Builder** - Full compatibility. Text analysis, excerpt generation, uppercase accent removal, and all other features work correctly with WP Bakery content blocks (vc_column_text, vc_row, etc.). Content is properly extracted from WP Bakery shortcodes for analysis and SEO.
+* **Elementor** - Full compatibility. The plugin reads Elementor widget data directly from post meta, ensuring text analysis and excerpt generation capture all your content - including text editors, headings, tabs, accordions, and other Elementor widgets.
+* **WordPress Gutenberg (Block Editor)** - Full compatibility. All block types are properly parsed and their content extracted for analysis, excerpt generation, and search.
+* **WordPress Classic Editor** - Full compatibility. Works with both TinyMCE visual and text modes.
+* **Yoast SEO** - Full compatibility. Greek Multi Tool provides clean, rendered content to Yoast's analysis engine when page builder shortcodes are detected, ensuring Yoast can properly analyze your Greek content for SEO optimization.
+* **Rank Math & All in One SEO** - Compatible. Uses standard WordPress hooks that work alongside all major SEO plugins.
+* **Divi Builder, Beaver Builder, Avada/Fusion Builder** - Compatible. Page builder shortcodes are properly stripped for text analysis and excerpt generation.
 
 = Why Greek Multi Tool Is Essential for Your Greek Website =
 
 * **Solve Greek URL Problems Once and For All** - Convert complicated Greek character URLs to clean, SEO-friendly Latin permalinks automatically
-* **Enhance Greek Content SEO** - Our specialized tools ensure search engines properly understand and index your Greek content
-* **Create Professional Greek Typography** - Remove unsightly uppercase accents and ensure consistent, beautiful Greek text display
+* **Clean Up Greek Media File Names** - Automatically convert Greek file names during upload so your images and documents have proper Latin file names for maximum compatibility and SEO
+* **Full ACF Compatibility** - Our smart context-aware transliteration knows when to convert and when to leave things alone, so Advanced Custom Fields and other plugins work perfectly alongside
+* **Works With Any Page Builder** - Text analysis, excerpt generation, uppercase accent removal, and search all work perfectly whether you build pages with WP Bakery, Elementor, Gutenberg, or the Classic Editor
+* **Enhance Greek Content SEO** - Our specialized tools ensure search engines properly understand and index your Greek content. Provides clean text to Yoast SEO for accurate analysis of page builder content
+* **Create Professional Greek Typography** - Remove unsightly uppercase accents and ensure consistent, beautiful Greek text display, even on dynamically loaded page builder content
 * **Boost Greek Search Accuracy** - Improve internal search with accent-insensitive, diphthong-aware algorithms built specifically for Greek
 * **Display Proper Greek Dates** - Show dates in proper Greek format with correct month and day names
-* **Generate Perfect Greek Excerpts** - Create proper excerpts that respect Greek word boundaries and linguistic rules
-* **Analyze Greek Text Quality** - Check for proper accent usage and text readability with our Greek-specific analysis tools
+* **Generate Perfect Greek Excerpts** - Create proper excerpts that respect Greek word boundaries and linguistic rules, with full support for extracting text from WP Bakery, Elementor, and Gutenberg content
+* **Analyze Greek Text Quality** - Check for proper accent usage and text readability with our Greek-specific analysis tools that understand page builder content
 
 Unlike generic WordPress plugins, Greek Multi Tool was built from the ground up specifically for Greek language websites, addressing peculiarities and challenges that non-specialized tools simply can't handle.
 
@@ -56,13 +71,33 @@ And it does all this while maintaining excellent performance - our lightweight, 
 14. **Advanced Greek Search Options** - Now with separate toggles for enhanced search and accent-insensitive search, giving you full control over how search works for Greek text.
 15. **Added Toggle Control for enabling/disabling Greek Text Analysis** - Analyze your content for proper Greek accent rules with easy on/off control. Ensure linguistic correctness with just a click.
 
+= New in Version 3.3.0 =
+16. **Greek Media File Name Conversion** - Automatically convert Greek characters in uploaded media file names (images, documents, PDFs, etc.) to clean, SEO-friendly Latin equivalents during upload. No more broken image URLs or encoding headaches - "φωτογραφία-προϊόντος.jpg" becomes "fotografia-proiontos.jpg" automatically.
+17. **ACF (Advanced Custom Fields) Compatibility Fix** - Our transliteration engine is now context-aware. It intelligently detects when Advanced Custom Fields is generating internal field names and keys, and skips transliteration to prevent ACF field corruption. Your ACF field definitions stay exactly as they should be.
+18. **Attachment Slug Conversion** - Media attachment slugs (URLs) are now automatically converted to Latin, just like posts and pages. This applies both on new uploads and through the bulk "Convert Old Permalinks" tool which now includes attachments and media items.
+
 == Compatibility ==
-Greek Multi Tool is compatible with:
-* WordPress core (tested up to 6.7.2)
-* WooCommerce
-* Major SEO plugins (Yoast SEO, Rank Math, All in One SEO)
-* Popular page builders (Elementor, Gutenberg, WP Bakery)
-* Most WordPress themes
+
+= Page Builders - Full Support =
+Greek Multi Tool provides deep, tested compatibility with all major page builders. Every feature of the plugin - text analysis, excerpt generation, uppercase accent removal, search, and permalink conversion - works correctly regardless of which page builder you use:
+
+* **WP Bakery Page Builder (Visual Composer)** - Full support. The plugin extracts text content from all WP Bakery elements (vc_column_text, vc_row, custom text blocks, etc.) both client-side and server-side. If client-side extraction isn't possible (e.g., WP Bakery's backend editor mode), the plugin automatically falls back to server-side content extraction from the saved post. The uppercase accent remover also works on WP Bakery's dynamically rendered frontend content.
+* **Elementor** - Full support. The plugin reads Elementor's widget data directly from post meta (_elementor_data), extracting text from all widget types including text editors, headings, tabs, accordions, testimonials, and more. Accent removal works on Elementor's frontend-rendered elements via MutationObserver.
+* **WordPress Gutenberg (Block Editor)** - Full support. Block content is properly parsed using WordPress core functions (excerpt_remove_blocks) and the Gutenberg data API.
+* **WordPress Classic Editor** - Full support. Works with TinyMCE visual mode and plain text mode.
+* **Divi Builder** - Compatible. Divi shortcodes (et_*) are properly stripped for content extraction.
+* **Beaver Builder** - Compatible. Beaver Builder shortcodes (fl_*) are properly handled.
+* **Avada / Fusion Builder** - Compatible. Fusion shortcodes (fusion_*) are properly handled.
+
+= SEO Plugins =
+* **Yoast SEO** - Full support. Greek Multi Tool filters content through Yoast's analysis hooks (wpseo_pre_analysis_post_content), providing clean rendered text when page builder shortcodes are detected. This ensures Yoast can accurately analyze your Greek content for readability and SEO, even when using WP Bakery or other shortcode-based builders.
+* **Rank Math** - Compatible. Uses standard WordPress hooks.
+* **All in One SEO (AIOSEO)** - Compatible. Uses standard WordPress hooks.
+
+= Other Plugins =
+* **WordPress core** (tested up to 6.9.1)
+* **WooCommerce** - Full support for product permalinks, search, and media
+* **Advanced Custom Fields (ACF)** - Full compatibility since v3.3.0 with context-aware transliteration
 
 The plugin has been extensively tested for compatibility issues and will not conflict with other well-coded plugins.
 
@@ -98,11 +133,20 @@ Yes! Greek Multi Tool is completely free with all features available at no cost.
 = Does this plugin work with WooCommerce? =
 Absolutely! Greek Multi Tool seamlessly integrates with WooCommerce to handle Greek permalinks, accents, and all other features on your product pages.
 
+= Does this plugin work with ACF (Advanced Custom Fields)? =
+Yes! Since version 3.3.0, Greek Multi Tool is fully compatible with ACF. Our context-aware transliteration engine automatically detects ACF internal operations and skips transliteration, so your field names, keys, and definitions remain untouched.
+
+= Does it convert media/image file names? =
+Yes! Since version 3.3.0, the plugin can automatically convert Greek characters in media file names during upload. Enable the "Media File Name Conversion" toggle in the Permalink Settings tab. For example, "εικόνα-προϊόντος.jpg" becomes "eikona-proiontos.jpg" automatically.
+
+= Does it convert attachment (media) slugs? =
+Yes! Media attachment slugs are automatically converted to Latin, just like regular posts and pages. The bulk "Convert Old Permalinks" tool also includes existing media attachments.
+
 = Will this plugin slow down my website? =
 No. Greek Multi Tool is built with performance in mind, using efficient code that makes minimal database queries. The impact on site speed is negligible.
 
 = How do I convert old permalinks? =
-Simply navigate to Greek Multi Tool → Convert Old Permalinks in your WordPress dashboard and click the "CONVERT" button. The plugin handles everything automatically, including setting up proper 301 redirects.
+Simply navigate to Greek Multi Tool → Convert Old Permalinks in your WordPress dashboard and click the "CONVERT" button. The plugin handles everything automatically, including posts, pages, custom post types, media attachments, taxonomy terms, and setting up proper 301 redirects.
 
 = Will this break my SEO? =
 Not at all! In fact, Greek Multi Tool enhances your SEO by creating more search-engine friendly URLs while maintaining proper 301 redirects from old URLs. Your search rankings should improve, not decline.
@@ -110,8 +154,17 @@ Not at all! In fact, Greek Multi Tool enhances your SEO by creating more search-
 = How do the Greek search enhancements work? =
 Our plugin implements specialized search algorithms that understand Greek linguistic patterns, including handling accented characters, diphthongs, and various word forms. This dramatically improves the accuracy of internal WordPress searches.
 
-= Is the Text Analysis tool compatible with Gutenberg and Classic Editor? =
-Yes, our Text Analysis tool works perfectly with both Gutenberg and Classic Editor.
+= Does this plugin work with WP Bakery Page Builder? =
+Yes! Greek Multi Tool is fully compatible with WP Bakery (Visual Composer). All features work correctly - text analysis extracts content from WP Bakery text blocks, excerpt generation properly handles vc_ shortcodes, and the uppercase accent remover works on WP Bakery's dynamically loaded frontend content. If you had issues with "No content to analyze" when using WP Bakery text blocks, this has been resolved with the page builder compatibility layer.
+
+= Does this plugin work with Elementor? =
+Yes! Full Elementor support is included. The plugin reads Elementor widget data directly from post meta to extract text content from all widget types. Text analysis, excerpt generation, and all other features work perfectly with Elementor-built pages.
+
+= Is the Text Analysis tool compatible with page builders? =
+Yes! The Text Analysis tool works with all major editors and page builders including WordPress Gutenberg (Block Editor), Classic Editor (TinyMCE), WP Bakery Page Builder, and Elementor. The plugin uses multiple content extraction strategies and includes a server-side fallback that reads saved post content when client-side extraction isn't possible.
+
+= Does this plugin work with Yoast SEO? =
+Yes! Greek Multi Tool enhances Yoast SEO compatibility by providing clean, rendered text content to Yoast's analysis engine. When your content uses page builder shortcodes (WP Bakery, Divi, etc.), Yoast may not be able to analyze the raw shortcode content properly. Greek Multi Tool intercepts Yoast's content analysis and provides the fully rendered, clean text for accurate SEO analysis of your Greek content.
 
 = What PHP version do I need? =
 Greek Multi Tool requires PHP 7.4 or greater, but we recommend using the latest PHP version for optimal performance.
@@ -138,6 +191,27 @@ While designed specifically for Greek language websites, some features like the 
 13. Feedback System
 
 == Changelog ==
+= 3.3.0 =
+* **New Feature**: Greek Media File Name Conversion - Automatically convert Greek characters in uploaded media file names (images, documents, etc.) to SEO-friendly Latin equivalents during upload
+* **New Feature**: Attachment Slug Conversion - Media attachment slugs are now converted to Latin both automatically on upload and via the bulk "Convert Old Permalinks" tool
+* **New Feature**: Page Builder Compatibility Layer - New shared content extraction engine that properly handles content from WP Bakery, Elementor, Gutenberg, Divi, Beaver Builder, and Avada/Fusion Builder
+* **Bug Fix**: ACF (Advanced Custom Fields) Compatibility - Transliteration engine is now context-aware and skips ACF internal operations, preventing field name/key corruption (e.g., 'acf-data-weight' no longer becomes 'acf-dedomena-varos')
+* **Bug Fix**: Text Analysis now works with WP Bakery Page Builder - Fixed "No content to analyze" error when content is inside WP Bakery text blocks. The plugin now uses multiple content extraction strategies (WP Bakery JS API, visual editor scraping, hidden textarea) with an automatic server-side fallback
+* **Bug Fix**: Text Analysis now works with Elementor - Content is extracted directly from Elementor's widget data stored in post meta
+* **Improvement**: Excerpt generation now uses the page builder compatibility layer to extract clean text from any page builder content, including Elementor widget data
+* **Improvement**: Uppercase accent remover now uses MutationObserver for dynamically loaded content from page builders (WP Bakery frontend editor, Elementor frontend rendering)
+* **Improvement**: Uppercase accent remover listens for WP Bakery and Elementor frontend events to apply accent removal on newly rendered content
+* **Improvement**: sanitize_title callbacks now accept all 3 WordPress filter arguments ($title, $raw_title, $context) and only run in 'save' context, preventing unintended transliteration during display and query operations
+* **Improvement**: Bulk "Convert Old Permalinks" now includes media attachments (post_status 'inherit') alongside posts, pages, and custom post types
+* **Improvement**: Translator functions refactored with shared helper functions (grmlt_get_greek_expressions, grmlt_transliterate_greek, grmlt_apply_diphthongs_simple/advanced) for better code reuse and maintainability
+* **Improvement**: Smart 301 redirect creation that skips attachments (whose URLs are served from /wp-content/uploads/ and don't use slugs in the same way)
+* **Compatibility**: Full WP Bakery Page Builder support - text analysis, excerpt generation, uppercase accent removal, and content extraction all work with WP Bakery elements
+* **Compatibility**: Full Elementor support - reads Elementor widget data directly from post meta for comprehensive content extraction
+* **Compatibility**: Full Gutenberg Block Editor support - proper block parsing via WordPress core functions
+* **Compatibility**: Yoast SEO integration - provides clean rendered content to Yoast's analysis engine via wpseo_pre_analysis_post_content filter, ensuring accurate SEO analysis of page builder content
+* **Compatibility**: Full ACF (Advanced Custom Fields) compatibility - detects ACF AJAX actions, ACF post types, and ACF admin screens
+* **Compatibility**: Updated plugin description to reflect all current features
+
 = 3.2.0 =
 * **Critical Fix**: Fixed 301 redirect feature not working (redirect was hooked incorrectly to `init` inside an `init` callback and never fired)
 * **Security**: Added nonce verification to old permalink conversion and menu builder forms
@@ -198,7 +272,7 @@ While designed specifically for Greek language websites, some features like the 
 * Speed Optimization Fixes.
 * Global 301 Redirect Error on database record fixed.
 
-= 2.1.6 = 
+= 2.1.6 =
 * Added new list for existing 301 redirections made by the plugin where you can edit/delete them.
 * Fixed where sometimes the plugin wouldn't automatically turn text transliteration on upon activation.
 * Fixed Options on plugins deletion where they would not get deleted from the database.
@@ -216,7 +290,7 @@ While designed specifically for Greek language websites, some features like the 
 * Fixed bug where on plugin first time activation the global translator was deactivated.
 
 = 2.1.2 =
-* Fixed the issue with the convertion of old URLs. 
+* Fixed the issue with the convertion of old URLs.
 * If you are facing any error 404 with mass converted old URLs, please visit the Admin > Greek Multi Tool > Convert Old Permalinks and hit the Convert Button.
 
 = 2.1.1 =
@@ -249,7 +323,7 @@ While designed specifically for Greek language websites, some features like the 
 = 1.2.2 =
 * Minor bug fixes
 
-= 1.2.1 = 
+= 1.2.1 =
 * Minor bug fixes
 
 = 1.2.0 =
@@ -265,22 +339,25 @@ While designed specifically for Greek language websites, some features like the 
 * Minor bug fixes and security updates
 
 = 1.0.4 =
-* Add the ability to choose how to save the diphthongs 
+* Add the ability to choose how to save the diphthongs
 
 = 1.0.3 =
-* Minor fixes on the settings page 
+* Minor fixes on the settings page
 
 = 1.0.2 =
-* Settings page redesign 
+* Settings page redesign
 
 = 1.0.1 =
 * Banner Updates
 * Add the installation information
 
 = 1.0.0 =
-* Plugin released. 
+* Plugin released.
 
 == Upgrade Notice ==
+= 3.3.0 =
+New features: Automatic Greek media file name conversion on upload, attachment slug conversion, and full ACF compatibility. Full page builder support: text analysis, excerpts, and accent removal now work perfectly with WP Bakery, Elementor, and Gutenberg. Yoast SEO integration provides clean content for accurate SEO analysis. Recommended update for all Greek websites!
+
 = 3.2.0 =
 Critical security and bug fix release. Fixes 301 redirects not working, XSS vulnerabilities, SQL injection risks, and PHP 8.2+ compatibility issues. All users should update immediately.
 

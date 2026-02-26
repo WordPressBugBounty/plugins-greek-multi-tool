@@ -1,5 +1,24 @@
-<?php 
-function grmlt_title_sanitizer_diphthongs_simple($text) {
+<?php
+/**
+ * Diphthong transliteration functions for Greek Multi Tool.
+ *
+ * Contains both reusable helper functions for pure transliteration
+ * and sanitize_title callbacks with context checking.
+ *
+ * @since    1.0.0
+ * @since    3.3.0 Refactored for ACF compatibility and media support.
+ * @package  Grmlt_Plugin
+ */
+
+/**
+ * Pure diphthong transliteration - simple mode.
+ * Reusable helper used by both sanitize_title callback and file name sanitizer.
+ *
+ * @since 3.3.0
+ * @param string $text The text to transliterate.
+ * @return string The transliterated text.
+ */
+function grmlt_apply_diphthongs_simple($text) {
 
 	$diphthongs = array(
 
@@ -28,7 +47,15 @@ function grmlt_title_sanitizer_diphthongs_simple($text) {
 
 }
 
-function grmlt_title_sanitizer_diphthongs_advanced($text) {
+/**
+ * Pure diphthong transliteration - advanced mode.
+ * Reusable helper used by both sanitize_title callback and file name sanitizer.
+ *
+ * @since 3.3.0
+ * @param string $text The text to transliterate.
+ * @return string The transliterated text.
+ */
+function grmlt_apply_diphthongs_advanced($text) {
 
 	$diphthongs = array(
 
@@ -53,5 +80,61 @@ function grmlt_title_sanitizer_diphthongs_advanced($text) {
 
 	$text = preg_replace( array_keys($diphthongs), array_values($diphthongs), $text );
 	return $text;
+
+}
+
+/**
+ * sanitize_title callback - simple diphthong mode.
+ * Accepts all 3 sanitize_title arguments to check context and skip ACF operations.
+ *
+ * @since 1.0.0
+ * @since 3.3.0 Added $raw_title and $context parameters for ACF compatibility.
+ *
+ * @param string $text      The sanitized title.
+ * @param string $raw_title The title prior to sanitization.
+ * @param string $context   The context for which the title is being sanitized.
+ * @return string The transliterated text.
+ */
+function grmlt_title_sanitizer_diphthongs_simple($text, $raw_title = '', $context = 'save') {
+
+	// Only transliterate when saving slugs
+	if ( $context !== 'save' ) {
+		return $text;
+	}
+
+	// Skip transliteration for ACF internal operations
+	if ( grmlt_is_acf_context() ) {
+		return $text;
+	}
+
+	return grmlt_apply_diphthongs_simple($text);
+
+}
+
+/**
+ * sanitize_title callback - advanced diphthong mode.
+ * Accepts all 3 sanitize_title arguments to check context and skip ACF operations.
+ *
+ * @since 1.0.0
+ * @since 3.3.0 Added $raw_title and $context parameters for ACF compatibility.
+ *
+ * @param string $text      The sanitized title.
+ * @param string $raw_title The title prior to sanitization.
+ * @param string $context   The context for which the title is being sanitized.
+ * @return string The transliterated text.
+ */
+function grmlt_title_sanitizer_diphthongs_advanced($text, $raw_title = '', $context = 'save') {
+
+	// Only transliterate when saving slugs
+	if ( $context !== 'save' ) {
+		return $text;
+	}
+
+	// Skip transliteration for ACF internal operations
+	if ( grmlt_is_acf_context() ) {
+		return $text;
+	}
+
+	return grmlt_apply_diphthongs_advanced($text);
 
 }

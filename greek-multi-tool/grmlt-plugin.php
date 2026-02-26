@@ -7,8 +7,8 @@
  * @wordpress-plugin
  * Plugin Name:       Greek Multi Tool
  * Plugin URI:        https://bigdrop.gr/greek-multi-tool
- * Description:       This plugin provides a handful of tools and key functionalities to simplify and fix the greek language used in your webpage. For example it change the greek character urls to latin, remove the uppercase accents.
- * Version:           3.2.0
+ * Description:       The comprehensive WordPress plugin for Greek websites. Converts Greek URLs and media file names to SEO-friendly Latin, removes uppercase accents, enhances search, localizes dates, and much more. Fully compatible with ACF, WooCommerce, and all major plugins.
+ * Version:           3.3.0
  * Author:            BigDrop.gr
  * Author URI:        https://bigdrop.gr
  * Tags: greek, permalinks, accent remover, accent remover, multi tool
@@ -28,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'GRMLT_PLUGIN_VERSION', '3.2.0' );
+define( 'GRMLT_PLUGIN_VERSION', '3.3.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -202,6 +202,9 @@ function grmlt_database_301_redirect_edit_handler() {
 // Only register for logged-in users with appropriate permissions
 add_action('wp_ajax_grmlt_database_301_redirect_edit_handler', 'grmlt_database_301_redirect_edit_handler');
 // Removed: add_action('wp_ajax_nopriv_grmlt_database_301_redirect_edit_handler', 'grmlt_database_301_redirect_edit_handler');
+
+// Load the Page Builder Compatibility Layer (WP Bakery, Elementor, Gutenberg, Yoast SEO)
+require_once plugin_dir_path(__FILE__) . 'admin/functions/page-builder-compat.php';
 
 // Load the Greek Text Analysis functionality
 if (is_admin()) {

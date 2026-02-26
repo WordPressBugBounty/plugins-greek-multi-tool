@@ -3,7 +3,7 @@
 <h6><?php esc_html_e( 'MANAGE OLD PERMALINKS', 'greek-multi-tool' ); ?></h6>
 <hr>
 <strong class="mb-0"><?php esc_html_e( 'Convert All Old Permalinks', 'greek-multi-tool' ); ?></strong>
-<p><?php esc_html_e( 'Press the button bellow to initialize the conversion of all old permalinks', 'greek-multi-tool' ); ?></p>
+<p><?php esc_html_e( 'Press the button below to initialize the conversion of all old permalinks. This includes posts, pages, custom post types, media/attachment slugs, and taxonomy terms.', 'greek-multi-tool' ); ?></p>
 <div class="mt-3">
 	<form method="post">
 		<?php wp_nonce_field( 'grmlt_convert_old_permalinks', 'grmlt_convert_nonce' ); ?>

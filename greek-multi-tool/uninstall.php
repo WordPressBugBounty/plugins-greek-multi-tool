@@ -27,6 +27,7 @@ delete_option( 'grmlt_two_letter_words' );
 delete_option( 'grmlt_stwords' );
 delete_option( 'grmlt_uar_js' );
 delete_option( 'grmlt_redirect' );
+delete_option( 'grmlt_media_file_name' );
 delete_option( 'grmlt_enhance_search' );
 delete_option( 'grmlt_accent_insensitive_search' );
 delete_option( 'grmlt_search_post_types' );

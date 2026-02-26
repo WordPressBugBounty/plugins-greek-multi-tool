@@ -69,25 +69,26 @@ function grmlt_trans_old_call() {
     
     global $wpdb;
 
-    // Get posts with non-Latin characters in post_name
-    $posts = $wpdb->get_results("SELECT ID, post_name, post_title FROM {$wpdb->posts} WHERE post_name REGEXP('[^A-Za-z0-9\-]+') AND post_status IN ('publish', 'future', 'private')");
-    
+    // Get posts with non-Latin characters in post_name (includes attachments via 'inherit' status)
+    $posts = $wpdb->get_results("SELECT ID, post_name, post_title, post_type FROM {$wpdb->posts} WHERE post_name REGEXP('[^A-Za-z0-9\-]+') AND post_status IN ('publish', 'future', 'private', 'inherit')");
+
     foreach ((array) $posts as $post) {
         $sanitized_name_var = grmlt_old_sanitizer($post->post_title);
         $sanitized_name = preg_replace("/[^A-Za-z0-9-]+/", "", $sanitized_name_var);
-        
+
         if ($post->post_name != $sanitized_name) {
             // Sanitize the post data before database operation
             $wpdb->update(
-                $wpdb->posts, 
-                array('post_name' => $sanitized_name), 
+                $wpdb->posts,
+                array('post_name' => $sanitized_name),
                 array('ID' => absint($post->ID))
             );
             clean_post_cache(absint($post->ID));
 
-            // Check if redirect option is ON/OFF.
+            // Create 301 redirect for non-attachment post types only.
+            // Attachment URLs are served from /wp-content/uploads/ and don't use slugs in the same way.
             $red_option = get_option('grmlt_redirect');
-            if ($red_option == 1) {
+            if ($red_option == 1 && $post->post_type !== 'attachment') {
                 // Prepare old permalink - sanitize
                 $old_permalink = $post->post_title;
                 $old_permalink = mb_strtolower("$old_permalink");
@@ -96,10 +97,10 @@ function grmlt_trans_old_call() {
                 // Build full URLs with proper escaping
                 $old_permalink = esc_url_raw(get_site_url() . "/" . $old_permalink . "/");
                 $new_permalink = esc_url_raw(get_site_url() . "/" . $sanitized_name . "/");
-                
+
                 // Insert into database with proper sanitization
                 $wpdb->insert(
-                    $wpdb->prefix . 'grmlt', 
+                    $wpdb->prefix . 'grmlt',
                     array(
                         'post_id' => absint($post->ID),
                         'redirect_type' => '301',

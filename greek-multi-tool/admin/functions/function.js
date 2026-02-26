@@ -83,12 +83,88 @@ jQuery.fn.extend({
 })( jQuery );
 
 jQuery( document ).ready(function($) {
-	$( ":uppercase:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
-	$( ":smallcaps:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
-	$( ".remove-accents, .remove-accents > *:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
+	/**
+	 * Apply accent removal to all matching elements.
+	 * Scoped to an optional root element for performance with MutationObserver.
+	 */
+	function grmltApplyAccentRemoval( root ) {
+		var $scope = root ? $( root ) : $( document );
+		$scope.find( ":uppercase:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
+		$scope.find( ":smallcaps:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
+		$scope.find( ".remove-accents, .remove-accents > *:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
+		// Also apply to root itself if it matches
+		if ( root ) {
+			$( root ).filter( ":uppercase:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
+			$( root ).filter( ":smallcaps:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
+		}
+	}
+
+	// Initial application on page load
+	grmltApplyAccentRemoval();
+
+	// Re-apply after any AJAX request (covers classic WP AJAX, WP Bakery AJAX loading, etc.)
 	$( document ).ajaxComplete(function( event, request, settings ) {
-		$( ":uppercase:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
-		$( ":smallcaps:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
-		$( ".remove-accents, .remove-accents > *:not(input[type!=submit], textarea, .no-remove-accents)" ).removeAcc();
+		grmltApplyAccentRemoval();
+	});
+
+	/**
+	 * MutationObserver for dynamic content loaded by page builders.
+	 *
+	 * WP Bakery (frontend editor), Elementor, and other page builders insert
+	 * content dynamically into the DOM. The MutationObserver watches for new
+	 * nodes and applies accent removal to them automatically.
+	 */
+	if ( typeof MutationObserver !== 'undefined' ) {
+		var grmltDebounceTimer = null;
+		var grmltObserver = new MutationObserver(function( mutations ) {
+			// Debounce to avoid running on every tiny DOM change
+			if ( grmltDebounceTimer ) {
+				clearTimeout( grmltDebounceTimer );
+			}
+			grmltDebounceTimer = setTimeout(function() {
+				var hasNewContent = false;
+				for ( var i = 0; i < mutations.length; i++ ) {
+					if ( mutations[ i ].addedNodes && mutations[ i ].addedNodes.length > 0 ) {
+						for ( var j = 0; j < mutations[ i ].addedNodes.length; j++ ) {
+							var node = mutations[ i ].addedNodes[ j ];
+							if ( node.nodeType === 1 ) { // Element nodes only
+								grmltApplyAccentRemoval( node );
+								hasNewContent = true;
+							}
+						}
+					}
+				}
+				// Full re-scan if many nodes changed (page builder re-render)
+				if ( hasNewContent ) {
+					grmltApplyAccentRemoval();
+				}
+			}, 100 );
+		});
+
+		grmltObserver.observe( document.body, {
+			childList: true,
+			subtree: true
+		});
+
+		// Elementor frontend: also observe the preview iframe if present
+		$( window ).on( 'elementor/frontend/init', function() {
+			setTimeout(function() {
+				grmltApplyAccentRemoval();
+			}, 500 );
+		});
+	}
+
+	// WP Bakery frontend editor: listen for vc-shortcode-render events
+	$( document ).on( 'vc-full-width-row vc-shortcodes-rendered', function() {
+		grmltApplyAccentRemoval();
+	});
+
+	// Elementor: listen for its frontend initialization events
+	$( window ).on( 'elementor/frontend/init', function() {
+		if ( typeof elementorFrontend !== 'undefined' && elementorFrontend.hooks ) {
+			elementorFrontend.hooks.addAction( 'frontend/element_ready/global', function( $element ) {
+				grmltApplyAccentRemoval( $element[0] );
+			});
+		}
 	});
 });

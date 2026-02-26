@@ -16,7 +16,7 @@
         <div class="row align-items-center">
             <div class="col">
                 <strong class="mb-0"><?php _e('Enable Greeklish Permalinks Convert: ', 'greek-multi-tool') ?></strong>
-                <p class="text-muted mb-0"><?php _e('Automatically convert the greek characters to latin in all permalinks in posts, pages, custom post type and terms.', 'greek-multi-tool') ?></p>
+                <p class="text-muted mb-0"><?php _e('Automatically convert the greek characters to latin in all permalinks in posts, pages, custom post types, media attachments and terms. Fully compatible with ACF (Advanced Custom Fields).', 'greek-multi-tool') ?></p>
             </div>
             <div class="col-auto">
                 <div class="custom-control custom-switch">
@@ -122,9 +122,39 @@
     </div>
 </div>
 
+<!-- MEDIA FILE NAME CONVERSION -->
+<?php
+    $grmlt_media_file_name = get_option( 'grmlt_media_file_name' );
+    if ( $grmlt_media_file_name == 'on' ){
+        $grmlt_media_file_name = true;
+    }
+?>
+
+<hr class="my-4" />
+<strong class="mb-0"><?php _e('Media File Name Conversion', 'greek-multi-tool'); ?></strong>
+<p><?php _e('Convert Greek characters in media file names to Latin during upload', 'greek-multi-tool'); ?></p>
+<div class="list-group mb-5 shadow">
+    <div class="list-group-item">
+        <div class="row align-items-center">
+            <div class="col">
+                <strong class="mb-0"><?php _e('Enable Media File Name Conversion: ', 'greek-multi-tool'); ?></strong>
+                <p class="text-muted mb-0"><?php _e('Automatically convert Greek characters in uploaded media file names (images, documents, etc.) to clean, SEO-friendly Latin equivalents. For example "φωτογραφία.jpg" becomes "fotografia.jpg".', 'greek-multi-tool'); ?></p>
+            </div>
+            <div class="col-auto">
+                <div class="custom-control custom-switch">
+                    <label class="switch">
+                        <input type="checkbox" class="custom-control-input" id="grmlt_media_file_name" name="grmlt_media_file_name" <?php echo checked( $grmlt_media_file_name, 1, 0 ); ?> />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- STOPWORDS START -->
-    
-<?php 
+
+<?php
     $textarea_stwords = get_option( 'grmlt_stwords' );
 ?>
 

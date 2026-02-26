@@ -143,6 +143,9 @@ add_filter('excerpt_more', 'grmlt_custom_excerpt_more', 999);
 /**
  * Create a Greek-friendly excerpt
  *
+ * Supports content from all major page builders including WP Bakery,
+ * Elementor, Gutenberg Blocks, Divi, Beaver Builder, and Avada.
+ *
  * @param string $text Text to create excerpt from
  * @param int $length Optional. Length of excerpt in words. Default 55.
  * @param string $more Optional. Text to append to the end of the excerpt. Default '&hellip;'.
@@ -152,30 +155,30 @@ function grmlt_greek_excerpt($text, $length = null, $more = null) {
     if ($length === null) {
         $length = get_option('grmlt_excerpt_length', 55);
     }
-    
+
     if ($more === null) {
         $more = get_option('grmlt_excerpt_more', '&hellip;');
     }
-    
-    // Remove shortcodes
-    $text = strip_shortcodes($text);
-    
-    // Remove page builder specific shortcodes
-    $text = preg_replace('/\[\/?vc_.*?\]/', '', $text); // WP Bakery shortcodes
-    $text = preg_replace('/\[\/?et_.*?\]/', '', $text); // Divi Builder shortcodes
-    $text = preg_replace('/\[\/?fl_.*?\]/', '', $text); // Beaver Builder shortcodes
-    $text = preg_replace('/\[\/?fusion_.*?\]/', '', $text); // Fusion Builder (Avada) shortcodes
-    $text = preg_replace('/\[\/?elementor_.*?\]/', '', $text); // Elementor shortcodes
-    
-    // Remove Gutenberg blocks
-    $text = excerpt_remove_blocks($text);
-    
-    // Remove HTML tags
-    $text = wp_strip_all_tags($text);
-    
-    // Remove excessive whitespace
-    $text = preg_replace('/\s+/', ' ', $text);
-    $text = trim($text);
+
+    // Use the page builder compatibility layer for clean text extraction
+    if (function_exists('grmlt_extract_clean_text')) {
+        $text = grmlt_extract_clean_text($text);
+    } else {
+        // Fallback if compat layer isn't loaded yet
+        $text = strip_shortcodes($text);
+        $text = preg_replace('/\[\/?vc_[^\]]*\]/s', '', $text);
+        $text = preg_replace('/\[\/?et_[^\]]*\]/s', '', $text);
+        $text = preg_replace('/\[\/?fl_[^\]]*\]/s', '', $text);
+        $text = preg_replace('/\[\/?fusion_[^\]]*\]/s', '', $text);
+        $text = preg_replace('/\[\/?elementor[^\]]*\]/s', '', $text);
+        $text = preg_replace('/\[\/?[^\]]+\]/', '', $text);
+        if (function_exists('excerpt_remove_blocks')) {
+            $text = excerpt_remove_blocks($text);
+        }
+        $text = wp_strip_all_tags($text);
+        $text = preg_replace('/\s+/', ' ', $text);
+        $text = trim($text);
+    }
     
     // Detect if text contains Greek characters
     $has_greek = preg_match('/\p{Greek}/u', $text);
@@ -211,6 +214,9 @@ function grmlt_greek_excerpt($text, $length = null, $more = null) {
 /**
  * Override the default get_the_excerpt function with Greek-friendly version
  *
+ * Supports all major page builders (WP Bakery, Elementor, Gutenberg, etc.)
+ * by using the page builder compatibility layer for content extraction.
+ *
  * @param string $post_excerpt The post excerpt
  * @param WP_Post $post The post object
  * @return string The modified excerpt
@@ -220,13 +226,28 @@ function grmlt_filter_get_the_excerpt($post_excerpt, $post) {
     if (!get_option('grmlt_enable_excerpts', false)) {
         return $post_excerpt;
     }
-    
+
     // If an explicit excerpt is set, return it unchanged
     if (!empty($post_excerpt)) {
         return $post_excerpt;
     }
-    
-    // Otherwise, generate a proper Greek-friendly excerpt
+
+    // Use the page builder compat layer for best content extraction
+    if (function_exists('grmlt_get_post_clean_text') && !empty($post->ID)) {
+        $clean_text = grmlt_get_post_clean_text($post->ID);
+        if (!empty($clean_text)) {
+            // Apply excerpt length and "more" text to the clean content
+            $length = get_option('grmlt_excerpt_length', 55);
+            $more = get_option('grmlt_excerpt_more', '&hellip;');
+            $words = preg_split('/\s+/u', $clean_text, -1, PREG_SPLIT_NO_EMPTY);
+            if (count($words) > $length) {
+                return implode(' ', array_slice($words, 0, $length)) . $more;
+            }
+            return $clean_text;
+        }
+    }
+
+    // Fallback to standard excerpt generation
     return grmlt_greek_excerpt($post->post_content);
 }
 add_filter('get_the_excerpt', 'grmlt_filter_get_the_excerpt', 10, 2);
@@ -421,12 +442,29 @@ function grmlt_ajax_refresh_excerpt() {
     
     // Get post content
     $post = get_post($post_id);
-    
+
     if (!$post) {
         wp_send_json_error(__('Post not found', 'greek-multi-tool'));
     }
-    
-    // Generate excerpt
+
+    // Use page builder compat layer for best content extraction
+    if (function_exists('grmlt_get_post_clean_text')) {
+        $clean_text = grmlt_get_post_clean_text($post_id);
+        if (!empty($clean_text)) {
+            $more = get_option('grmlt_excerpt_more', '&hellip;');
+            $words = preg_split('/\s+/u', $clean_text, -1, PREG_SPLIT_NO_EMPTY);
+            $actual_length = ($length !== null) ? $length : get_option('grmlt_excerpt_length', 55);
+            if (count($words) > $actual_length) {
+                $excerpt = implode(' ', array_slice($words, 0, $actual_length)) . $more;
+            } else {
+                $excerpt = $clean_text;
+            }
+            wp_send_json_success($excerpt);
+            return;
+        }
+    }
+
+    // Fallback: Generate excerpt from raw post_content
     $excerpt = grmlt_greek_excerpt($post->post_content, $length);
     
     // Send results

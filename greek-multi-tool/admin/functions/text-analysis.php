@@ -386,27 +386,166 @@ function grmlt_text_analysis_metabox_callback($post) {
     
     <script>
     jQuery(document).ready(function($) {
-        $('#grmlt-analyze-button').on('click', function() {
-            // Get content from the editor
-            let content = '';
-            
-            if (typeof wp !== 'undefined' && wp.data && wp.data.select('core/editor')) {
-                // For Gutenberg
-                content = wp.data.select('core/editor').getEditedPostContent();
-            } else {
-                // For Classic Editor
-                if (typeof tinyMCE !== 'undefined' && tinyMCE.activeEditor && !tinyMCE.activeEditor.isHidden()) {
-                    content = tinyMCE.activeEditor.getContent();
-                } else {
+        /**
+         * Extract content from the current editor, supporting:
+         * - WordPress Gutenberg (Block Editor)
+         * - Classic Editor (TinyMCE / textarea)
+         * - WP Bakery Page Builder (backend & frontend)
+         * - Elementor Page Builder
+         */
+        function grmltGetEditorContent() {
+            var content = '';
+
+            // --- 1. Gutenberg Block Editor ---
+            if (typeof wp !== 'undefined' && wp.data && wp.data.select) {
+                try {
+                    var editor = wp.data.select('core/editor');
+                    if (editor && typeof editor.getEditedPostContent === 'function') {
+                        content = editor.getEditedPostContent();
+                        if (content && content.trim().length > 0) {
+                            return content;
+                        }
+                    }
+                } catch(e) {}
+
+                // Try core/block-editor for newer WP versions
+                try {
+                    var blockEditor = wp.data.select('core/block-editor');
+                    if (blockEditor && typeof blockEditor.getBlocks === 'function') {
+                        var blocks = blockEditor.getBlocks();
+                        if (blocks && blocks.length > 0) {
+                            content = wp.blocks.serialize(blocks);
+                            if (content && content.trim().length > 0) {
+                                return content;
+                            }
+                        }
+                    }
+                } catch(e) {}
+            }
+
+            // --- 2. WP Bakery Page Builder ---
+            // WP Bakery backend editor: content is in the #content textarea (raw shortcodes)
+            // Also try WP Bakery's own content areas
+            if (typeof vc !== 'undefined' || $('#wpb_visual_composer').length > 0 || $('[data-vc-shortcode]').length > 0) {
+                // Try to get content from WP Bakery's internal storage
+                if (typeof vc !== 'undefined' && typeof vc.builder !== 'undefined') {
+                    try {
+                        content = vc.builder.getContent();
+                        if (content && content.trim().length > 0) {
+                            return content;
+                        }
+                    } catch(e) {}
+                }
+
+                // Try the Visual Composer shortcode textarea
+                if ($('#wpb_vc_js_status').length && $('#wpb_vc_js_status').val() === 'true') {
+                    // WP Bakery visual mode is active, get from hidden textarea
                     content = $('#content').val();
+                    if (content && content.trim().length > 0) {
+                        return content;
+                    }
+                }
+
+                // Try to scrape text from WP Bakery visual editor elements
+                var vcTexts = [];
+                $('.wpb_text_column .wpb_wrapper, .vc_element .wpb_wrapper, [data-vc-content] .wpb_wrapper').each(function() {
+                    var txt = $(this).text().trim();
+                    if (txt.length > 0) {
+                        vcTexts.push(txt);
+                    }
+                });
+                if (vcTexts.length > 0) {
+                    content = vcTexts.join(' ');
+                    if (content.trim().length > 0) {
+                        return content;
+                    }
                 }
             }
-            
+
+            // --- 3. Elementor ---
+            // When editing with Elementor, the main editor is not present;
+            // content comes from the server via post_id fallback.
+            // But try the preview iframe if available
+            if (typeof elementor !== 'undefined' || typeof elementorFrontend !== 'undefined') {
+                try {
+                    var $previewFrame = $('#elementor-preview-iframe');
+                    if ($previewFrame.length) {
+                        var iframeContent = $previewFrame.contents().find('.elementor-widget-container');
+                        if (iframeContent.length) {
+                            var elTexts = [];
+                            iframeContent.each(function() {
+                                var txt = $(this).text().trim();
+                                if (txt.length > 0) {
+                                    elTexts.push(txt);
+                                }
+                            });
+                            if (elTexts.length > 0) {
+                                content = elTexts.join(' ');
+                                return content;
+                            }
+                        }
+                    }
+                } catch(e) {}
+            }
+
+            // --- 4. Classic Editor (TinyMCE) ---
+            if (typeof tinyMCE !== 'undefined' && tinyMCE.activeEditor && !tinyMCE.activeEditor.isHidden()) {
+                content = tinyMCE.activeEditor.getContent();
+                if (content && content.trim().length > 0) {
+                    return content;
+                }
+            }
+
+            // --- 5. Plain textarea fallback ---
+            if ($('#content').length && $('#content').val()) {
+                content = $('#content').val();
+                if (content && content.trim().length > 0) {
+                    return content;
+                }
+            }
+
+            return content || '';
+        }
+
+        /**
+         * Strip HTML tags and shortcodes from content client-side.
+         */
+        function grmltStripContent(content) {
+            if (!content) return '';
+
+            // Remove Gutenberg block comments
+            content = content.replace(/<!--\s*\/?wp:.*?-->/gs, '');
+
+            // Remove shortcode tags but keep their inner content
+            // Matches [shortcode attr="val"]...[/shortcode] and standalone [shortcode /]
+            content = content.replace(/\[\/?[^\]]+\]/g, ' ');
+
             // Strip HTML tags
-            const div = document.createElement('div');
+            var div = document.createElement('div');
             div.innerHTML = content;
             content = div.textContent || div.innerText || '';
-            
+
+            // Normalize whitespace
+            content = content.replace(/\s+/g, ' ').trim();
+
+            return content;
+        }
+
+        $('#grmlt-analyze-button').on('click', function() {
+            // Get content from the editor
+            var rawContent = grmltGetEditorContent();
+            var content = grmltStripContent(rawContent);
+
+            // Get post ID for server-side fallback
+            var postId = 0;
+            if ($('#post_ID').length) {
+                postId = $('#post_ID').val();
+            } else if (typeof wp !== 'undefined' && wp.data && wp.data.select) {
+                try {
+                    postId = wp.data.select('core/editor').getCurrentPostId();
+                } catch(e) {}
+            }
+
             // AJAX request to analyze text
             $.ajax({
                 url: ajaxurl,
@@ -414,6 +553,7 @@ function grmlt_text_analysis_metabox_callback($post) {
                 data: {
                     action: 'grmlt_analyze_text',
                     content: content,
+                    post_id: postId,
                     nonce: $('#grmlt_text_analysis_nonce').val()
                 },
                 beforeSend: function() {
@@ -421,31 +561,31 @@ function grmlt_text_analysis_metabox_callback($post) {
                 },
                 success: function(response) {
                     if (response.success) {
-                        let html = '<div class="grmlt-analysis-stats">';
+                        var html = '<div class="grmlt-analysis-stats">';
                         html += '<h4><?php _e('Text Statistics', 'greek-multi-tool'); ?></h4>';
                         html += '<p><?php _e('Characters:', 'greek-multi-tool'); ?> ' + response.data.stats.total_chars + '</p>';
                         html += '<p><?php _e('Words:', 'greek-multi-tool'); ?> ' + response.data.stats.total_words + '</p>';
                         html += '<p><?php _e('Greek characters:', 'greek-multi-tool'); ?> ' + response.data.stats.greek_chars;
                         html += ' (' + response.data.stats.percent_greek + '%)</p>';
                         html += '<p><?php _e('Accented characters:', 'greek-multi-tool'); ?> ' + response.data.stats.accented_chars + '</p>';
-                        
+
                         if (response.data.issues.length > 0) {
                             html += '<h4><?php _e('Accent Rule Issues', 'greek-multi-tool'); ?></h4>';
                             html += '<ul class="grmlt-issues-list">';
-                            
+
                             $.each(response.data.issues, function(index, issue) {
-                                html += '<li>' + issue + '</li>';
+                                html += '<li>' + $('<span>').text(issue).html() + '</li>';
                             });
-                            
+
                             html += '</ul>';
                         } else {
                             html += '<p class="grmlt-no-issues"><?php _e('No accent rule issues found!', 'greek-multi-tool'); ?></p>';
                         }
-                        
+
                         html += '</div>';
                         $('#grmlt-analysis-results').html(html);
                     } else {
-                        $('#grmlt-analysis-results').html('<p class="grmlt-error">' + response.data + '</p>');
+                        $('#grmlt-analysis-results').html('<p class="grmlt-error">' + $('<span>').text(response.data).html() + '</p>');
                     }
                 },
                 error: function() {
@@ -460,26 +600,54 @@ function grmlt_text_analysis_metabox_callback($post) {
 
 /**
  * AJAX handler for text analysis
+ *
+ * Accepts content from the client-side editor, but also supports a post_id
+ * fallback for page builders (WP Bakery, Elementor, etc.) where client-side
+ * content extraction may not capture the full text.
  */
 function grmlt_ajax_analyze_text() {
     // Check nonce for security
     check_ajax_referer('grmlt_text_analysis_nonce', 'nonce');
-    
+
     // Check if user has permission
     if (!current_user_can('edit_posts')) {
         wp_send_json_error(__('You do not have permission to perform this action.', 'greek-multi-tool'));
     }
-    
+
     // Get content from request
     $content = isset($_POST['content']) ? sanitize_textarea_field($_POST['content']) : '';
-    
-    if (empty($content)) {
-        wp_send_json_error(__('No content to analyze.', 'greek-multi-tool'));
+    $post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+
+    // If content is empty or too short, try server-side extraction from the post
+    if ((empty($content) || mb_strlen($content) < 10) && $post_id > 0) {
+        // Load page builder compat if not already loaded
+        if (!function_exists('grmlt_get_post_clean_text')) {
+            require_once plugin_dir_path(__FILE__) . 'page-builder-compat.php';
+        }
+
+        $server_content = grmlt_get_post_clean_text($post_id);
+
+        // Use server content if it's longer than client content
+        if (mb_strlen($server_content) > mb_strlen($content)) {
+            $content = $server_content;
+        }
     }
-    
+
+    // If content still contains shortcode-like patterns, clean them
+    if (!empty($content) && preg_match('/\[\w+/', $content)) {
+        if (!function_exists('grmlt_extract_clean_text')) {
+            require_once plugin_dir_path(__FILE__) . 'page-builder-compat.php';
+        }
+        $content = grmlt_extract_clean_text($content);
+    }
+
+    if (empty($content)) {
+        wp_send_json_error(__('No content to analyze. If you are using a page builder, please save the post first and try again.', 'greek-multi-tool'));
+    }
+
     // Analyze text
     $results = grmlt_analyze_text($content);
-    
+
     // Send results
     wp_send_json_success($results);
 }

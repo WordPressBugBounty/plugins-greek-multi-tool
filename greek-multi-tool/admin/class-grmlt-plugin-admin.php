@@ -201,21 +201,32 @@ class Grmlt_Plugin_Admin {
 	 */
 	public static function register_grmlt_option_triggers() {
 
-	    // Check if grmlt_text is set to on ( The Greeklish Permalinks Switch in settings page ).
-	    if  (get_option( 'grmlt_text' ) == 'on'){
+	    $permalinks_on = ( get_option( 'grmlt_text' ) === 'on' );
+	    $media_on      = ( get_option( 'grmlt_media_file_name' ) === 'on' );
 
-	        // Check if grmlt_diphthongs is set to `Enabled` ( The Greeklish Permalinks Convert Diphthongs Switch in settings page ).
-	        if  (get_option( 'grmlt_diphthongs' ) == 'simple'){
-	            require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/functions/translator-diphthongs.php';
-	            add_filter('sanitize_title', 'grmlt_title_sanitizer_diphthongs_simple', 1);
+	    // Load translator files if either permalinks or media conversion is enabled
+	    if ( $permalinks_on || $media_on ) {
+	        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/functions/translator-diphthongs.php';
+	        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/functions/translator.php';
+	    }
+
+	    // Register sanitize_title filters for permalink conversion.
+	    // Now passes 3 accepted args so callbacks receive $raw_title and $context
+	    // for ACF compatibility (skips transliteration on ACF internal post types).
+	    if ( $permalinks_on ) {
+
+	        if ( get_option( 'grmlt_diphthongs' ) === 'simple' ) {
+	            add_filter( 'sanitize_title', 'grmlt_title_sanitizer_diphthongs_simple', 1, 3 );
 	        } else {
-	            require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/functions/translator-diphthongs.php';
-	            add_filter('sanitize_title', 'grmlt_title_sanitizer_diphthongs_advanced', 1);
+	            add_filter( 'sanitize_title', 'grmlt_title_sanitizer_diphthongs_advanced', 1, 3 );
 	        }
 
-	        // Call and add_filter for title sanitization when text sanitize option is 'enabled'.
-	        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/functions/translator.php';
-	        add_filter('sanitize_title', 'grmlt_title_sanitizer', 1);
+	        add_filter( 'sanitize_title', 'grmlt_title_sanitizer', 1, 3 );
+	    }
+
+	    // Register sanitize_file_name filter for Greek media file name conversion on upload.
+	    if ( $media_on ) {
+	        add_filter( 'sanitize_file_name', 'grmlt_file_name_sanitizer', 1 );
 	    }
 
 	    // Call old permalink conversion function (with nonce verification).

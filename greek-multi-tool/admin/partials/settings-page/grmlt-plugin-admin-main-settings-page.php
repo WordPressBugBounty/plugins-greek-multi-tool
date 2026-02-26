@@ -58,6 +58,13 @@ register_setting(
     'sanitize_text_field' // sanitization function
 );
 
+// It registers settings for Media File Name Conversion.
+register_setting(
+    'grmlt_settings', // settings group name
+    'grmlt_media_file_name', // option name
+    'sanitize_text_field' // sanitization function
+);
+
 // It registers settings for Stopwords.
 register_setting(
     'grmlt_settings', // settings group name
