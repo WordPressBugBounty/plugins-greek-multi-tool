@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Greek Multi Tool 2.4.0\n"
+"Project-Id-Version: Greek Multi Tool 3.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/greek-multi-tool\n"
 "POT-Creation-Date: 2025-03-12T00:00:00+00:00\n"
 "MIME-Version: 1.0\n"

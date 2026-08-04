@@ -439,7 +439,14 @@ function grmlt_ajax_refresh_excerpt() {
     if (!$post_id) {
         wp_send_json_error(__('Invalid post ID', 'greek-multi-tool'));
     }
-    
+
+    // The nonce only proves the request came from one of our screens, not that
+    // this user may read this particular post. Without this check any logged in
+    // user who can open a post editor could read any draft or private post.
+    if (!current_user_can('edit_post', $post_id)) {
+        wp_send_json_error(__('You do not have permission to edit this post.', 'greek-multi-tool'), 403);
+    }
+
     // Get post content
     $post = get_post($post_id);
 
@@ -486,7 +493,22 @@ function grmlt_ajax_use_excerpt() {
     if (!$post_id) {
         wp_send_json_error(__('Invalid post ID', 'greek-multi-tool'));
     }
-    
+
+    // The nonce alone is not authorisation: it is handed to every user who can
+    // open a post editor, and the post_id arrives from the request. Without
+    // this check any contributor could overwrite the excerpt of any post.
+    if (!current_user_can('edit_post', $post_id)) {
+        wp_send_json_error(__('You do not have permission to edit this post.', 'greek-multi-tool'), 403);
+    }
+
+    // Only ever touch the post types this feature is offered on. On ACF 5 and 6
+    // the post_excerpt of an acf-field post holds the field NAME that
+    // get_field() looks up, so writing an excerpt there breaks the field.
+    $grmlt_post_type = get_post_type($post_id);
+    if (!in_array($grmlt_post_type, array('post', 'page'), true)) {
+        wp_send_json_error(__('Excerpts can only be set on posts and pages.', 'greek-multi-tool'), 400);
+    }
+
     // Update post excerpt
     $updated = wp_update_post(array(
         'ID' => $post_id,

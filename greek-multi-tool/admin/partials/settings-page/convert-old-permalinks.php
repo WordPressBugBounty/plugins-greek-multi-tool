@@ -3,13 +3,80 @@
 <h6><?php esc_html_e( 'MANAGE OLD PERMALINKS', 'greek-multi-tool' ); ?></h6>
 <hr>
 <strong class="mb-0"><?php esc_html_e( 'Convert All Old Permalinks', 'greek-multi-tool' ); ?></strong>
-<p><?php esc_html_e( 'Press the button below to initialize the conversion of all old permalinks. This includes posts, pages, custom post types, media/attachment slugs, and taxonomy terms.', 'greek-multi-tool' ); ?></p>
-<div class="mt-3">
+<p><?php esc_html_e( 'Press the button below to initialize the conversion of all old permalinks. This includes posts, pages, publicly visible custom post types, media/attachment slugs, and taxonomy terms.', 'greek-multi-tool' ); ?></p>
+<div class="alert alert-warning" role="alert">
+	<strong><?php esc_html_e( 'Back up your database first.', 'greek-multi-tool' ); ?></strong>
+	<?php esc_html_e( 'This rewrites slugs directly in the database. Use PREVIEW to see exactly what will change before you run it.', 'greek-multi-tool' ); ?>
+</div>
+<div class="mt-3 d-flex">
+	<form method="post" class="mr-2">
+		<?php wp_nonce_field( 'grmlt_convert_old_permalinks', 'grmlt_convert_nonce' ); ?>
+		<input type="hidden" name="grmlt_preview" value="1" />
+		<input class="btn btn-secondary text-bold" type="submit" name="oldpermalinks" id="grmlt_preview_permalinks" value="<?php esc_attr_e( 'PREVIEW', 'greek-multi-tool' ); ?>" />
+	</form>
 	<form method="post">
 		<?php wp_nonce_field( 'grmlt_convert_old_permalinks', 'grmlt_convert_nonce' ); ?>
-		<input class="btn btn-warning text-bold" type="submit" name="oldpermalinks" id="oldpermalinks" value="<?php esc_attr_e( 'CONVERT', 'greek-multi-tool' ); ?>" /><br/>
+		<input class="btn btn-warning text-bold" type="submit" name="oldpermalinks" id="oldpermalinks" value="<?php esc_attr_e( 'CONVERT', 'greek-multi-tool' ); ?>" />
 	</form>
 </div>
+
+<?php
+// Render the outcome of a PREVIEW or CONVERT run performed on this request.
+if ( isset( $GLOBALS['grmlt_conversion_result'] ) ) :
+	$grmlt_result     = $GLOBALS['grmlt_conversion_result'];
+	$grmlt_is_preview = ! empty( $GLOBALS['grmlt_conversion_was_preview'] );
+	$grmlt_total      = count( $grmlt_result['posts'] ) + count( $grmlt_result['terms'] );
+	?>
+	<div class="mt-3">
+		<div class="alert <?php echo $grmlt_is_preview ? 'alert-info' : 'alert-success'; ?>" role="alert">
+			<?php
+			if ( $grmlt_is_preview ) {
+				printf(
+					/* translators: %d: number of slugs that would change. */
+					esc_html( _n( 'Preview only, nothing was changed. %d slug would be rewritten.', 'Preview only, nothing was changed. %d slugs would be rewritten.', $grmlt_total, 'greek-multi-tool' ) ),
+					absint( $grmlt_total )
+				);
+			} else {
+				printf(
+					/* translators: %d: number of slugs that were changed. */
+					esc_html( _n( '%d slug was rewritten.', '%d slugs were rewritten.', $grmlt_total, 'greek-multi-tool' ) ),
+					absint( $grmlt_total )
+				);
+			}
+			?>
+		</div>
+		<?php if ( $grmlt_total > 0 ) : ?>
+			<table class="table table-sm">
+				<thead>
+					<tr>
+						<th><?php esc_html_e( 'Type', 'greek-multi-tool' ); ?></th>
+						<th><?php esc_html_e( 'Title', 'greek-multi-tool' ); ?></th>
+						<th><?php esc_html_e( 'Old Slug', 'greek-multi-tool' ); ?></th>
+						<th><?php esc_html_e( 'New Slug', 'greek-multi-tool' ); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ( $grmlt_result['posts'] as $grmlt_row ) : ?>
+					<tr>
+						<td><?php echo esc_html( $grmlt_row['post_type'] ); ?></td>
+						<td><?php echo esc_html( $grmlt_row['title'] ); ?></td>
+						<td><code><?php echo esc_html( rawurldecode( $grmlt_row['from'] ) ); ?></code></td>
+						<td><code><?php echo esc_html( $grmlt_row['to'] ); ?></code></td>
+					</tr>
+				<?php endforeach; ?>
+				<?php foreach ( $grmlt_result['terms'] as $grmlt_row ) : ?>
+					<tr>
+						<td><?php esc_html_e( 'term', 'greek-multi-tool' ); ?></td>
+						<td>&mdash;</td>
+						<td><code><?php echo esc_html( rawurldecode( $grmlt_row['from'] ) ); ?></code></td>
+						<td><code><?php echo esc_html( $grmlt_row['to'] ); ?></code></td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+		<?php endif; ?>
+	</div>
+<?php endif; ?>
 <hr>
 <strong class="mb-0"><?php esc_html_e( 'List of old permalinks', 'greek-multi-tool' ); ?></strong>
 <p><?php esc_html_e( 'In the list below you can view/manage the old converted permalinks', 'greek-multi-tool' ); ?></p>
