@@ -30,7 +30,13 @@ function grmlt_redirect() {
 	// Build the current URL from server variables.
 	$scheme = ( ! empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' ) ? 'https' : 'http';
 	$host   = isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
-	$uri    = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+	// esc_url_raw, NOT sanitize_text_field: sanitize_text_field() deletes every
+	// %xx octet sequence, which reduces a browser-encoded Greek path like
+	// /%CE%B3%CE%B5%CE%B9%CE%B1/ to // before any comparison below could ever
+	// match. Greek URLs arrive percent-encoded from every browser, so with
+	// sanitize_text_field() here the whole redirect table was inert for
+	// exactly the URLs it exists to redirect.
+	$uri    = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 
 	if ( empty( $host ) || empty( $uri ) ) {
 		return;

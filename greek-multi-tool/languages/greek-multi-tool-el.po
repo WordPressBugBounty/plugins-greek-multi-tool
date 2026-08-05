@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Greek Multi Tool 3.4.0\n"
+"Project-Id-Version: Greek Multi Tool 3.4.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/greek-multi-tool\n"
 "POT-Creation-Date: 2025-03-13T00:00:00+00:00\n"
 "PO-Revision-Date: 2025-03-17 13:36+0200\n"

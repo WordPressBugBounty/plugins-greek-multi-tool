@@ -142,10 +142,10 @@ if ( isset( $GLOBALS['grmlt_conversion_result'] ) ) :
                         <div class="col-1">
                             <div class="row">
                                 <a href="#" class="blue-square-edit" data-toggle="modal" data-target="#fullscreenModal<?php echo esc_attr( $pid ); ?>">
-                                    <i class="fas fa-pencil-alt"></i>
+                                    <span class="dashicons dashicons-edit" aria-hidden="true"></span>
                                 </a>
                                 <a href="#" class="red-square-delete mx-2" data-toggle="modal" data-target="#fullscreenModalDelete<?php echo esc_attr( $pid ); ?>">
-                                    <i class="fas fa-trash"></i>
+                                    <span class="dashicons dashicons-trash" aria-hidden="true"></span>
                                 </a>
                             </div>
                         </div>
@@ -187,10 +187,10 @@ if ( isset( $GLOBALS['grmlt_conversion_result'] ) ) :
                         <div class="row mt-2">
                             <div class="d-flex justify-content-center">
                                 <a href="#" class="blue-square-edit mx-2" data-toggle="modal" data-target="#fullscreenModal<?php echo esc_attr( $pid ); ?>">
-                                    <i class="fas fa-pencil-alt"></i>
+                                    <span class="dashicons dashicons-edit" aria-hidden="true"></span>
                                 </a>
                                 <a href="#" class="red-square-delete mx-2" data-toggle="modal" data-target="#fullscreenModalDelete<?php echo esc_attr( $pid ); ?>">
-                                    <i class="fas fa-trash"></i>
+                                    <span class="dashicons dashicons-trash" aria-hidden="true"></span>
                                 </a>
                             </div>
                         </div>

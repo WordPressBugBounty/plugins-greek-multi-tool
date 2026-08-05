@@ -4,7 +4,7 @@ Author: bigdropgr, aivazidis
 Committers: bigdropgr, aivazidis
 Tags: greeklish slugs, permalinks, transliteration, greek search, seo
 Requires at least: 6.2
-Stable tag: 3.4.0
+Stable tag: 3.4.1
 Tested up to: 7.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
@@ -100,13 +100,16 @@ Not at all! Greek Multi Tool actually enhances your SEO by creating search-engin
 Absolutely! Greek Multi Tool seamlessly integrates with WooCommerce to handle Greek permalinks, media, accents, and search for your product pages.
 
 = Does this plugin work with ACF (Advanced Custom Fields)? =
-Yes! Since version 3.3.0, our context-aware transliteration engine automatically detects ACF internal operations and skips them, keeping your field names untouched.
+Yes. The transliteration engine detects ACF internal operations and skips them, and since 3.4.1 the bulk permalink converter is restricted to publicly visible post types, so it can never touch ACF fields, groups or options pages. Versions before 3.4.1 had a critical bug here - if you were affected, see the recovery FAQ below.
 
 = Does it convert media/image file names? =
 Yes! Enable the "Media File Name Conversion" toggle to automatically translate uploaded files. For example, "εικόνα-προϊόντος.jpg" becomes "eikona-proiontos.jpg".
 
 = How do I convert old permalinks? =
-Navigate to Greek Multi Tool → Convert Old Permalinks and click "CONVERT". The plugin safely handles posts, pages, custom post types, media attachments, taxonomy terms, and sets up 301 redirects.
+Navigate to Greek Multi Tool → Convert Old Permalinks. Back up your database, click "PREVIEW" to see exactly which slugs would change without writing anything, then click "CONVERT". The plugin handles posts, pages, publicly visible custom post types, media attachments, taxonomy terms, and sets up 301 redirects.
+
+= My ACF fields broke after "Convert All Old Permalinks" - what do I do? =
+First update to 3.4.1 or later, so it cannot happen again. The damaged field keys can usually be restored without a backup: the converter only changed the key stored on the field itself, while every post that ever saved the field still holds the original key. With WP-CLI, run `wp grmlt acf-restore-keys` for a dry-run report, then add `--write` to apply it. If your theme has an `acf-json` folder, prefer ACF → Field Groups → Sync instead: it also restores field group keys, which the command cannot. Fields that were never used on any post cannot be recovered this way. Always back up your database first.
 
 = How does the Greek Search work? =
 Our specialized search algorithms understand Greek linguistic patterns. It handles accented characters, diphthongs, and various word forms to drastically improve internal WordPress search accuracy.
@@ -142,14 +145,19 @@ The filter also receives the post ID as a second argument, so you can enable it 
 13. Feedback System
 
 == Changelog ==
-= 3.4.0 =
-* **Critical Fix**: "Convert All Old Permalinks" destroyed Advanced Custom Fields. The bulk converter ran a direct database query against every post in the site with no post type restriction at all. ACF stores each field as a hidden `acf-field` post whose slug **is** the field key (`field_5f8a1b2c...`), so the converter overwrote those keys with a slug built from the field's label. Every `get_field()` call then returned nothing and the original keys could not be recovered. Field groups, ACF post types, ACF taxonomies and ACF options pages were affected the same way, in every language, including fields with English labels. The converter is now restricted to publicly visible post types and can never touch ACF or any other plugin's internal post types.
-* **New**: PREVIEW button on the permalink converter. It lists every slug that would change, and writes nothing. The page also warns to back up first.
-* **Bug Fix**: The converter no longer rewrites slugs that merely contain an underscore. An underscore is a valid WordPress slug character, so pages with slugs such as `my_page` were being renamed unnecessarily.
-* **Bug Fix**: The converter can no longer write an empty slug. Titles that reduced to nothing (for example when made up entirely of stop words) previously left the post with no permalink at all.
-* **Bug Fix**: Slug changes now record `_wp_old_slug`, so WordPress can still serve the old URL, and an undo snapshot is stored before the first change.
+= 3.4.1 =
+* **Security**: AJAX endpoints now verify the capabilities of the requesting user instead of relying on a nonce alone. The excerpt endpoints require permission to edit the post they touch (and excerpt writes are limited to posts and pages), the excerpt settings sync requires administrator capabilities and is limited to the three options that screen owns, and server-side text analysis requires permission to edit the post being analyzed. All users should update immediately.
+* **Critical Fix**: "Convert All Old Permalinks" destroyed Advanced Custom Fields configuration. The bulk converter ran a direct database query against every post in the site with no post type restriction at all. ACF stores each field as a hidden `acf-field` post whose slug **is** the field key (`field_5f8a1b2c...`), so the converter overwrote those keys with a slug built from the field's label. Every `get_field()` call then returned nothing. Field groups, ACF post types, ACF taxonomies and ACF options pages were affected the same way, in every language, including fields with English labels. The converter is now restricted to publicly visible post types and can never touch ACF or any other plugin's internal post types. Term slug conversion is likewise restricted to public taxonomies.
+* **New**: Recovery tool for sites already affected. The WP-CLI command `wp grmlt acf-restore-keys` reconstructs damaged ACF field keys from data the converter never touched. It is a dry run by default and only writes with an explicit `--write` flag. See the FAQ.
+* **New**: PREVIEW button on the permalink converter. It lists every slug that would change, and writes nothing. The page now also warns to back up first.
+* **Bug Fix**: The converter no longer rewrites slugs that merely contain an underscore. An underscore is a valid WordPress slug character, so slugs such as `my_page` were being renamed unnecessarily.
+* **Bug Fix**: The converter can no longer write an empty slug. Titles that reduce to nothing (for example when made up entirely of stop words) previously left the post with no permalink at all.
+* **Bug Fix**: Slug changes now record `_wp_old_slug`, so WordPress can still serve the old URL, and an undo snapshot is stored in the `grmlt_last_conversion_undo` option before the first write.
 * **Bug Fix**: 301 redirects created by the converter now point from the URL that was actually in use. They were previously built from the post title, which had never been part of the permalink.
-* **Security**: The excerpt AJAX endpoints checked only a nonce, not whether the user was allowed to edit the post whose ID they sent. Any logged in user able to open a post editor could read or overwrite the excerpt of any post, including hidden `acf-field` posts, where the excerpt holds the field name. Both endpoints now verify `edit_post`, and saving an excerpt is limited to posts and pages.
+* **Bug Fix**: The 301 redirect matcher now recognizes percent-encoded Greek URLs - the form every browser actually sends. The incoming URL was previously passed through a sanitizer that stripped the encoded characters, so redirects for Greek URLs could never fire.
+* **Bug Fix**: Removed an admin stylesheet enqueue that pointed to a file missing from the plugin package, causing a 404 request on every admin page since 3.2.0. The affected icons now use WordPress Dashicons.
+
+= 3.4.0 =
 * **Critical Fix**: Missing CSS and broken layouts on page builder pages. Since 3.3.0 the Yoast SEO integration ran the whole page content through `do_shortcode()` inside `wp_head`. Yoast calls that filter on the front end too, not only in the editor, whenever a singular page has **no featured image**. Themes that load per-element CSS on demand (Woodmart, Flatsome, Porto and similar) marked each CSS part as already delivered during that hidden first render, then skipped it during the real one, so the stylesheet never reached the browser. Symptoms: pages that look unstyled or partly unstyled, elements stacked or full width, styling that appears correctly again as soon as the plugin is deactivated. Affected every singular page builder page without a featured image. The content is no longer rendered on the front end.
 * **Bug Fix**: Duplicate Slider Revolution modules. The hidden render produced a second module with the same ID and a second init script on every page view. Sliders that failed to start, or started twice, now behave normally.
 * **Bug Fix**: Yoast SEO can find content images again. The old filter handed Yoast tag-stripped plain text, so the `<img>` tags it looks for had already been removed and its schema and og:image lookup could never succeed. Yoast now receives the real content.
@@ -157,6 +165,9 @@ The filter also receives the post ID as a second argument, so you can enable it 
 * **New Filter**: `grmlt_render_shortcodes_on_frontend` restores the previous behaviour for anyone who depends on it. See the FAQ.
 * **Compatibility**: Tested up to WordPress 7.0.2. No deprecated or removed WordPress 7.0 APIs are used, and the plugin runs clean under PHP 8.2, 8.3 and 8.4.
 * **Housekeeping**: The internal version constant was out of sync with the plugin header (3.3.0 against 3.3.1), which meant cache-busting version strings on the plugin's own CSS and JS were stale. Both now read 3.4.0.
+
+= 3.3.1 =
+* Maintenance release: fixes a fatal error introduced in 3.3.0.
 
 = 3.3.0 =
 * **New Feature**: Greek Media File Name Conversion - Automatically convert Greek characters in uploaded media file names to SEO-friendly Latin equivalents during upload.
@@ -182,8 +193,11 @@ The filter also receives the post ID as a second argument, so you can enable it 
 *(Previous changelog entries truncated for brevity, but all previous versions remain supported and secure).*
 
 == Upgrade Notice ==
+= 3.4.1 =
+If ACF fields suddenly returned nothing after "Convert All Old Permalinks", 3.4.1 fixes the cause and adds a WP-CLI command that restores the damaged field keys. This is also a security release: AJAX endpoints now verify user permissions. All users should update immediately.
+
 = 3.4.0 =
-Two critical fixes. "Convert All Old Permalinks" could destroy your ACF field keys, making every get_field() return nothing - it now never touches ACF and has a PREVIEW button. Also fixes missing CSS on page builder pages with no featured image when Yoast SEO is active. Update immediately.
+Fixes missing CSS and broken layouts on page builder pages with no featured image, caused by 3.3.0/3.3.1 when Yoast SEO is active. If your pages look unstyled and deactivating this plugin fixes them, update now. Also stops duplicate Slider Revolution modules.
 
 = 3.3.0 =
 New features: Automatic Greek media file name conversion on upload, attachment slug conversion, and full ACF compatibility! Full page builder support for WP Bakery and Elementor, plus Yoast SEO integration. Highly recommended update for all Greek websites!

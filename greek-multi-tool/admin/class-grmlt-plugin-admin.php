@@ -93,9 +93,11 @@ class Grmlt_Plugin_Admin {
 		// Enqueue stylesheet of Custom CSS for grmlt plugin admin area
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/grmlt-plugin-admin.css', array(), $this->version, 'all' );
 
-		// Enqueue Font Awesome (moved from inline CDN link)
-		wp_enqueue_style( 'grmlt_fontawesome_css', plugins_url( 'admin/css/fontawesome.min.css', dirname( __FILE__ ) ), array(), '5.15.4' );
-    
+		// Icons come from Dashicons, which WordPress always loads in wp-admin.
+		// Do not reintroduce a Font Awesome enqueue here: admin/css/fontawesome.min.css
+		// was never shipped in the plugin package, so the enqueue produced a 404
+		// on every admin page from 3.2.0 through 3.4.0.
+
 	}
 
 	/**

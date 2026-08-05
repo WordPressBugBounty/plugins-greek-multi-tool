@@ -8,7 +8,7 @@
  * Plugin Name:       Greek Multi Tool
  * Plugin URI:        https://bigdrop.gr/greek-multi-tool
  * Description:       The comprehensive WordPress plugin for Greek websites. Converts Greek URLs and media file names to SEO-friendly Latin, removes uppercase accents, enhances search, localizes dates, and much more. Fully compatible with ACF, WooCommerce, and all major plugins.
- * Version:           3.4.0
+ * Version:           3.4.1
  * Author:            BigDrop.gr
  * Author URI:        https://bigdrop.gr
  * Tags: greek, permalinks, accent remover, accent remover, multi tool
@@ -29,7 +29,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'GRMLT_PLUGIN_VERSION', '3.4.0' );
+define( 'GRMLT_PLUGIN_VERSION', '3.4.1' );
 
 /**
  * The code that runs during plugin activation.
@@ -240,5 +240,15 @@ if (file_exists($grmlt_greek_excerpts)) {
 $grmlt_feedback = plugin_dir_path(__FILE__) . 'admin/functions/feedback.php';
 if (file_exists($grmlt_feedback)) {
     require_once $grmlt_feedback;
+}
+
+// Recovery tool for ACF field keys damaged by the pre-3.4.1 permalink
+// converter. WP-CLI only: the file registers a CLI command and nothing else,
+// so it is never loaded (and exposes nothing) on web requests.
+if (defined('WP_CLI') && WP_CLI) {
+    $grmlt_acf_key_restore = plugin_dir_path(__FILE__) . 'admin/functions/acf-key-restore.php';
+    if (file_exists($grmlt_acf_key_restore)) {
+        require_once $grmlt_acf_key_restore;
+    }
 }
 

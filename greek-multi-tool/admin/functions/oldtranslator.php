@@ -3,7 +3,7 @@
  * Bulk conversion of existing (old) permalinks to Latin slugs.
  *
  * @since   1.0.0
- * @since   3.4.0 Restricted to a post type whitelist, added dry-run preview and
+ * @since   3.4.1 Restricted to a post type whitelist, added dry-run preview and
  *                undo state. See grmlt_get_convertible_post_types() for why.
  * @package Grmlt_Plugin
  */
@@ -67,7 +67,7 @@ function grmlt_old_sanitizer($text) {
 /**
  * Post types the bulk converter is allowed to rewrite.
  *
- * CRITICAL - this is a whitelist on purpose. Before 3.4.0 the converter ran a
+ * CRITICAL - this is a whitelist on purpose. Before 3.4.1 the converter ran a
  * raw query against wp_posts with no post_type condition at all, which swept in
  * every internal post type registered by any plugin.
  *
@@ -85,7 +85,7 @@ function grmlt_old_sanitizer($text) {
  * because none of them are publicly queryable and none of them have a slug that
  * a visitor ever sees.
  *
- * @since 3.4.0
+ * @since 3.4.1
  * @return string[] Post type names that may be converted.
  */
 function grmlt_get_convertible_post_types() {
@@ -113,7 +113,7 @@ function grmlt_get_convertible_post_types() {
 	 * post type whose post_name is used as an internal identifier will corrupt
 	 * that plugin's data.
 	 *
-	 * @since 3.4.0
+	 * @since 3.4.1
 	 * @param string[] $types Post type names.
 	 */
 	$types = apply_filters( 'grmlt_convertible_post_types', array_values( $types ) );
@@ -123,11 +123,40 @@ function grmlt_get_convertible_post_types() {
 }
 
 /**
+ * Taxonomies the bulk converter is allowed to rewrite term slugs in.
+ *
+ * Same reasoning as grmlt_get_convertible_post_types(): only a slug that is
+ * part of a public URL should ever be rewritten. Internal taxonomies
+ * (nav_menu, link_category, post_format, and any plugin-private taxonomy that
+ * uses the slug as an identifier) must never be touched.
+ *
+ * @since 3.4.1
+ * @return string[] Taxonomy names whose term slugs may be converted.
+ */
+function grmlt_get_convertible_taxonomies() {
+
+	$taxonomies = get_taxonomies( array( 'public' => true ), 'names' );
+
+	/**
+	 * Filters the taxonomies the old permalink converter is allowed to rewrite.
+	 *
+	 * Only add a taxonomy here if its term slugs appear in public URLs.
+	 *
+	 * @since 3.4.1
+	 * @param string[] $taxonomies Taxonomy names.
+	 */
+	$taxonomies = apply_filters( 'grmlt_convertible_taxonomies', array_values( (array) $taxonomies ) );
+
+	return array_values( array_filter( (array) $taxonomies, 'is_string' ) );
+
+}
+
+/**
  * Build the list of slug changes the converter would make.
  *
  * Performs no writes, so it can back both the preview and the real run.
  *
- * @since 3.4.0
+ * @since 3.4.1
  * @return array{posts: array, terms: array} Planned changes.
  */
 function grmlt_collect_permalink_changes() {
@@ -138,49 +167,70 @@ function grmlt_collect_permalink_changes() {
 
 	$types = grmlt_get_convertible_post_types();
 
-	if ( empty( $types ) ) {
+	// An empty post type list (possible via the grmlt_convertible_post_types
+	// filter) only skips the posts query. Terms have their own whitelist below
+	// and must still be collected.
+	if ( ! empty( $types ) ) {
+
+		$placeholders = implode( ', ', array_fill( 0, count( $types ), '%s' ) );
+
+		// Note the underscore inside the character class: an underscore is a legal
+		// WordPress slug character, not a leftover from a non-Latin title. Treating
+		// it as "needs conversion" is what pulled ACF keys and ordinary slugs like
+		// my_page into the result set before 3.4.1.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$posts = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT ID, post_name, post_title, post_type FROM {$wpdb->posts}
+				 WHERE post_name REGEXP '[^A-Za-z0-9_-]+'
+				   AND post_status IN ('publish', 'future', 'private', 'inherit')
+				   AND post_type IN ({$placeholders})",
+				$types
+			)
+		);
+
+		foreach ( (array) $posts as $post ) {
+			$sanitized_name = preg_replace( '/[^A-Za-z0-9-]+/', '', grmlt_old_sanitizer( $post->post_title ) );
+			$sanitized_name = trim( $sanitized_name, '-' );
+
+			// Never write an empty slug: a post with no post_name loses its
+			// permalink entirely. Titles made up only of stop words, or of
+			// characters the map does not cover, can reduce to nothing.
+			if ( '' === $sanitized_name || $post->post_name === $sanitized_name ) {
+				continue;
+			}
+
+			$plan['posts'][] = array(
+				'ID'        => absint( $post->ID ),
+				'post_type' => $post->post_type,
+				'title'     => $post->post_title,
+				'from'      => $post->post_name,
+				'to'        => $sanitized_name,
+			);
+		}
+	}
+
+	$taxonomies = grmlt_get_convertible_taxonomies();
+
+	if ( empty( $taxonomies ) ) {
 		return $plan;
 	}
 
-	$placeholders = implode( ', ', array_fill( 0, count( $types ), '%s' ) );
+	$tax_placeholders = implode( ', ', array_fill( 0, count( $taxonomies ), '%s' ) );
 
-	// Note the underscore inside the character class: an underscore is a legal
-	// WordPress slug character, not a leftover from a non-Latin title. Treating
-	// it as "needs conversion" is what pulled ACF keys and ordinary slugs like
-	// my_page into the result set before 3.4.0.
+	// Join through term_taxonomy so that terms belonging only to internal
+	// taxonomies are never rewritten. DISTINCT because a term row can be
+	// referenced by more than one taxonomy.
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-	$posts = $wpdb->get_results(
+	$terms = $wpdb->get_results(
 		$wpdb->prepare(
-			"SELECT ID, post_name, post_title, post_type FROM {$wpdb->posts}
-			 WHERE post_name REGEXP '[^A-Za-z0-9_-]+'
-			   AND post_status IN ('publish', 'future', 'private', 'inherit')
-			   AND post_type IN ({$placeholders})",
-			$types
+			"SELECT DISTINCT t.term_id, t.slug FROM {$wpdb->terms} t
+			 INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_id = t.term_id
+			 WHERE t.slug REGEXP '[^A-Za-z0-9_-]+'
+			   AND tt.taxonomy IN ({$tax_placeholders})",
+			$taxonomies
 		)
 	);
-
-	foreach ( (array) $posts as $post ) {
-		$sanitized_name = preg_replace( '/[^A-Za-z0-9-]+/', '', grmlt_old_sanitizer( $post->post_title ) );
-		$sanitized_name = trim( $sanitized_name, '-' );
-
-		// Never write an empty slug: a post with no post_name loses its
-		// permalink entirely. Titles made up only of stop words, or of
-		// characters the map does not cover, can reduce to nothing.
-		if ( '' === $sanitized_name || $post->post_name === $sanitized_name ) {
-			continue;
-		}
-
-		$plan['posts'][] = array(
-			'ID'        => absint( $post->ID ),
-			'post_type' => $post->post_type,
-			'title'     => $post->post_title,
-			'from'      => $post->post_name,
-			'to'        => $sanitized_name,
-		);
-	}
-
-	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-	$terms = $wpdb->get_results( "SELECT term_id, slug FROM {$wpdb->terms} WHERE slug REGEXP '[^A-Za-z0-9_-]+'" );
 
 	foreach ( (array) $terms as $term ) {
 		$sanitized_slug = trim( grmlt_old_sanitizer( urldecode( $term->slug ) ), '-' );
@@ -204,7 +254,7 @@ function grmlt_collect_permalink_changes() {
  * Translate all old permalinks.
  *
  * @since 1.0.0
- * @since 3.4.0 Added the $dry_run parameter and post type whitelisting.
+ * @since 3.4.1 Added the $dry_run parameter and post type whitelisting.
  * @param bool $dry_run When true, returns the planned changes without writing.
  * @return array The changes made, or that would be made when $dry_run is true.
  */
@@ -219,6 +269,15 @@ function grmlt_trans_old_call( $dry_run = false ) {
     $plan = grmlt_collect_permalink_changes();
 
     if ( $dry_run ) {
+        return $plan;
+    }
+
+    if ( empty( $plan['posts'] ) && empty( $plan['terms'] ) ) {
+        // Nothing to convert. Return WITHOUT touching the undo option: after a
+        // successful run every slug is Latin, so a re-submitted CONVERT form
+        // (browser refresh - the nonce is still valid) reaches this point and
+        // would otherwise overwrite the just-written snapshot with an empty
+        // one, destroying the only record of the pre-conversion term slugs.
         return $plan;
     }
 

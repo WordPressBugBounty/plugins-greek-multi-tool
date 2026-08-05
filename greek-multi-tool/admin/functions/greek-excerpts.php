@@ -530,14 +530,27 @@ add_action('wp_ajax_grmlt_use_excerpt', 'grmlt_ajax_use_excerpt');
 function grmlt_ajax_sync_settings() {
     // Check nonce for security
     check_ajax_referer('grmlt_sync_excerpt_settings_nonce', 'nonce');
+
+    // The nonce only proves the request originated from our settings screen.
+    // This endpoint writes options, so it must also require the capability
+    // that screen is gated behind. The action is registered for every logged
+    // in user, so without this check the nonce is the only barrier.
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error(__('You do not have permission to change these settings.', 'greek-multi-tool'), 403);
+    }
     
     // Get field and value
     $field = isset($_POST['field']) ? sanitize_text_field($_POST['field']) : '';
     $value = isset($_POST['value']) ? $_POST['value'] : '';
     $is_checkbox = isset($_POST['is_checkbox']) ? (bool)$_POST['is_checkbox'] : false;
     
-    if (empty($field)) {
-        wp_send_json_error(__('Invalid field', 'greek-multi-tool'));
+    // Only the three options the excerpts screen actually syncs. Without this
+    // whitelist the endpoint would write whatever wp_options row the caller
+    // names (default_role, users_can_register, ...), which is a site takeover
+    // primitive for anyone holding a valid nonce.
+    $grmlt_allowed_fields = array('grmlt_enable_excerpts', 'grmlt_excerpt_length', 'grmlt_excerpt_more');
+    if (!in_array($field, $grmlt_allowed_fields, true)) {
+        wp_send_json_error(__('Invalid field', 'greek-multi-tool'), 400);
     }
     
     // Process value based on field type

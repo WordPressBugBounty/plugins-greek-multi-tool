@@ -618,6 +618,14 @@ function grmlt_ajax_analyze_text() {
     $content = isset($_POST['content']) ? sanitize_textarea_field($_POST['content']) : '';
     $post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
 
+    // The post_id arrives straight from the request. The server-side fallback
+    // below reads that post's content regardless of its status or owner, so
+    // without this check any user with edit_posts could extract the text of
+    // other users' drafts and private posts. edit_posts alone is not enough.
+    if ($post_id > 0 && !current_user_can('edit_post', $post_id)) {
+        wp_send_json_error(__('You do not have permission to analyze this post.', 'greek-multi-tool'), 403);
+    }
+
     // If content is empty or too short, try server-side extraction from the post
     if ((empty($content) || mb_strlen($content) < 10) && $post_id > 0) {
         // Load page builder compat if not already loaded
