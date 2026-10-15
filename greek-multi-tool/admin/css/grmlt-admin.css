@@ -1,0 +1,995 @@
+/* Greek Multi Tool — admin screen. Everything is scoped under .grmlt-admin. */
+
+.grmlt-admin {
+	--grmlt-accent: var(--wp-admin-theme-color, #3858e9);
+	--grmlt-accent-dark: var(--wp-admin-theme-color-darker-10, #2145e6);
+	--grmlt-text: #1e1e1e;
+	--grmlt-text-2: #50575e;
+	--grmlt-text-3: #757575;
+	--grmlt-border: #e0e0e0;
+	--grmlt-divider: #f0f0f0;
+	--grmlt-field-border: #949494;
+	--grmlt-success: #00a32a;
+	--grmlt-success-bg: #edfaef;
+	--grmlt-warning: #dba617;
+	--grmlt-warning-bg: #fcf9e8;
+	--grmlt-error: #d63638;
+	--grmlt-error-bg: #fcf0f1;
+	margin: 0 0 0 -20px;
+	color: var(--grmlt-text);
+}
+
+.grmlt-admin *,
+.grmlt-admin *::before,
+.grmlt-admin *::after {
+	box-sizing: border-box;
+}
+
+/* Header ------------------------------------------------------------------ */
+
+.grmlt-header {
+	background: #fff;
+	border-bottom: 1px solid #dcdcde; /* Separates the tab bar from the content, full width. */
+	padding: 16px 24px 0;
+}
+
+.grmlt-header__top {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px 24px;
+}
+
+.grmlt-header__brand {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.grmlt-header__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 6px;
+	background: var(--grmlt-accent);
+	color: #fff;
+}
+
+.grmlt-header__icon .dashicons {
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+}
+
+.grmlt-admin .grmlt-header__title {
+	margin: 0;
+	padding: 0;
+	font-size: 23px;
+	font-weight: 400;
+	line-height: 1.3;
+	color: var(--grmlt-text);
+}
+
+.grmlt-badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 4px;
+	background: var(--grmlt-divider);
+	color: var(--grmlt-text-2);
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+.grmlt-header__links {
+	display: flex;
+	gap: 16px;
+}
+
+.grmlt-header__links a {
+	color: var(--grmlt-text-2);
+	text-decoration: none;
+	font-size: 13px;
+}
+
+.grmlt-header__links a:hover,
+.grmlt-header__links a:focus {
+	color: var(--grmlt-accent);
+	text-decoration: underline;
+}
+
+/* Tab bar: links to the three pages of the screen, in the spirit of the Site Health tabs. */
+.grmlt-tabs {
+	display: flex;
+	gap: 2px;
+	margin: 12px 0 -1px; /* The active tab's line covers the header's bottom border. */
+	overflow-x: auto;
+	scrollbar-width: thin;
+}
+
+.grmlt-tab {
+	display: inline-flex;
+	flex: 0 0 auto;
+	align-items: center;
+	gap: 8px;
+	padding: 14px 18px 10px;
+	border-bottom: 4px solid transparent;
+	color: #3c434a; /* 10:1 on white. */
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.grmlt-tab__icon {
+	width: 20px;
+	height: 20px;
+	font-size: 20px;
+}
+
+.grmlt-tab:hover {
+	background: #f0f0f1;
+	color: var(--grmlt-accent);
+}
+
+/* The focus style of core: a ring in the admin color (inset, the bar scrolls). */
+.grmlt-tab:focus {
+	box-shadow: none;
+	outline: none;
+}
+
+.grmlt-tab:focus-visible {
+	box-shadow: inset 0 0 0 2px var(--grmlt-accent);
+	outline: 2px solid transparent; /* Windows high contrast mode. */
+	color: var(--grmlt-accent);
+}
+
+.grmlt-tab.is-active {
+	border-bottom-color: var(--grmlt-accent);
+	color: var(--grmlt-accent);
+	font-weight: 600;
+}
+
+.grmlt-admin .wp-header-end {
+	display: none;
+}
+
+/* Layout ------------------------------------------------------------------ */
+
+/*
+ * Notices: ours, and the ones WordPress moves after .wp-header-end, get their own
+ * space under the tabs. The gap counts only visible notices; the 1px ::before and
+ * the -1px margin cancel out, so without notices the area takes no space.
+ */
+.grmlt-notices {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	max-width: 1240px;
+	margin-top: -1px;
+	padding: 0 24px;
+}
+
+.grmlt-notices::before {
+	content: "";
+	height: 1px;
+}
+
+.grmlt-admin .notice,
+.grmlt-notices > .notice {
+	margin: 0;
+}
+
+.grmlt-content .notice {
+	margin: 0 0 12px;
+}
+
+/*
+ * Notices of other plugins (grmlt_hide_third_party_notices): the notice hooks are
+ * already cleaned on this screen; this hides what arrives another way, e.g. with
+ * JavaScript. Ours, the core notices that are kept and the settings messages stay.
+ */
+body.grmlt-hide-notices #wpbody-content :is(.notice, .error, .updated, .update-nag):not(.grmlt-notice, .grmlt-core-notice, .settings-error, .grmlt-content *) {
+	display: none !important;
+}
+
+.grmlt-content {
+	max-width: 1240px;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.grmlt-columns {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	align-items: flex-start;
+}
+
+.grmlt-main {
+	flex: 999 1 600px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	min-width: 0;
+}
+
+.grmlt-main form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.grmlt-side {
+	flex: 1 1 320px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	min-width: 0;
+}
+
+@media (min-width: 1100px) {
+	.grmlt-side {
+		position: sticky;
+		top: 52px;
+	}
+}
+
+.grmlt-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+	gap: 20px;
+}
+
+/* Cards ------------------------------------------------------------------- */
+
+.grmlt-card {
+	background: #fff;
+	border: 1px solid var(--grmlt-border);
+	border-radius: 8px;
+	min-width: 0;
+}
+
+.grmlt-card__header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 20px 24px;
+}
+
+.grmlt-card__heading {
+	min-width: 0;
+}
+
+.grmlt-admin .grmlt-card h2 {
+	margin: 0 0 4px;
+	padding: 0;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--grmlt-text);
+}
+
+.grmlt-card__heading p {
+	margin: 0;
+	max-width: 760px;
+	color: var(--grmlt-text-2);
+	font-size: 13px;
+}
+
+.grmlt-card__body {
+	border-top: 1px solid var(--grmlt-divider);
+	padding: 20px 24px;
+}
+
+.grmlt-card__body > p:first-child {
+	margin-top: 0;
+}
+
+.grmlt-card--off .grmlt-card__body {
+	opacity: 0.45;
+	pointer-events: none;
+}
+
+/* Rows -------------------------------------------------------------------- */
+
+.grmlt-card__body .grmlt-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 24px;
+	padding: 20px 0;
+	border-top: 1px solid var(--grmlt-divider);
+}
+
+.grmlt-card__body .grmlt-row:first-child {
+	padding-top: 0;
+	border-top: 0;
+}
+
+.grmlt-card__body .grmlt-row:last-child {
+	padding-bottom: 0;
+}
+
+.grmlt-row__label {
+	flex: 0 0 200px;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.grmlt-row__title {
+	font-weight: 600;
+	font-size: 13px;
+}
+
+.grmlt-row__help {
+	font-size: 12px;
+	color: var(--grmlt-text-3);
+}
+
+.grmlt-row__field {
+	flex: 1 1 360px;
+	min-width: 0;
+}
+
+@media (max-width: 782px) {
+	.grmlt-row__label {
+		flex-basis: 100%;
+	}
+}
+
+.grmlt-admin .regular-text {
+	max-width: 100%;
+}
+
+.grmlt-admin .description {
+	color: var(--grmlt-text-3);
+}
+
+/* Switch ------------------------------------------------------------------ */
+
+.grmlt-switch {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+	margin: -13px -4px -13px 0;
+	cursor: pointer;
+}
+
+.grmlt-switch input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+.grmlt-switch__ui {
+	position: relative;
+	display: block;
+	width: 36px;
+	height: 18px;
+	border: 1px solid var(--grmlt-text);
+	border-radius: 9px;
+	background: #fff;
+	transition: background-color 0.15s, border-color 0.15s;
+}
+
+.grmlt-switch__ui::before {
+	content: "";
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: var(--grmlt-text);
+	transition: transform 0.15s, background-color 0.15s;
+}
+
+.grmlt-switch input:checked + .grmlt-switch__ui {
+	background: var(--grmlt-accent);
+	border-color: var(--grmlt-accent);
+}
+
+.grmlt-switch input:checked + .grmlt-switch__ui::before {
+	background: #fff;
+	transform: translateX(18px);
+}
+
+.grmlt-switch input:focus-visible + .grmlt-switch__ui {
+	outline: 2px solid var(--grmlt-accent);
+	outline-offset: 2px;
+}
+
+/* Radio cards ------------------------------------------------------------- */
+
+.grmlt-radio-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.grmlt-radio-card {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 14px 16px;
+	border: 1px solid var(--grmlt-border);
+	border-radius: 6px;
+	cursor: pointer;
+	min-width: 0;
+}
+
+.grmlt-radio-card:hover {
+	border-color: var(--grmlt-field-border);
+}
+
+.grmlt-radio-card.is-selected,
+.grmlt-radio-card:has(input:checked) {
+	border-color: var(--grmlt-accent);
+	box-shadow: inset 0 0 0 1px var(--grmlt-accent);
+}
+
+.grmlt-radio-card:has(input:focus-visible) {
+	outline: 2px solid var(--grmlt-accent);
+	outline-offset: 2px;
+}
+
+.grmlt-radio-card input {
+	margin: 0 0 4px;
+}
+
+.grmlt-radio-card__title {
+	font-weight: 600;
+}
+
+.grmlt-radio-card__desc {
+	font-size: 12px;
+	color: var(--grmlt-text-2);
+}
+
+.grmlt-radio-card__example {
+	display: block;
+	margin-top: 4px;
+	padding: 6px 8px;
+	background: var(--grmlt-divider);
+	border-radius: 4px;
+	font-size: 12px;
+	white-space: normal;
+	word-break: break-word;
+}
+
+.grmlt-legacy-warning {
+	margin-top: 12px;
+}
+
+/* Checks, lists, details -------------------------------------------------- */
+
+.grmlt-checks {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.grmlt-checks--grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+}
+
+.grmlt-count {
+	color: var(--grmlt-text-3);
+}
+
+.grmlt-details summary {
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.grmlt-list {
+	margin: 12px 0 0 20px;
+	list-style: disc;
+}
+
+.grmlt-list li {
+	margin-bottom: 4px;
+}
+
+/* Chips ------------------------------------------------------------------- */
+
+.grmlt-chips {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	min-height: 32px;
+	padding: 4px 6px;
+	border: 1px solid var(--grmlt-field-border);
+	border-radius: 4px;
+	background: #fff;
+	max-width: 100%;
+}
+
+.grmlt-chips:focus-within {
+	border-color: var(--grmlt-accent);
+	box-shadow: 0 0 0 1px var(--grmlt-accent);
+}
+
+.grmlt-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 4px 2px 8px;
+	border-radius: 12px;
+	background: var(--grmlt-divider);
+	font-size: 13px;
+}
+
+.grmlt-chip__remove {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: var(--grmlt-text-2);
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 1;
+}
+
+.grmlt-chip__remove:hover,
+.grmlt-chip__remove:focus-visible {
+	background: var(--grmlt-error-bg);
+	color: var(--grmlt-error);
+	outline: none;
+}
+
+.grmlt-admin .grmlt-chips__input {
+	flex: 1 1 120px;
+	min-width: 80px;
+	border: 0;
+	box-shadow: none;
+	padding: 2px 4px;
+	margin: 0;
+	background: transparent;
+}
+
+.grmlt-admin .grmlt-chips__input:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+/* Try it ------------------------------------------------------------------ */
+
+.grmlt-try p {
+	margin: 0 0 12px;
+}
+
+.grmlt-try label {
+	display: block;
+	margin-bottom: 4px;
+	font-weight: 600;
+	font-size: 13px;
+}
+
+.grmlt-try__out {
+	display: block;
+	margin-top: 6px;
+	word-break: break-all;
+}
+
+.grmlt-admin code.grmlt-path,
+.grmlt-admin .grmlt-path {
+	font-family: Consolas, Monaco, monospace;
+	font-size: 12px;
+	background: var(--grmlt-divider);
+	padding: 2px 6px;
+	border-radius: 3px;
+	word-break: break-all;
+}
+
+/* Readiness --------------------------------------------------------------- */
+
+.grmlt-readiness {
+	margin: 0 0 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.grmlt-readiness li {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	margin: 0;
+}
+
+.grmlt-readiness .dashicons {
+	flex: 0 0 auto;
+	color: var(--grmlt-warning);
+}
+
+.grmlt-readiness .is-pending .dashicons {
+	color: var(--grmlt-text-3);
+}
+
+.grmlt-readiness__text {
+	flex: 1 1 auto;
+}
+
+.grmlt-readiness__action {
+	flex: 0 0 auto;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.grmlt-ok {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 12px;
+	color: var(--grmlt-success);
+	font-weight: 600;
+}
+
+/* Steps ------------------------------------------------------------------- */
+
+.grmlt-steps {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.grmlt-admin .grmlt-step__title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0 0 12px;
+	padding: 0;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.grmlt-step__num {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: #a7aaad;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.grmlt-step__num.is-active {
+	background: var(--grmlt-text);
+}
+
+.grmlt-step__body {
+	padding-left: 34px;
+}
+
+@media (max-width: 600px) {
+	.grmlt-step__body {
+		padding-left: 0;
+	}
+}
+
+.grmlt-step__body > p:first-child {
+	margin-top: 0;
+}
+
+.grmlt-admin .spinner {
+	float: none;
+	margin: 0 0 0 6px;
+	vertical-align: middle;
+}
+
+/* Preview table ----------------------------------------------------------- */
+
+.grmlt-summary {
+	margin: 0 0 12px;
+	padding: 12px 16px;
+	border-radius: 6px;
+	background: var(--grmlt-divider);
+}
+
+.grmlt-summary ul {
+	margin: 6px 0 0 18px;
+	list-style: disc;
+}
+
+.grmlt-table-wrap {
+	overflow-x: auto;
+	max-width: 100%;
+}
+
+.grmlt-admin .grmlt-preview-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+}
+
+.grmlt-preview-table th,
+.grmlt-preview-table td {
+	padding: 8px 10px;
+	border-bottom: 1px solid var(--grmlt-divider);
+	text-align: left;
+	vertical-align: top;
+}
+
+.grmlt-preview-table th {
+	font-weight: 600;
+}
+
+.grmlt-preview-table .grmlt-path--new {
+	font-weight: 600;
+}
+
+/* Progress ---------------------------------------------------------------- */
+
+.grmlt-progress {
+	margin-top: 12px;
+}
+
+.grmlt-progress progress {
+	width: 100%;
+	max-width: 480px;
+	height: 10px;
+	accent-color: var(--grmlt-accent);
+}
+
+.grmlt-progress__text {
+	margin: 6px 0;
+}
+
+/* Toolbar, forms, table ---------------------------------------------------- */
+
+.grmlt-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.grmlt-inline-form {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+}
+
+.grmlt-import-form input[type="file"] {
+	max-width: 240px;
+}
+
+.grmlt-search-form {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.grmlt-admin .subsubsub {
+	float: none;
+	margin: 0;
+}
+
+.grmlt-admin .search-box {
+	float: none;
+	display: flex;
+	gap: 6px;
+}
+
+.grmlt-table-form {
+	overflow-x: auto;
+}
+
+.grmlt-admin .wp-list-table .grmlt-path {
+	font-size: 12px;
+}
+
+.grmlt-dest__note {
+	display: block;
+	font-size: 11px;
+	color: var(--grmlt-text-3);
+}
+
+.grmlt-dest-edit {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+}
+
+.grmlt-dest-edit input {
+	flex: 1 1 200px;
+}
+
+.grmlt-status {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 600;
+	background: var(--grmlt-divider);
+	color: var(--grmlt-text-2);
+}
+
+.grmlt-status--ok {
+	background: var(--grmlt-success-bg);
+	color: #0b6b2a;
+}
+
+.grmlt-status--missing,
+.grmlt-status--loop {
+	background: var(--grmlt-error-bg);
+	color: var(--grmlt-error);
+}
+
+.grmlt-status--chain {
+	background: var(--grmlt-warning-bg);
+	color: #8a6d0b;
+}
+
+/* Commands ---------------------------------------------------------------- */
+
+.grmlt-cmd {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 8px 8px 12px;
+	border-radius: 6px;
+	background: #1e1e1e;
+	color: #fff;
+}
+
+.grmlt-cmd code {
+	flex: 1 1 auto;
+	background: transparent;
+	color: #fff;
+	font-family: Consolas, Monaco, monospace;
+	font-size: 12px;
+	padding: 0;
+	word-break: break-all;
+}
+
+.grmlt-cmd-list {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.grmlt-cmd-list li {
+	margin: 0;
+}
+
+.grmlt-cmd-list .description {
+	margin: 4px 0 0;
+}
+
+/* Inline confirmation ----------------------------------------------------- */
+
+.grmlt-confirm {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	padding: 6px 10px;
+	border-radius: 4px;
+	background: var(--grmlt-warning-bg);
+}
+
+/* Save bar ---------------------------------------------------------------- */
+
+/* Sticky at the bottom of the viewport, as wide as the column it is in; at the end of the column it takes its own place, after the last card. */
+.grmlt-savebar {
+	position: sticky;
+	bottom: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 16px;
+	background: #fff;
+	border: 1px solid var(--grmlt-border);
+	border-radius: 8px;
+	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* A bar that appears only with unsaved changes (Conversion tab): [hidden] must win over display: flex. */
+.grmlt-savebar[hidden] {
+	display: none;
+}
+
+/* Fields reached with the keyboard scroll into view above the bar, not under it. */
+html:has(.grmlt-savebar:not([hidden])) {
+	scroll-padding-bottom: 96px;
+}
+
+.grmlt-savebar__status {
+	color: var(--grmlt-text-2);
+	font-size: 13px;
+}
+
+.grmlt-savebar.is-dirty .grmlt-savebar__status::before {
+	content: "";
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	margin-right: 6px;
+	border-radius: 50%;
+	background: var(--grmlt-warning);
+}
+
+/* Result notices (inline) ------------------------------------------------- */
+
+.grmlt-admin .notice.inline {
+	margin: 0 0 12px;
+}
+
+.grmlt-admin .notice.inline ul {
+	margin: 6px 0 6px 18px;
+	list-style: disc;
+}
+
+/* Small screens ----------------------------------------------------------- */
+
+@media (max-width: 600px) {
+	.grmlt-header {
+		padding: 12px 16px 0;
+	}
+
+	.grmlt-tabs {
+		margin-right: -16px; /* Scrolls to the edge of the screen. */
+	}
+
+	.grmlt-tab {
+		padding: 12px 14px 8px;
+	}
+
+	.grmlt-content {
+		padding: 16px;
+	}
+
+	.grmlt-notices {
+		padding: 0 16px;
+	}
+
+	.grmlt-card__header,
+	.grmlt-card__body {
+		padding: 16px;
+	}
+
+	.grmlt-savebar {
+		flex-wrap: wrap;
+	}
+}

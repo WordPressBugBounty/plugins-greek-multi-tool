@@ -1,819 +1,1496 @@
-# Copyright (C) 2025 BigDrop.gr
+# Copyright (C) 2026 BigDrop.gr
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Greek Multi Tool 3.4.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/greek-multi-tool\n"
-"POT-Creation-Date: 2025-03-12T00:00:00+00:00\n"
+"Project-Id-Version: Greek Multi Tool 4.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/trunk\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-12T18:47:20+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: greek-multi-tool\n"
 
 #. Plugin Name of the plugin
+#: grmlt-plugin.php
 msgid "Greek Multi Tool"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: grmlt-plugin.php
 msgid "https://bigdrop.gr/greek-multi-tool"
 msgstr ""
 
 #. Description of the plugin
-msgid "This plugin provides a handful of tools and key functionalities to simplify and fix the greek language used in your webpage. For example it change the greek character urls to latin, remove the uppercase accents."
+#: grmlt-plugin.php
+msgid "Greek-to-Latin permalinks and media file names (ELOT 743), one-click conversion of old Greek permalinks with 301 redirects, a Greek accent checker for the editor, and Greek readiness checks in Site Health."
 msgstr ""
 
 #. Author of the plugin
+#: grmlt-plugin.php
 msgid "BigDrop.gr"
 msgstr ""
 
 #. Author URI of the plugin
+#: grmlt-plugin.php
 msgid "https://bigdrop.gr"
 msgstr ""
 
-#: 301-redirect.php:7
-msgid "301 REDIRECT SETTINGS"
+#: admin/class-grmlt-admin.php:123
+#: grmlt-plugin.php:73
+#: includes/class-grmlt-site-health.php:181
+#: includes/class-grmlt-site-health.php:369
+msgid "Settings"
 msgstr ""
 
-#: 301-redirect.php:12
-msgid "Enable Automatic 301 Redirect"
+#: admin/class-grmlt-admin.php:124
+msgid "Conversion & redirects"
 msgstr ""
 
-#: 301-redirect.php:13
-msgid "Enabling the automatic 301 redirect option setting will create dynamic redirects for every old permalink being converted via the `Convert Old Permalinks` functionality."
+#: admin/class-grmlt-admin.php:125
+msgid "Tools"
 msgstr ""
 
-#: convert-old-permalinks.php:3
-msgid "MANAGE OLD PERMALINKS"
+#. translators: %s: number
+#: admin/class-grmlt-admin.php:181
+#, php-format
+msgid "%s redirect deleted."
+msgid_plural "%s redirects deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/class-grmlt-admin.php:343
+msgid "You are not allowed to access this page."
 msgstr ""
 
-#: convert-old-permalinks.php:5
-msgid "Convert All Old Permalinks"
+#: admin/class-grmlt-admin.php:378
+#: admin/class-grmlt-admin.php:407
+#: admin/class-grmlt-admin.php:420
+#: admin/class-grmlt-admin.php:438
+#: admin/class-grmlt-admin.php:491
+#: includes/notices.php:182
+#: includes/notices.php:197
+msgid "You are not allowed to do this."
 msgstr ""
 
-#: convert-old-permalinks.php:6
-msgid "Press the button bellow to initialize the conversion of all old permalinks"
+#. translators: 1: menu name, 2: number of items, 3: URL of the Menus screen
+#: admin/class-grmlt-admin.php:392
+#, php-format
+msgid "The menu “%1$s” was created with %2$s item. <a href=\"%3$s\">Open it in Menus</a>."
+msgid_plural "The menu “%1$s” was created with %2$s items. <a href=\"%3$s\">Open it in Menus</a>."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/class-grmlt-admin.php:411
+msgid "The settings were restored to their defaults."
 msgstr ""
 
-#: convert-old-permalinks.php:9
-msgid "CONVERT"
+#: admin/class-grmlt-admin.php:444
+msgid "No file was uploaded."
 msgstr ""
 
-#: convert-old-permalinks.php:13
-msgid "List of old permalinks"
+#: admin/class-grmlt-admin.php:448
+msgid "The file is larger than 2 MB."
 msgstr ""
 
-#: convert-old-permalinks.php:14
-msgid "In the list below you can view/manage the old converted permalinks"
+#: admin/class-grmlt-admin.php:453
+msgid "Only .csv files can be imported."
 msgstr ""
 
-#: convert-old-permalinks.php:59
-msgid "ID:"
+#: admin/class-grmlt-admin.php:458
+msgid "The file does not look like a CSV text file."
 msgstr ""
 
-#: convert-old-permalinks.php:65
-msgid "Post ID:"
+#. translators: 1: imported rows, 2: total rows
+#: admin/class-grmlt-admin.php:468
+#, php-format
+msgid "%1$s of %2$s rows were imported."
 msgstr ""
 
-#: convert-old-permalinks.php:73
-msgid "Old Permalink:"
+#. translators: 1: line number in the CSV file, 2: old path, 3: reason
+#: admin/class-grmlt-admin.php:475
+#, php-format
+msgid "line %1$d (%2$s): %3$s"
 msgstr ""
 
-#: convert-old-permalinks.php:79
-msgid "New Permalink:"
+#. translators: %d: number
+#: admin/class-grmlt-admin.php:478
+#, php-format
+msgid "… and %d more."
 msgstr ""
 
-#: convert-old-permalinks.php:121
-msgid "Edit Redirection"
+#: admin/class-grmlt-admin.php:480
+msgid "Not imported:"
 msgstr ""
 
-#: convert-old-permalinks.php:129
-msgid "Make sure you are making the correct changes, as editting redirection permalinks while redirection is still active may result in broken URLs or Loops"
+#: admin/class-grmlt-admin.php:497
+msgid "The redirect was deleted."
 msgstr ""
 
-#: convert-old-permalinks.php:147
-msgid "Cancel"
+#: admin/class-grmlt-admin.php:497
+#: includes/class-grmlt-redirects.php:430
+msgid "Redirect not found."
 msgstr ""
 
-#: convert-old-permalinks.php:148
-msgid "Save Changes"
+#: admin/class-grmlt-redirects-list-table.php:60
+msgid "Old permalink"
 msgstr ""
 
-#: convert-old-permalinks.php:166
-msgid "Delete Redirection"
+#: admin/class-grmlt-redirects-list-table.php:61
+msgid "Destination"
 msgstr ""
 
-#: convert-old-permalinks.php:174
-msgid "Are you sure you want to delete this redirect record?"
+#: admin/class-grmlt-redirects-list-table.php:62
+msgid "Visits"
 msgstr ""
 
-#: convert-old-permalinks.php:176
+#: admin/class-grmlt-redirects-list-table.php:63
+msgid "Last visit"
+msgstr ""
+
+#: admin/class-grmlt-redirects-list-table.php:64
+msgid "Status"
+msgstr ""
+
+#: admin/class-grmlt-redirects-list-table.php:65
+msgid "Created"
+msgstr ""
+
+#: admin/class-grmlt-redirects-list-table.php:88
+#: admin/class-grmlt-redirects-list-table.php:175
 msgid "Delete"
 msgstr ""
 
-#: convert-old-permalinks.php:262
-msgid "No Permalinks Found"
+#: admin/class-grmlt-redirects-list-table.php:102
+msgid "All"
 msgstr ""
 
-#: feedback.php:18
-msgid "Feedback"
+#: admin/class-grmlt-redirects-list-table.php:103
+msgid "With problems"
 msgstr ""
 
-#: feedback.php:25
-msgid "FEEDBACK & SUGGESTIONS"
+#. translators: %s: path
+#: admin/class-grmlt-redirects-list-table.php:162
+#, php-format
+msgid "Select redirect %s"
 msgstr ""
 
-#: feedback.php:27
-msgid "Help Us Improve Greek Multi-Tool"
+#: admin/class-grmlt-redirects-list-table.php:174
+msgid "Edit destination"
 msgstr ""
 
-#: feedback.php:28
-msgid "We value your feedback and suggestions for enhancing our tools for Greek websites."
+#: admin/class-grmlt-redirects-list-table.php:175
+msgid "Delete this redirect?"
 msgstr ""
 
-#: feedback.php:33
-msgid "We'd Love to Hear From You!"
+#: admin/class-grmlt-redirects-list-table.php:193
+msgid "no public address"
 msgstr ""
 
-#: feedback.php:34
-msgid "Have ideas for new features? Found a bug? Have suggestions for improving existing tools? Let us know!"
+#: admin/class-grmlt-redirects-list-table.php:202
+msgid "Home page"
 msgstr ""
 
-#: feedback.php:38
-msgid "Contact Options"
+#: admin/class-grmlt-redirects-list-table.php:203
+msgid "the page is the static front page"
 msgstr ""
 
-#: feedback.php:40
-msgid "Contact Us via Our Website"
+#. translators: %s: post or term
+#: admin/class-grmlt-redirects-list-table.php:208
+#, php-format
+msgid "current link of the %s"
 msgstr ""
 
-#: greek-excerpts.php:31
-msgid "Greek Excerpt Settings"
+#. translators: %s: post or term
+#: admin/class-grmlt-redirects-list-table.php:208
+msgid "post"
 msgstr ""
 
-#: greek-excerpts.php:38
-msgid "Enable Greek Excerpts"
+#. translators: %s: post or term
+#: admin/class-grmlt-redirects-list-table.php:208
+msgid "term"
 msgstr ""
 
-#: greek-excerpts.php:46
-msgid "Greek Excerpt Length"
+#. translators: %s: post or term
+#: admin/class-grmlt-redirects-list-table.php:209
+#: admin/js/grmlt-admin.js:855
+msgid "fixed path"
 msgstr ""
 
-#: greek-excerpts.php:54
-msgid "Greek Read More Text"
+#: admin/class-grmlt-redirects-list-table.php:227
+msgid "Working"
 msgstr ""
 
-#: greek-excerpts.php:81
-msgid "Configure how excerpts are generated for Greek text."
+#: admin/class-grmlt-redirects-list-table.php:228
+msgid "No destination"
 msgstr ""
 
-#: greek-excerpts.php:89
-msgid "Enable Greek-friendly excerpt generation. When disabled, WordPress will use its default excerpt generation."
+#: admin/class-grmlt-redirects-list-table.php:229
+msgid "Chain"
 msgstr ""
 
-#: greek-excerpts.php:98
-msgid "Number of words to show in Greek excerpts (default WordPress value is 55)."
+#: admin/class-grmlt-redirects-list-table.php:230
+msgid "Loop"
 msgstr ""
 
-#: greek-excerpts.php:107
-msgid "Text to append after truncated excerpts (default is "…")."
+#: admin/class-grmlt-redirects-list-table.php:238
+msgid "Not checked"
 msgstr ""
 
-#: greek-excerpts.php:261
-msgid "Greek-Friendly Excerpt"
+#: admin/class-grmlt-redirects-list-table.php:270
+msgid "No redirects match."
 msgstr ""
 
-#: greek-excerpts.php:278
-msgid "Greek-friendly excerpt generator creates proper excerpts for Greek text, ensuring words are not cut off incorrectly."
+#: admin/class-grmlt-redirects-list-table.php:273
+msgid "There are no redirects yet. They are created automatically when you convert old permalinks."
 msgstr ""
 
-#: greek-excerpts.php:281
-msgid "Current Excerpt:"
+#: admin/editor.php:55
+#: admin/views/tab-settings.php:143
+#: includes/class-grmlt-site-health.php:452
+#: admin/js/grmlt-editor-panel.js:95
+msgid "Accent check"
 msgstr ""
 
-#: greek-excerpts.php:287
-msgid "Generated Greek-Friendly Excerpt:"
+#: admin/editor.php:67
+msgid "Checks the text for words whose accent is probably wrong."
 msgstr ""
 
-#: greek-excerpts.php:292
-msgid "Manual Edit:"
+#: admin/editor.php:68
+#: admin/js/grmlt-editor-panel.js:50
+msgid "Check text"
 msgstr ""
 
-#: greek-excerpts.php:293
-msgid "Edit excerpt manually..."
+#: admin/menu-builder.php:17
+msgid "Post categories"
 msgstr ""
 
-#: greek-excerpts.php:298
-msgid "Refresh Generated Excerpt"
+#: admin/menu-builder.php:19
+msgid "Product categories (WooCommerce)"
 msgstr ""
 
-#: greek-excerpts.php:299
-msgid "Use Generated Excerpt"
+#: admin/menu-builder.php:35
+msgid "Unknown menu source."
 msgstr ""
 
-#: greek-excerpts.php:300
-msgid "Save Manual Excerpt"
+#: admin/menu-builder.php:39
+msgid "Please enter a name for the menu."
 msgstr ""
 
-#: greek-excerpts.php:303
-msgid "Custom Length:"
+#. translators: %s: menu name
+#: admin/menu-builder.php:50
+#, php-format
+msgid "A menu named “%s” already exists. Tick “Replace the items of the existing menu” to refill it, or choose another name."
 msgstr ""
 
-#: greek-excerpts.php:305
-msgid "Apply"
+#: admin/views/header.php:21
+msgid "Plugin links"
 msgstr ""
 
-#: greek-excerpts.php:343
-msgid "Error refreshing excerpt"
+#: admin/views/header.php:22
+msgid "Support"
 msgstr ""
 
-#: greek-excerpts.php:352
-msgid "Generated excerpt successfully applied to post!"
+#: admin/views/header.php:23
+msgid "Rate the plugin"
 msgstr ""
 
-#: greek-excerpts.php:363
-msgid "Error applying excerpt"
+#: admin/views/header.php:26
+msgid "Greek Multi Tool sections"
 msgstr ""
 
-#: greek-excerpts.php:384
-msgid "Manual excerpt successfully saved!"
+#: admin/views/tab-conversion.php:27
+msgid "Convert old permalinks"
 msgstr ""
 
-#: greek-excerpts.php:395
-msgid "Error saving excerpt"
+#: admin/views/tab-conversion.php:29
+msgid "New posts get Latin permalinks automatically. Content published before the plugin was enabled keeps its Greek permalinks until you convert it here, once."
 msgstr ""
 
-#: greek-excerpts.php:420
-msgid "Invalid post ID"
+#. translators: %s: transliteration standard
+#: admin/views/tab-conversion.php:33
+#, php-format
+msgid "The conversion uses the current transliteration standard: %s."
 msgstr ""
 
-#: greek-excerpts.php:427
-msgid "Post not found"
+#: admin/views/tab-conversion.php:42
+msgid "Greek permalinks are disabled in Settings. The conversion still works, but new content will keep Greek permalinks until you enable the feature."
 msgstr ""
 
-#: greek-excerpts.php:453
-msgid "Invalid post ID"
+#: admin/views/tab-conversion.php:45
+msgid "Redirects are disabled. The conversion still records a redirect for every old permalink, but old links return a 404 error until you enable them."
 msgstr ""
 
-#: greek-excerpts.php:462
-msgid "Error updating post excerpt"
+#: admin/views/tab-conversion.php:45
+msgid "Enable redirects"
 msgstr ""
 
-#: greek-excerpts.php:479
-msgid "Invalid field"
+#: admin/views/tab-conversion.php:50
+#: admin/views/tab-conversion.php:116
+msgid "Continue"
 msgstr ""
 
-#: greek-excerpts.php:498
-msgid "Excerpts"
+#: admin/views/tab-conversion.php:51
+msgid "Discard"
 msgstr ""
 
-#: greek-excerpts.php:519
-msgid "Settings saved."
+#: admin/views/tab-conversion.php:57
+msgid "What to convert"
 msgstr ""
 
-#: greek-excerpts.php:529
-msgid "GREEK EXCERPT GENERATOR"
+#: admin/views/tab-conversion.php:60
+msgid "Content types"
 msgstr ""
 
-#: greek-excerpts.php:531
-msgid "Greek-Friendly Excerpt Generator"
+#: admin/views/tab-conversion.php:85
+msgid "Media attachment pages"
 msgstr ""
 
-#: greek-excerpts.php:532
-msgid "Fix WordPress excerpt issues with Greek text"
+#: admin/views/tab-conversion.php:89
+msgid "Internal post types, such as those of ACF, are always excluded."
 msgstr ""
 
-#: greek-excerpts.php:541
-msgid "Enable Greek Excerpts"
+#: admin/views/tab-conversion.php:94
+msgid "Preview"
 msgstr ""
 
-#: greek-excerpts.php:546
-msgid "Enable Greek-friendly excerpt generation"
+#: admin/views/tab-conversion.php:96
+msgid "Preview changes"
 msgstr ""
 
-#: greek-excerpts.php:547
-msgid "When disabled, WordPress will use its default excerpt generation."
+#: admin/views/tab-conversion.php:102
+#: includes/class-grmlt-site-health.php:329
+msgid "Convert"
 msgstr ""
 
-#: greek-excerpts.php:552
-msgid "Greek Excerpt Length"
+#: admin/views/tab-conversion.php:104
+msgid "Back up your database before you continue."
 msgstr ""
 
-#: greek-excerpts.php:555
-msgid "Number of words to show in Greek excerpts (default WordPress value is 55)."
+#: admin/views/tab-conversion.php:105
+msgid "I have backed up the database."
 msgstr ""
 
-#: greek-excerpts.php:559
-msgid "Greek Read More Text"
+#: admin/views/tab-conversion.php:107
+msgid "Convert permalinks"
 msgstr ""
 
-#: greek-excerpts.php:562
-msgid "Text to append after truncated excerpts (default is "…")."
+#: admin/views/tab-conversion.php:110
+#: admin/js/grmlt-admin.js:449
+msgid "Run the preview and confirm the backup first."
 msgstr ""
 
-#: greek-excerpts.php:568
-msgid "Features:"
+#: admin/views/tab-conversion.php:115
+#: admin/js/grmlt-admin.js:113
+#: admin/js/grmlt-admin.js:812
+msgid "Cancel"
 msgstr ""
 
-#: greek-excerpts.php:569
-msgid "This feature fixes how WordPress generates excerpts for Greek text."
+#: admin/views/tab-conversion.php:129
+#: includes/class-grmlt-site-health.php:460
+msgid "Last conversion"
 msgstr ""
 
-#: greek-excerpts.php:571
-msgid "Properly handles Greek word boundaries"
+#. translators: 1: date, 2: posts, 3: terms, 4: standard
+#: admin/views/tab-conversion.php:134
+#, php-format
+msgid "%1$s — %2$s and %3$s were converted (%4$s)."
 msgstr ""
 
-#: greek-excerpts.php:572
-msgid "Ensures Greek words are not cut off mid-character"
+#. translators: %s: number
+#: admin/views/tab-conversion.php:136
+#: includes/class-grmlt-site-health.php:317
+#, php-format
+msgid "%s post"
+msgid_plural "%s posts"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number
+#: admin/views/tab-conversion.php:137
+#: includes/class-grmlt-site-health.php:318
+#, php-format
+msgid "%s term"
+msgid_plural "%s terms"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/views/tab-conversion.php:146
+msgid "This conversion was cancelled before it finished; the permalinks converted until then can still be undone."
+msgstr ""
+
+#: admin/views/tab-conversion.php:149
+msgid "This conversion was made by version 3.x. Undo restores the previous permalinks and keeps the redirects migrated from 3.x; the Latin addresses then redirect to the restored ones. Permalinks that were changed again afterwards are left as they are."
+msgstr ""
+
+#: admin/views/tab-conversion.php:151
+msgid "Undo restores the previous permalinks and deletes the redirects this conversion created for them and for their child pages and terms. The Latin addresses keep working: they redirect to the restored ones (posts through WordPress’ own old-slug redirect, pages and terms through new redirects). Permalinks that were changed again afterwards are left as they are."
+msgstr ""
+
+#: admin/views/tab-conversion.php:153
+msgid "Undo the last conversion?"
+msgstr ""
+
+#: admin/views/tab-conversion.php:153
+msgid "Undo"
+msgstr ""
+
+#: admin/views/tab-conversion.php:166
+#: includes/class-grmlt-site-health.php:456
+msgid "301 redirects"
+msgstr ""
+
+#: admin/views/tab-conversion.php:167
+msgid "Old Greek permalinks lead permanently to the new ones, so search engine rankings are kept. Redirects follow the post or term, so they keep working if the permalink structure changes later."
+msgstr ""
+
+#: admin/views/tab-conversion.php:179
+msgid "Check redirects"
+msgstr ""
+
+#: admin/views/tab-conversion.php:183
+msgid "Export CSV"
+msgstr ""
+
+#: admin/views/tab-conversion.php:188
+msgid "CSV file"
+msgstr ""
+
+#: admin/views/tab-conversion.php:190
+msgid "Import CSV"
+msgstr ""
+
+#: admin/views/tab-conversion.php:202
+msgid "Search redirects"
+msgstr ""
+
+#: admin/views/tab-conversion.php:211
+#: admin/views/tab-settings.php:173
+msgid "Save changes"
+msgstr ""
+
+#: admin/views/tab-conversion.php:212
+#: admin/views/tab-settings.php:174
+msgid "There are unsaved changes."
+msgstr ""
+
+#: admin/views/tab-settings.php:25
+msgid "The official Greek standard (ELOT 743 / ISO 843), as used in passports and road signs. Recommended."
+msgstr ""
+
+#: admin/views/tab-settings.php:26
+msgid "Closer to pronunciation: αι → e, ει/οι → i, μπ → b everywhere."
+msgstr ""
+
+#: admin/views/tab-settings.php:27
+msgid "Keeps new permalinks identical to those created by version 3.x (for example μπλούζα → mplouza). If you switch to ELOT 743, new permalinks follow the standard (blouza); existing ones do not change."
+msgstr ""
+
+#: admin/views/tab-settings.php:38
+#: includes/class-grmlt-site-health.php:49
+#: includes/class-grmlt-site-health.php:306
+#: includes/class-grmlt-site-health.php:432
+msgid "Greek permalinks"
+msgstr ""
+
+#: admin/views/tab-settings.php:40
+msgid "Converts Greek characters to Latin in the permalinks of posts, pages, custom post types, terms and attachments as they are created. Existing permalinks do not change;"
+msgstr ""
+
+#: admin/views/tab-settings.php:41
+msgid "convert them in the Conversion tab."
+msgstr ""
+
+#: admin/views/tab-settings.php:52
+#: admin/views/tab-settings.php:57
+#: includes/class-grmlt-site-health.php:436
+msgid "Transliteration standard"
+msgstr ""
+
+#: admin/views/tab-settings.php:53
+msgid "Also used for media file names."
+msgstr ""
+
+#: admin/views/tab-settings.php:83
+msgid "After saving, the “3.x compatibility” option will no longer be available."
+msgstr ""
+
+#: admin/views/tab-settings.php:91
+msgid "Short words"
+msgstr ""
+
+#: admin/views/tab-settings.php:92
+msgid "Numbers are never removed."
+msgstr ""
+
+#: admin/views/tab-settings.php:95
+msgid "Remove one-letter words"
+msgstr ""
+
+#: admin/views/tab-settings.php:96
+msgid "Remove two-letter words"
+msgstr ""
+
+#: admin/views/tab-settings.php:102
+#: includes/class-grmlt-site-health.php:444
+msgid "Excluded words"
+msgstr ""
+
+#: admin/views/tab-settings.php:103
+msgid "Never appear in permalinks. Matched regardless of accents and letter case."
+msgstr ""
+
+#: admin/views/tab-settings.php:106
+msgid "e.g. και, με, σε"
+msgstr ""
+
+#: admin/views/tab-settings.php:107
+msgid "Separate words with commas."
+msgstr ""
+
+#: admin/views/tab-settings.php:113
+msgid "Permalink structure"
+msgstr ""
+
+#: admin/views/tab-settings.php:117
+msgid "The site uses plain permalinks (?p=123), so transliteration has no visible effect on URLs."
+msgstr ""
+
+#: admin/views/tab-settings.php:121
+msgid "Change it in Settings → Permalinks"
+msgstr ""
+
+#: admin/views/tab-settings.php:130
+#: includes/class-grmlt-site-health.php:448
+msgid "Media file names"
+msgstr ""
+
+#: admin/views/tab-settings.php:131
+msgid "Renames uploaded files with Greek names to Latin, for example φωτογραφία.jpg → fotografia.jpg, using the transliteration standard above. Files that are already uploaded are not renamed."
+msgstr ""
+
+#: admin/views/tab-settings.php:144
+msgid "Adds a panel to the editor sidebar that points out words whose accent is probably wrong."
+msgstr ""
+
+#. translators: %d: number of rules
+#: admin/views/tab-settings.php:157
+#, php-format
+msgid "Which rules are checked (%d)"
+msgstr ""
+
+#: admin/views/tab-settings.php:182
+msgid "Try it"
+msgstr ""
+
+#: admin/views/tab-settings.php:183
+msgid "Shows the result with the settings as they are on this screen, even before you save."
+msgstr ""
+
+#: admin/views/tab-settings.php:188
+msgid "Post title"
+msgstr ""
+
+#: admin/views/tab-settings.php:189
+#: admin/views/tab-settings.php:190
+msgid "Οι καλύτερες ιδέες για το σαλόνι σας"
+msgstr ""
+
+#: admin/views/tab-settings.php:193
+msgid "File name"
+msgstr ""
+
+#: admin/views/tab-settings.php:194
+#: admin/views/tab-settings.php:195
+msgid "Φωτογραφία προϊόντος.JPG"
+msgstr ""
+
+#: admin/views/tab-settings.php:204
+msgid "Greek site readiness"
+msgstr ""
+
+#: admin/views/tab-settings.php:209
+msgid "Everything looks right."
+msgstr ""
+
+#: admin/views/tab-settings.php:223
+msgid "All checks in Site Health"
+msgstr ""
+
+#: admin/views/tab-tools.php:14
+msgid "Shows what the conversion would change, writes nothing."
+msgstr ""
+
+#: admin/views/tab-tools.php:18
+msgid "Converts old permalinks in batches, with 301 redirects. Ideal for large sites."
+msgstr ""
+
+#: admin/views/tab-tools.php:22
+msgid "Restores the permalinks of the last conversion."
+msgstr ""
+
+#: admin/views/tab-tools.php:26
+msgid "Checks every redirect for missing destinations, chains and loops."
+msgstr ""
+
+#: admin/views/tab-tools.php:30
+msgid "Exports the redirects to a CSV file."
+msgstr ""
+
+#: admin/views/tab-tools.php:34
+msgid "Imports redirects from a CSV file (columns old_path, new_path)."
+msgstr ""
+
+#: admin/views/tab-tools.php:38
+msgid "Restores ACF and Secure Custom Fields keys damaged by versions before 3.4.1 (fields, sub fields, field groups, post types, taxonomies, options pages), from stored values or acf-json. Dry run by default. --write keeps a backup that --undo restores; --regenerate-keys gives new keys to what cannot be recovered."
+msgstr ""
+
+#: admin/views/tab-tools.php:46
+msgid "Category menu"
 msgstr ""
 
-#: greek-excerpts.php:573
-msgid "Removes shortcodes and page builder elements"
+#: admin/views/tab-tools.php:47
+msgid "Creates a navigation menu that mirrors a category hierarchy."
 msgstr ""
 
-#: greek-excerpts.php:574
-msgid "Customizable excerpt length specifically for Greek text"
+#: admin/views/tab-tools.php:54
+msgid "Source"
 msgstr ""
 
-#: greek-excerpts.php:575
-msgid "Custom "read more" text"
+#: admin/views/tab-tools.php:62
+msgid "Menu name"
 msgstr ""
 
-#: greek-excerpts.php:576
-msgid "Adds a meta box in the post editor for generating and previewing excerpts"
+#: admin/views/tab-tools.php:65
+msgid "Replace the items of the existing menu with this name"
 msgstr ""
 
-#: greek-excerpts.php:577
-msgid "Manual editing capability for fine-tuning excerpts"
+#: admin/views/tab-tools.php:66
+msgid "Create menu"
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:226
-msgid "Greek Multi Tool Settings Page"
+#: admin/views/tab-tools.php:73
+msgid "Restore ACF field keys"
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:236
-msgid "Welcome, "
+#: admin/views/tab-tools.php:74
+msgid "For sites where “Convert All Old Permalinks” in a version before 3.4.1 damaged the keys of Advanced Custom Fields or Secure Custom Fields. Run it first without --write: it lists every damaged field, field group, post type, taxonomy and options page, the key it would restore and where that key comes from."
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:239
-msgid "Congratulations! You are about to use the most powerful WordPress plugin for Greek Language Users -  Greek Multi Tool is designed to make the process of using the Greek Language in WordPress as ease as possible."
+#: admin/views/tab-tools.php:80
+#: admin/views/tab-tools.php:98
+msgid "Copy command"
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:241
-msgid "Support Forum"
+#: admin/views/tab-tools.php:80
+#: admin/views/tab-tools.php:98
+msgid "Copy"
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:243
-msgid "Review the Plugin on WordPress Repository"
+#: admin/views/tab-tools.php:82
+msgid "Then add --write to apply. A backup of the changed rows is written to wp-content/uploads/grmlt-acf-backups/, a folder closed to the web, and --undo=<file name> puts them back. Keys that cannot be recovered need the site’s acf-json folder in the theme, or new keys with --write --regenerate-keys. Back up the database first."
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:260
-msgid "Permalinks Settings"
+#: admin/views/tab-tools.php:89
+msgid "WP-CLI commands"
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:261
-msgid "Uppercase Accent Remover Settings"
+#: admin/views/tab-tools.php:110
+#: admin/views/tab-tools.php:120
+msgid "Restore defaults"
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:262
-msgid "Manage Old Permalinks"
+#: admin/views/tab-tools.php:111
+msgid "Resets the plugin settings. Converted permalinks and redirects are not affected."
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:263
-msgid "301 Redirect Settings"
+#: admin/views/tab-tools.php:118
+msgid "The “3.x compatibility” transliteration standard is kept, so new permalinks keep being written the same way."
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:264
-msgid "Menu Builder"
+#: admin/views/tab-tools.php:120
+msgid "Restore all settings to their defaults? The 3.x compatibility standard is kept."
 msgstr ""
 
-#: grmlt-plugin-admin-main-settings-page.php:333
-msgid "Save Settings"
+#: admin/views/tab-tools.php:120
+msgid "Restore all settings to their defaults?"
 msgstr ""
 
-#: menu-builder.php:7
-msgid "MENU BUILDER"
+#: includes/class-grmlt-converter.php:459
+msgid "Another batch of this conversion is still running. Please wait a moment."
 msgstr ""
 
-#: menu-builder.php:13
-msgid "Woocomerce Products Category Menu"
+#: includes/class-grmlt-converter.php:492
+msgid "A conversion is already in progress. Continue it or discard it first."
 msgstr ""
 
-#: menu-builder.php:14
-msgid "To create a custom menu for your WooCommerce store effortlessly, simply enter your preferred menu name in the form below. Click 'Create,' and voilà! A new menu with the name you specified will be automatically generated. This menu will intuitively organize all your WooCommerce product categories, following their existing hierarchy."
+#: includes/class-grmlt-converter.php:573
+msgid "No conversion is in progress."
 msgstr ""
 
-#: menu-builder.php:17
-msgid "Enter a name for the Menu..."
+#: includes/class-grmlt-converter.php:661
+msgid "The conversion was cancelled or replaced while this batch was running."
 msgstr ""
 
-#: menu-builder.php:18
-msgid "Create Menu"
+#: includes/class-grmlt-converter.php:1084
+msgid "A conversion is in progress. Finish or discard it before undoing."
 msgstr ""
 
-#: menu-builder.php:25
-msgid "Posts Category Menu"
+#: includes/class-grmlt-converter.php:1088
+msgid "There is no conversion to undo."
 msgstr ""
 
-#: menu-builder.php:26
-msgid "To effortlessly create a custom menu for your WordPress blog, simply enter your preferred menu name in the form below. Click 'Create,' and voilà! A new menu with the name you specified will be automatically generated. This menu will intuitively organize all your WordPress post categories, following their existing hierarchy."
+#: includes/class-grmlt-redirects.php:310
+msgid "The old path is empty."
 msgstr ""
 
-#: menu-builder.php:29
-msgid "Enter a name for the Menu..."
+#: includes/class-grmlt-redirects.php:313
+msgid "The old and the new path are the same."
 msgstr ""
 
-#: menu-builder.php:30
-msgid "Create Menu"
+#: includes/class-grmlt-redirects.php:318
+msgid "A redirect for this path already exists."
 msgstr ""
 
-#: oldtranslator.php:9
-msgid "You do not have sufficient permissions to access this page."
+#: includes/class-grmlt-redirects.php:339
+msgid "The redirect could not be saved."
 msgstr ""
 
-#: permalinks-settings.php:7
-msgid "PERMALINK SETTINGS"
+#: includes/class-grmlt-redirects.php:426
+msgid "The destination must be a path on this site."
 msgstr ""
 
-#: permalinks-settings.php:9
-msgid "Convert the permalinks"
+#: includes/class-grmlt-redirects.php:434
+msgid "The home page cannot be the destination of a redirect. Choose a specific page of the site as the destination."
 msgstr ""
 
-#: permalinks-settings.php:10
-msgid "Enable the permalinks convert sitewide"
+#: includes/class-grmlt-redirects.php:437
+msgid "The destination cannot be the old path itself."
 msgstr ""
 
-#: permalinks-settings.php:15
-msgid "Enable Greeklish Permalinks Convert: "
+#: includes/class-grmlt-redirects.php:1492
+msgid "The file could not be read."
 msgstr ""
 
-#: permalinks-settings.php:16
-msgid "Automatically convert the greek characters to latin in all permalinks in posts, pages, custom post type and terms."
+#: includes/class-grmlt-redirects.php:1502
+msgid "The file is empty."
 msgstr ""
 
-#: permalinks-settings.php:43
-msgid "Diphthongs Settings"
+#: includes/class-grmlt-redirects.php:1512
+msgid "The first line must contain the columns old_path and new_path."
 msgstr ""
 
-#: permalinks-settings.php:44
-msgid "Select how you want the dipthongs to be converted"
+#: includes/class-grmlt-redirects.php:1580
+msgid "Empty path"
 msgstr ""
 
-#: permalinks-settings.php:49
-msgid "Simple Conversion"
+#: includes/class-grmlt-redirects.php:1582
+msgid "Not a path on this site"
 msgstr ""
 
-#: permalinks-settings.php:50
-msgid "For example \"ει\" becomes \"ei\", \"οι\" becomes \"οi\", \"μπ\" becomes \"mp\" etc"
+#: includes/class-grmlt-redirects.php:1584
+msgid "A redirect for this path already exists"
 msgstr ""
 
-#: permalinks-settings.php:61
-msgid "Advance  Conversion"
+#: includes/class-grmlt-redirects.php:1587
+msgid "Old and new path are the same"
 msgstr ""
 
-#: permalinks-settings.php:62
-msgid "For example \"ει\", \"οι\" becomes \"i\", \"μπ\" becomes \"b\" etc"
+#: includes/class-grmlt-redirects.php:1589
+msgid "The destination is the home page; choose a specific page of the site as the destination"
 msgstr ""
 
-#: permalinks-settings.php:75
-msgid "Remove One/Two Letter Words"
+#: includes/class-grmlt-redirects.php:1591
+msgid "Internal object without a public address (e.g. an ACF field)"
 msgstr ""
 
-#: permalinks-settings.php:76
-msgid "Select which of the following word options you want to remove from the posts urls"
+#: includes/class-grmlt-redirects.php:1593
+msgid "The new address leads to no public content"
 msgstr ""
 
-#: permalinks-settings.php:86
-msgid "Remove One Letter Words"
+#: includes/class-grmlt-redirects.php:1595
+msgid "A post with a public address had the same old address; its redirect was kept"
 msgstr ""
 
-#: permalinks-settings.php:105
-msgid "Remove Two Letter Words"
+#: includes/class-grmlt-rest.php:286
+msgid "The accent check needs the PHP mbstring extension, which is not available on this server."
 msgstr ""
 
-#: permalinks-settings.php:125
-msgid "Exclude Stopwords From Permalinks"
+#: includes/class-grmlt-rest.php:297
+msgid "There is no text to check yet."
 msgstr ""
 
-#: permalinks-settings.php:126
-msgid "Type the words you want to exclude from permalinks seperated by a comma!"
+#: includes/class-grmlt-rest.php:351
+msgid "Please confirm that you have a database backup."
 msgstr ""
 
-#: text-analysis.php:180
-msgid "Word \"%s\" is all-caps and should not have accents"
+#: includes/class-grmlt-site-health.php:41
+#: includes/class-grmlt-site-health.php:165
+msgid "Site language for Greek content"
 msgstr ""
 
-#: text-analysis.php:215
-msgid "Word \"%s\" should not have an accent"
+#: includes/class-grmlt-site-health.php:45
+#: includes/class-grmlt-site-health.php:260
+msgid "Accent-insensitive search in the database"
 msgstr ""
 
-#: text-analysis.php:304
-msgid "Multi-syllable word \"%s\" should have an accent"
+#: includes/class-grmlt-site-health.php:53
+#: includes/class-grmlt-site-health.php:356
+#: includes/class-grmlt-site-health.php:468
+msgid "Greek media file names"
 msgstr ""
 
-#: text-analysis.php:374
-msgid "Word \"%s\" should have an accent in this context"
+#: includes/class-grmlt-site-health.php:57
+#: includes/class-grmlt-site-health.php:384
+msgid "Redirects from old Greek permalinks"
 msgstr ""
 
-#: text-analysis.php:387
-msgid "Monosyllabic word \"%s\" should not have an accent"
+#: includes/class-grmlt-site-health.php:62
+#: includes/class-grmlt-site-health.php:192
+msgid "Language attribute of the HTML page"
 msgstr ""
 
-#: text-analysis.php:427
-msgid "Greek Text Analysis"
+#: includes/class-grmlt-site-health.php:168
+msgid "The site language is Greek, so WordPress shows Greek dates and browsers handle Greek capitals correctly."
 msgstr ""
 
-#: text-analysis.php:444
-msgid "Analyze your content for proper Greek accent rules."
+#: includes/class-grmlt-site-health.php:168
+msgid "Site language is Greek."
 msgstr ""
 
-#: text-analysis.php:445
-msgid "Analyze Text"
+#: includes/class-grmlt-site-health.php:171
+msgid "The site language is not Greek, but no Greek content was found, so nothing depends on it."
 msgstr ""
 
-#: text-analysis.php:475
-msgid "Analyzing..."
+#: includes/class-grmlt-site-health.php:171
+msgid "No Greek content found."
 msgstr ""
 
-#: text-analysis.php:479
-msgid "Text Statistics"
+#: includes/class-grmlt-site-health.php:177
+msgid "The site language is not Greek, but the content is."
 msgstr ""
 
-#: text-analysis.php:480
-msgid "Characters:"
+#: includes/class-grmlt-site-health.php:177
+msgid "Greek dates, month names in the right grammatical case and accent-free capitals all depend on the site language. Set it to Greek in Settings → General."
 msgstr ""
 
-#: text-analysis.php:481
-msgid "Words:"
+#: includes/class-grmlt-site-health.php:178
+msgid "Open Settings → General"
 msgstr ""
 
-#: text-analysis.php:482
-msgid "Greek characters:"
+#: includes/class-grmlt-site-health.php:179
+msgid "The site language is not Greek."
 msgstr ""
 
-#: text-analysis.php:484
-msgid "Accented characters:"
+#: includes/class-grmlt-site-health.php:195
+msgid "Not checked yet."
 msgstr ""
 
-#: text-analysis.php:487
-msgid "Accent Rule Issues"
+#: includes/class-grmlt-site-health.php:195
+msgid "Check now"
 msgstr ""
 
-#: text-analysis.php:495
-msgid "No accent rule issues found!"
+#: includes/class-grmlt-site-health.php:202
+msgid "The front page could not be requested from the server, so the language attribute could not be verified."
 msgstr ""
 
-#: text-analysis.php:506
-msgid "Error analyzing text."
+#: includes/class-grmlt-site-health.php:202
+msgid "Could not be verified."
 msgstr ""
 
-#: text-analysis.php:518
-msgid "You do not have permission to perform this action."
+#. translators: %s: lang attribute value
+#: includes/class-grmlt-site-health.php:206
+#, php-format
+msgid "The page declares lang=\"%s\"."
 msgstr ""
 
-#: text-analysis.php:524
-msgid "No content to analyze."
+#. translators: %s: lang attribute value
+#: includes/class-grmlt-site-health.php:206
+msgid "The page declares Greek as its language."
 msgstr ""
 
-#: text-analysis.php:538
-msgid "Text Analysis"
+#: includes/class-grmlt-site-health.php:212
+msgid "The front page does not declare Greek as its language."
 msgstr ""
 
-#: text-analysis.php:547
-msgid "TEXT ANALYSIS SETTINGS"
+#: includes/class-grmlt-site-health.php:212
+msgid "Without lang=\"el\" on the <html> element browsers keep the accents on capital letters and screen readers read the text in the wrong language. The theme must call language_attributes() in its <html> tag."
 msgstr ""
 
-#: text-analysis.php:549
-msgid "Greek Accent Rules Analysis"
+#. translators: %s: lang attribute value
+#: includes/class-grmlt-site-health.php:212
+#, php-format
+msgid "Found: lang=\"%s\"."
 msgstr ""
 
-#: text-analysis.php:550
-msgid "Analyze your content for proper Greek accent rule usage"
+#: includes/class-grmlt-site-health.php:214
+msgid "The theme does not declare Greek as the page language."
 msgstr ""
 
-#: text-analysis.php:555
-msgid "Accent Rules Checked:"
+#: includes/class-grmlt-site-health.php:285
+msgid "The database collation could not be tested on this server."
 msgstr ""
 
-#: text-analysis.php:556
-msgid "This feature adds a metabox to your post and page editor that analyzes Greek text for accent rule compliance."
+#: includes/class-grmlt-site-health.php:285
+msgid "Collation could not be verified."
 msgstr ""
 
-#: text-analysis.php:558
-msgid "All words with two or more syllables must have an accent"
+#. translators: %s: collation name
+#: includes/class-grmlt-site-health.php:288
+#, php-format
+msgid "Searching for a word without accents finds it with accents too (collation %s)."
 msgstr ""
 
-#: text-analysis.php:559
-msgid "Words that appear monosyllabic after elision or apocope keep their accent"
+#. translators: %s: collation name
+#: includes/class-grmlt-site-health.php:288
+msgid "Search ignores accents."
 msgstr ""
 
-#: text-analysis.php:560
-msgid "Words that have lost their accent through aphaeresis are exceptions"
+#: includes/class-grmlt-site-health.php:294
+msgid "The site search distinguishes accented from unaccented letters."
 msgstr ""
 
-#: text-analysis.php:561
-msgid "Monosyllabic words generally do not take accents, with specific exceptions"
+#. translators: %s: collation name
+#: includes/class-grmlt-site-health.php:294
+#, php-format
+msgid "The posts table uses the collation %s, which treats “δουλειά” and “δουλεια” as different words. An accent-insensitive collation such as utf8mb4_unicode_ci or utf8mb4_0900_ai_ci fixes this. Ask your hosting provider or database administrator; the plugin never changes the database itself."
 msgstr ""
 
-#: text-analysis.php:562
-msgid "Common Greek words like \"Όλα\", \"Ένα\", \"Όταν\" are recognized as correctly accented"
+#: includes/class-grmlt-site-health.php:296
+msgid "Site search distinguishes accents."
 msgstr ""
 
-#: text-analysis.php:563
-msgid "Certain words like \"μου\", \"σου\", \"του\", \"το\", \"τα\", \"για\", \"πιο\", \"ναι\", \"και\", \"οι\", etc. never take accents"
+#: includes/class-grmlt-site-health.php:312
+msgid "No post or term still has a Greek permalink."
 msgstr ""
 
-#: text-analysis.php:564
-msgid "The disjunctive conjunction \"ή\" always takes an accent"
+#: includes/class-grmlt-site-health.php:312
+msgid "All permalinks are Latin."
 msgstr ""
 
-#: text-analysis.php:565
-msgid "Interrogative \"πού\" and \"πώς\" always take accents in questions"
+#. translators: 1: number of posts, 2: number of terms
+#: includes/class-grmlt-site-health.php:316
+#, php-format
+msgid "%1$s and %2$s still have Greek permalinks."
 msgstr ""
 
-#: text-analysis.php:566
-msgid "Special cases for \"πού\" and \"πώς\" in specific phrases"
+#: includes/class-grmlt-site-health.php:320
+msgid "Greek permalinks are currently not converted for new content either; enable the Greek permalinks feature first."
 msgstr ""
 
-#: text-analysis.php:567
-msgid "All-caps words should not have accents (except for \"Ή\")"
+#: includes/class-grmlt-site-health.php:325
+msgid "Greek characters in URLs are shown percent-encoded when shared, which is hard to read. The converter rewrites them to Latin and adds a 301 redirect for every old address."
 msgstr ""
 
-#: text-analysis.php:569
-msgid "The text analysis metabox will appear in the sidebar of your post and page editors."
+#: includes/class-grmlt-site-health.php:326
+msgid "Open the converter"
 msgstr ""
 
-#: uppercase-accent-remover-settings.php:10
-msgid "UPPERCASE ACCENT REMOVER SETTINGS"
+#. translators: %s: number
+#: includes/class-grmlt-site-health.php:360
+#, php-format
+msgid "%s media file has a Greek file name and new uploads are not converted."
+msgid_plural "%s media files have Greek file names and new uploads are not converted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-grmlt-site-health.php:365
+msgid "Enable the media file name conversion so that every new upload gets a Latin file name. Files that are already uploaded are not renamed."
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:366
+msgid "Open the settings"
+msgstr ""
+
+#. translators: %s: number
+#: includes/class-grmlt-site-health.php:373
+#, php-format
+msgid "New uploads get Latin file names. %s existing file keeps its Greek name (existing files are not renamed)."
+msgid_plural "New uploads get Latin file names. %s existing files keep their Greek names (existing files are not renamed)."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number
+#: includes/class-grmlt-site-health.php:374
+msgid "No media file has a Greek file name."
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:388
+msgid "There are no redirects yet. They are created automatically when old permalinks are converted."
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:388
+msgid "No redirects yet."
+msgstr ""
+
+#. translators: %s: number
+#: includes/class-grmlt-site-health.php:392
+#, php-format
+msgid "%s redirect points to missing content or forms a chain or loop."
+msgid_plural "%s redirects point to missing content or form chains or loops."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-grmlt-site-health.php:397
+msgid "Visitors and search engines following those old addresses end up on an error page or go through several hops. Review them in the redirects list."
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:398
+msgid "Show the problematic redirects"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:401
+msgid "Review"
+msgstr ""
+
+#. translators: %s: number
+#: includes/class-grmlt-site-health.php:406
+#, php-format
+msgid "%s redirect exists but has not been checked yet."
+msgid_plural "%s redirects exist but have not been checked yet."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number
+#: includes/class-grmlt-site-health.php:407
+#, php-format
+msgid "%s redirect works."
+msgid_plural "All %s redirects work."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-grmlt-site-health.php:428
+msgid "Version"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:433
+#: includes/class-grmlt-site-health.php:449
+#: includes/class-grmlt-site-health.php:453
+#: includes/class-grmlt-site-health.php:457
+msgid "Enabled"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:433
+#: includes/class-grmlt-site-health.php:449
+#: includes/class-grmlt-site-health.php:453
+#: includes/class-grmlt-site-health.php:457
+msgid "Disabled"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:440
+msgid "Short words removed"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:461
+msgid "None"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:464
+msgid "Greek permalinks remaining"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:472
+msgid "posts.post_title collation"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:473
+msgid "Not checked yet"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:476
+msgid "PHP intl (Unicode normalization)"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:477
+#: includes/class-grmlt-site-health.php:481
+msgid "Available"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:477
+msgid "Not available"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:480
+msgid "PHP mbstring"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:481
+msgid "Not available: permalinks and redirects work, the accent check needs it"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:487
+msgid "Backup of the 3.x redirects table"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:494
+msgid "Data update"
+msgstr ""
+
+#. translators: 1: date and time, 2: step name, 3: error message
+#: includes/class-grmlt-site-health.php:497
+#, php-format
+msgid "Waiting after an error (%1$s, step %2$s): %3$s"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:525
+msgid "Migration from 3.x"
+msgstr ""
+
+#: includes/class-grmlt-site-health.php:532
+msgid "Data repair"
 msgstr ""
 
-#: uppercase-accent-remover-settings.php:12
-msgid "Remove Uppercase Accents"
+#: includes/notices.php:46
+msgid "Greek dates"
 msgstr ""
 
-#: uppercase-accent-remover-settings.php:13
-msgid "Enable the uppercase accent remover sitewide"
+#: includes/notices.php:47
+msgid "Uppercase accent removal"
 msgstr ""
 
-#: uppercase-accent-remover-settings.php:18
-msgid "Enable Uppercase Accents Remover: "
+#: includes/notices.php:48
+msgid "Enhanced search"
 msgstr ""
 
-#: uppercase-accent-remover-settings.php:19
-msgid "Automatically remove accented characters from elements having their text content uppercase transformed through CSS."
+#: includes/notices.php:49
+msgid "Greek excerpts"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:19
-msgid "GREEK SEARCH SETTINGS"
+#. translators: %s: URL of Settings > General
+#: includes/notices.php:67
+#, php-format
+msgid "Greek dates were enabled but the site language is not Greek. Set the Site Language to Greek in <a href=\"%s\">Settings &rarr; General</a> so WordPress shows Greek dates."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:21
-msgid "Enhanced Greek Search"
+#: includes/notices.php:74
+#: includes/notices.php:114
+#: includes/notices.php:167
+msgid "Greek Multi Tool 4.0"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:22
-msgid "Improve WordPress search for Greek content by handling accents and diphthongs"
+#. translators: %s: comma separated feature names
+#: includes/notices.php:78
+#, php-format
+msgid "The following features were removed because WordPress now covers them: %s."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:28
-msgid "Enable Enhanced Greek Search:"
+#. translators: %s: URL of Site Health
+#: includes/notices.php:84
+#, php-format
+msgid "Whether your site meets the requirements is checked in <a href=\"%s\">Site Health</a>."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:29
-msgid "Improve search results for Greek content by handling accents and diphthongs."
+#: includes/notices.php:92
+#: includes/notices.php:171
+msgid "Do not show again"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:42
-msgid "Post Types to Include in Search:"
+#: includes/notices.php:117
+msgid "The update of the plugin data stopped because of an error and will be retried in an hour. Until then the plugin keeps working with your 3.x settings, and nothing was lost."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:43
-msgid "Select which post types should be included in the enhanced search."
+#: includes/notices.php:119
+msgid "The setup of the plugin data stopped because of an error and will be retried in an hour. Until then new permalinks are converted with the default settings; redirects and the converter need the database tables."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:62
-msgid "Greek Accent-Insensitive Search"
+#: includes/notices.php:124
+msgid "Retry now"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:63
-msgid "The enhanced Greek search allows users to find content regardless of accent marks. For example, searching for \"πενσα\" will also match \"πένσα\"."
+#. translators: %s: database table name
+#: includes/notices.php:141
+#, php-format
+msgid "Not every old redirect could be migrated, so the old table was kept as %s. Nothing was deleted."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:67
-msgid "Save Search Settings"
+#. translators: 1: number of redirects, 2: URL of Site Health > Info
+#: includes/notices.php:149
+#, php-format
+msgid "%1$d old redirect could not be migrated. The details are listed under <a href=\"%2$s\">Site Health &rarr; Info &rarr; Greek Multi Tool</a>."
+msgid_plural "%1$d old redirects could not be migrated. The details are listed under <a href=\"%2$s\">Site Health &rarr; Info &rarr; Greek Multi Tool</a>."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: option name
+#: includes/notices.php:157
+#, php-format
+msgid "Some entries of the 3.x undo data could not be read; a copy was kept in the option %s."
+msgstr ""
+
+#: includes/options.php:19
+msgid "ELOT 743"
+msgstr ""
+
+#: includes/options.php:20
+msgid "Phonetic"
+msgstr ""
+
+#: includes/options.php:21
+msgid "3.x compatibility"
+msgstr ""
+
+#: includes/text-analysis.php:19
+msgid "Words with two or more syllables must carry an accent."
+msgstr ""
+
+#: includes/text-analysis.php:20
+msgid "Words that become monosyllabic after elision or apocope keep their accent."
+msgstr ""
+
+#: includes/text-analysis.php:21
+msgid "Words that lost their accent through aphaeresis are exceptions."
+msgstr ""
+
+#: includes/text-analysis.php:22
+msgid "Monosyllabic words do not take an accent, with specific exceptions."
+msgstr ""
+
+#: includes/text-analysis.php:23
+msgid "Common words such as “όλα”, “ένα”, “όταν” are recognized as correctly accented."
+msgstr ""
+
+#: includes/text-analysis.php:24
+msgid "Words such as “μου”, “σου”, “του”, “το”, “τα”, “για”, “πιο”, “ναι”, “και”, “οι” never take an accent."
+msgstr ""
+
+#: includes/text-analysis.php:25
+msgid "The disjunctive conjunction “ή” always takes an accent."
+msgstr ""
+
+#: includes/text-analysis.php:26
+msgid "Interrogative “πού” and “πώς” take an accent in questions."
+msgstr ""
+
+#: includes/text-analysis.php:27
+msgid "“πού” and “πώς” keep their accent in set phrases such as “πού και πού”."
+msgstr ""
+
+#: includes/text-analysis.php:28
+msgid "Words written in capitals do not carry accents, except “Ή”."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:105
-msgid "Error saving settings"
+#. translators: %s: word
+#: includes/text-analysis.php:131
+#, php-format
+msgid "“%s” is written in capitals and should not carry an accent."
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:233
-msgid "Settings saved successfully"
+#. translators: %s: word
+#: includes/text-analysis.php:137
+#, php-format
+msgid "“%s” never takes an accent."
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:205
-msgid "Security check failed"
+#. translators: %s: word
+#: includes/text-analysis.php:152
+#, php-format
+msgid "“%s” has more than one syllable and should carry an accent."
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:210
-msgid "Permission denied"
+#. translators: %s: word
+#: includes/text-analysis.php:202
+#, php-format
+msgid "“%s” should carry an accent in this context."
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:180
-msgid "Enable enhanced Greek search"
+#. translators: %s: word
+#: includes/text-analysis.php:204
+#, php-format
+msgid "“%s” is monosyllabic and should not carry an accent."
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:190
-msgid "Post types to include in enhanced search"
+#: admin/js/grmlt-admin.js:79
+msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:167
-msgid "Search"
+#: admin/js/grmlt-admin.js:112
+msgid "Confirm"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:19
-msgid "GREEK SEARCH SETTINGS"
+#: admin/js/grmlt-admin.js:252
+msgid "Add a word and press Enter"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:21
-msgid "Enhanced Greek Search"
+#. translators: %s: word
+#: admin/js/grmlt-admin.js:263
+#, js-format
+msgid "Remove “%s”"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:22
-msgid "Improve WordPress search for Greek content by handling accents and diphthongs"
+#: admin/js/grmlt-admin.js:377
+msgid "Copied"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:28
-msgid "Enable Enhanced Greek Search:"
+#: admin/js/grmlt-admin.js:451
+msgid "Nothing to convert with the current selection."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:29
-msgid "Improve search results for Greek content by handling accents and diphthongs."
+#: admin/js/grmlt-admin.js:453
+msgid "Confirm the database backup to enable the conversion."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:41
-msgid "Enable Accent-Insensitive Search:"
+#. translators: 1: number, 2: standard
+#: admin/js/grmlt-admin.js:468
+#, js-format
+msgid "%1$s permalinks will change, using the %2$s standard."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:42
-msgid "Allow searching for Greek words regardless of accent marks (e.g., searching for \"πενσα\" will match \"πένσα\")."
+#. translators: %s: number
+#: admin/js/grmlt-admin.js:478
+#, js-format
+msgid "About %s permalinks will get a numeric suffix because the Latin slug already exists (estimated from the sample)."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:55
-msgid "Post Types to Include in Search:"
+#. translators: %s: number
+#: admin/js/grmlt-admin.js:479
+#, js-format
+msgid "%s permalink will get a numeric suffix because the Latin slug already exists."
+msgid_plural "%s permalinks will get a numeric suffix because the Latin slug already exists."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/js/grmlt-admin.js:491
+msgid "Type"
+msgstr ""
+
+#: admin/js/grmlt-admin.js:491
+msgid "Title"
+msgstr ""
+
+#: admin/js/grmlt-admin.js:491
+msgid "Current permalink"
+msgstr ""
+
+#: admin/js/grmlt-admin.js:491
+msgid "New permalink"
+msgstr ""
+
+#. translators: 1: shown, 2: total
+#: admin/js/grmlt-admin.js:512
+#, js-format
+msgid "Showing a sample of %1$s of %2$s."
+msgstr ""
+
+#. translators: %s: number
+#: admin/js/grmlt-admin.js:544
+#, js-format
+msgid "A conversion is running right now in another window or in WP-CLI (%s permalinks converted so far). Wait for it to finish, or take it over with “Continue”."
+msgstr ""
+
+#. translators: %s: number
+#: admin/js/grmlt-admin.js:546
+#, js-format
+msgid "A conversion was interrupted after converting %s permalinks. Continue it, or discard it: what was converted stays converted and can be undone."
+msgstr ""
+
+#. translators: 1: posts, 2: terms, 3: skipped
+#: admin/js/grmlt-admin.js:564
+#, js-format
+msgid "Done: %1$s posts and %2$s terms were converted, %3$s were skipped."
+msgstr ""
+
+#. translators: %s: plugin name
+#: admin/js/grmlt-admin.js:566
+#, js-format
+msgid "%s is active: run its indexing or optimization so that canonical URLs and sitemaps pick up the new permalinks."
+msgstr ""
+
+#: admin/js/grmlt-admin.js:569
+msgid "Reload the page to see the redirects and the undo option."
+msgstr ""
+
+#. translators: %s: number
+#: admin/js/grmlt-admin.js:581
+#, js-format
+msgid "The conversion was cancelled after converting %s permalinks. They stay converted and can be undone from the “Last conversion” card."
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:56
-msgid "Select which post types should be included in the enhanced search."
+#: admin/js/grmlt-admin.js:582
+msgid "Reload the page"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:75
-msgid "Greek Search Features"
+#. translators: 1: done, 2: total
+#: admin/js/grmlt-admin.js:615
+#, js-format
+msgid "Converted %1$s of %2$s"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:76
-msgid "The enhanced Greek search improves the default WordPress search for Greek content."
+#: admin/js/grmlt-admin.js:658
+#: admin/js/grmlt-admin.js:762
+#: admin/js/grmlt-admin.js:790
+msgid "Starting…"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:78
-msgid "Accent-insensitive search: Find results regardless of accent marks"
+#: admin/js/grmlt-admin.js:675
+msgid "Cancelling after the current permalink…"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:79
-msgid "Extended search: Search in post titles, content, excerpts, and meta fields"
+#: admin/js/grmlt-admin.js:703
+msgid "Continuing…"
 msgstr ""
 
-#: admin/partials/settings-page/search-tab.php:80
-msgid "Improved product search: Better results for WooCommerce products"
+#. translators: 1: done, 2: total
+#: admin/js/grmlt-admin.js:740
+#, js-format
+msgid "Restored %1$s of %2$s"
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:205
-msgid "Security check failed"
+#. translators: 1: restored, 2: skipped
+#: admin/js/grmlt-admin.js:744
+#, js-format
+msgid "Done: %1$s permalinks were restored, %2$s were skipped because they had changed in the meantime. Reload the page to update the lists."
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:210
-msgid "Permission denied"
+#. translators: 1: done, 2: total
+#: admin/js/grmlt-admin.js:775
+#, js-format
+msgid "Checked %1$s of %2$s"
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:233
-msgid "Settings saved successfully"
+#: admin/js/grmlt-admin.js:777
+msgid "Check complete. Reloading…"
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:180
-msgid "Enable enhanced Greek search"
+#: admin/js/grmlt-admin.js:810
+msgid "Destination path"
 msgstr ""
+
+#: admin/js/grmlt-admin.js:811
+msgid "Save"
+msgstr ""
+
+#: admin/js/grmlt-classic-metabox.js:37
+msgid "Checking…"
+msgstr ""
+
+#: admin/js/grmlt-classic-metabox.js:46
+#: admin/js/grmlt-editor-panel.js:73
+msgid "No accent problems were found."
+msgstr ""
+
+#. translators: %s: number of possible problems.
+#: admin/js/grmlt-classic-metabox.js:50
+#: admin/js/grmlt-editor-panel.js:77
+#, js-format
+msgid "%s possible problem"
+msgid_plural "%s possible problems"
+msgstr[0] ""
+msgstr[1] ""
 
-#: public/grmlt-enhanced-search.php:190
-msgid "Enable accent-insensitive Greek search"
+#: admin/js/grmlt-classic-metabox.js:64
+#: admin/js/grmlt-editor-panel.js:44
+msgid "The check failed. Please try again."
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:200
-msgid "Post types to include in enhanced search"
+#: admin/js/grmlt-editor-panel.js:49
+msgid "Finds words whose accent is probably wrong."
 msgstr ""
 
-#: public/grmlt-enhanced-search.php:167
-msgid "Search"
+#. translators: 1: words, 2: Greek characters percentage
+#: admin/js/grmlt-editor-panel.js:66
+#, js-format
+msgid "%1$s words, %2$s%% Greek characters."
 msgstr ""

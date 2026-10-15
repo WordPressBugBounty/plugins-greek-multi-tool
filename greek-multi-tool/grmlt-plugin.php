@@ -7,13 +7,11 @@
  * @wordpress-plugin
  * Plugin Name:       Greek Multi Tool
  * Plugin URI:        https://bigdrop.gr/greek-multi-tool
- * Description:       The comprehensive WordPress plugin for Greek websites. Converts Greek URLs and media file names to SEO-friendly Latin, removes uppercase accents, enhances search, localizes dates, and much more. Fully compatible with ACF, WooCommerce, and all major plugins.
- * Version:           3.4.1
+ * Description:       Greek-to-Latin permalinks and media file names (ELOT 743), one-click conversion of old Greek permalinks with 301 redirects, a Greek accent checker for the editor, and Greek readiness checks in Site Health.
+ * Version:           4.0.0
  * Author:            BigDrop.gr
  * Author URI:        https://bigdrop.gr
- * Tags: greek, permalinks, accent remover, accent remover, multi tool
  * Requires at least: 6.2
- * Tested up to:      7.0.2
  * Requires PHP:      7.4
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -21,234 +19,83 @@
  * Domain Path:       /languages
  */
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-    die;
+defined( 'ABSPATH' ) || exit;
+
+define( 'GRMLT_PLUGIN_VERSION', '4.0.0' );
+define( 'GRMLT_PLUGIN_FILE', __FILE__ );
+define( 'GRMLT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'GRMLT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'GRMLT_SETTINGS_PAGE', 'grmlt-main-settings' );
+
+require_once GRMLT_PLUGIN_DIR . 'includes/options.php';
+require_once GRMLT_PLUGIN_DIR . 'includes/install.php';
+require_once GRMLT_PLUGIN_DIR . 'includes/transliteration.php';
+require_once GRMLT_PLUGIN_DIR . 'includes/page-builder-compat.php';
+require_once GRMLT_PLUGIN_DIR . 'includes/text-analysis.php';
+require_once GRMLT_PLUGIN_DIR . 'includes/class-grmlt-redirects.php';
+require_once GRMLT_PLUGIN_DIR . 'includes/class-grmlt-converter.php';
+require_once GRMLT_PLUGIN_DIR . 'includes/class-grmlt-site-health.php';
+require_once GRMLT_PLUGIN_DIR . 'includes/class-grmlt-rest.php';
+require_once GRMLT_PLUGIN_DIR . 'includes/deprecated.php';
+
+if ( is_admin() ) {
+	require_once GRMLT_PLUGIN_DIR . 'includes/notices.php';
+	require_once GRMLT_PLUGIN_DIR . 'admin/class-grmlt-admin.php';
+	require_once GRMLT_PLUGIN_DIR . 'admin/editor.php';
 }
 
-/**
- * Currently plugin version.
- */
-define( 'GRMLT_PLUGIN_VERSION', '3.4.1' );
-
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-grmlt-plugin-activator.php
- */
-function activate_grmlt_plugin() {
-    require_once plugin_dir_path( __FILE__ ) . 'includes/class-grmlt-plugin-activator.php';
-    Grmlt_Plugin_Activator::activate();
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once GRMLT_PLUGIN_DIR . 'includes/class-grmlt-cli.php';
+	require_once GRMLT_PLUGIN_DIR . 'includes/cli-acf-restore.php';
 }
 
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-grmlt-plugin-deactivator.php
- */
-function deactivate_grmlt_plugin() {
-    require_once plugin_dir_path( __FILE__ ) . 'includes/class-grmlt-plugin-deactivator.php';
-    Grmlt_Plugin_Deactivator::deactivate();
-}
+register_activation_hook( __FILE__, 'grmlt_activate' );
+register_deactivation_hook( __FILE__, 'grmlt_deactivate' );
 
-register_activation_hook( __FILE__, 'activate_grmlt_plugin' );
-register_deactivation_hook( __FILE__, 'deactivate_grmlt_plugin' );
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-grmlt-plugin.php';
+// The upgrade check runs on every request (front end, REST, cron, CLI): it is
+// one autoloaded option comparison unless a migration is actually pending.
+add_action( 'init', 'grmlt_load_textdomain', 0 );
+add_action( 'change_locale', 'grmlt_load_textdomain' );
+add_action( 'init', 'grmlt_maybe_upgrade', 1 );
+add_action( 'init', 'grmlt_register_transliteration_filters' );
+add_action( 'init', array( 'GRMLT_Redirects', 'init' ) );
+add_action( 'admin_init', 'grmlt_register_settings' );
+add_action( 'rest_api_init', array( 'GRMLT_REST', 'register_routes' ) );
+add_action( 'plugins_loaded', array( 'GRMLT_Site_Health', 'init' ) );
 
 /**
- * Begins execution of the plugin.
+ * Adds the "Settings" link on the Plugins screen.
  *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
+ * @param string[] $links Action links.
+ * @return string[]
+ */
+function grmlt_plugin_action_links( $links ) {
+	$links[] = '<a href="' . esc_url( admin_url( 'admin.php?page=' . GRMLT_SETTINGS_PAGE ) ) . '">' . esc_html__( 'Settings', 'greek-multi-tool' ) . '</a>';
+	return $links;
+}
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'grmlt_plugin_action_links' );
+
+/**
+ * Loads the plugin's translations.
  *
- * @since    2.1.1
+ * A language pack from translate.wordpress.org stays first, as in core. The
+ * translations bundled in languages/ are loaded after it, so strings the pack
+ * does not have yet (a pack made for an older version) are still translated.
+ * WordPress before 6.8 also needs this to find the bundled files at all.
+ *
+ * @param string $locale Optional. Locale from change_locale; current locale otherwise.
  */
-function run_grmlt_plugin() {
+function grmlt_load_textdomain( $locale = '' ) {
+	// phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- needed: WordPress before 6.8 does not find the bundled files on its own.
+	load_plugin_textdomain( 'greek-multi-tool', false, dirname( plugin_basename( GRMLT_PLUGIN_FILE ) ) . '/languages' );
 
-    $plugin = new Grmlt_Plugin();
-    $plugin->run();
-
+	$locale = $locale ? $locale : determine_locale();
+	if ( 'en_US' === $locale ) {
+		return;
+	}
+	$mofile = 'greek-multi-tool-' . $locale . '.mo';
+	if ( ! is_textdomain_loaded( 'greek-multi-tool' ) ) {
+		load_textdomain( 'greek-multi-tool', WP_LANG_DIR . '/plugins/' . $mofile, $locale );
+	}
+	load_textdomain( 'greek-multi-tool', GRMLT_PLUGIN_DIR . 'languages/' . $mofile, $locale );
 }
-run_grmlt_plugin();
-
-add_filter( "plugin_action_links_". plugin_basename(__FILE__), 'grmlt_settings_link' );
-
-// This is the settings_link method which is responsible for creating the settings page button along with the url used for it.
-function grmlt_settings_link( $links ) {
-    $settings_link = '<a href="' . esc_url( admin_url( 'admin.php?page=grmlt-main-settings' ) ) . '">' . esc_html__( 'Settings', 'greek-multi-tool' ) . '</a>';
-    $links[] = $settings_link;
-    return $links;
-}
-
-/**
- * AJAX handler for permalink deletion
- * 
- * @since    2.3.2
- */
-function grmlt_database_301_redirect_deletion_handler() {
-    // Check if the AJAX action is set
-    if (isset($_POST['action']) && $_POST['action'] === 'grmlt_database_301_redirect_deletion_handler') {
-        
-        // Check if user is logged in and has appropriate permissions
-        if (!is_user_logged_in() || !current_user_can('manage_options')) {
-            wp_send_json_error('Unauthorized access', 403);
-            wp_die();
-        }
-        
-        // Verify nonce for security
-        if (!isset($_POST['security_nonce']) || !wp_verify_nonce($_POST['security_nonce'], 'grmlt_permalink_delete_nonce')) {
-            wp_send_json_error('Security check failed', 403);
-            wp_die();
-        }
-        
-        global $wpdb;
-        
-        // Sanitize and validate the record ID
-        $record_id = isset($_POST['record_id']) ? absint($_POST['record_id']) : 0;
-        
-        if ($record_id <= 0) {
-            wp_send_json_error('Invalid record ID');
-            wp_die();
-        }
-        
-        // Database Table Name
-        $grml_table_name = $wpdb->prefix . 'grmlt';
-        
-        // Perform the database deletion operation based on the record ID
-        $result = $wpdb->delete($grml_table_name, array('permalink_id' => $record_id));
-        
-        if ($result) {
-            wp_send_json_success('Record deleted successfully');
-        } else {
-            wp_send_json_error('Failed to delete record');
-        }
-    } else {
-        wp_send_json_error('Invalid request');
-    }
-    wp_die();
-}
-// Only register for logged-in users with appropriate permissions
-add_action('wp_ajax_grmlt_database_301_redirect_deletion_handler', 'grmlt_database_301_redirect_deletion_handler');
-// Removed: add_action('wp_ajax_nopriv_grmlt_database_301_redirect_deletion_handler', 'grmlt_database_301_redirect_deletion_handler');
-
-/**
- * AJAX handler for permalink editing
- * 
- * @since    2.3.2
- */
-function grmlt_database_301_redirect_edit_handler() {   
-    // Check if the AJAX action is set
-    if (isset($_POST['action']) && $_POST['action'] === 'grmlt_database_301_redirect_edit_handler') {
-        
-        // Check if user is logged in and has appropriate permissions
-        if (!is_user_logged_in() || !current_user_can('manage_options')) {
-            wp_send_json_error('Unauthorized access', 403);
-            wp_die();
-        }
-        
-        // Verify nonce for security
-        if (!isset($_POST['security_nonce']) || !wp_verify_nonce($_POST['security_nonce'], 'grmlt_permalink_edit_nonce')) {
-            wp_send_json_error('Security check failed', 403);
-            wp_die();
-        }
-
-        global $wpdb;
-
-        // Sanitize and validate the record ID
-        $record_id = isset($_POST['record_id']) ? absint($_POST['record_id']) : 0;
-        
-        if ($record_id <= 0) {
-            wp_send_json_error('Invalid record ID');
-            wp_die();
-        }
-
-        // Sanitize permalink values
-        $record_old_permalink_value = isset($_POST['record_oldPermalinkValue']) ? 
-            esc_url_raw($_POST['record_oldPermalinkValue']) : '';
-        $record_new_permalink_value = isset($_POST['record_newPermalinkValue']) ? 
-            esc_url_raw($_POST['record_newPermalinkValue']) : '';
-            
-        if (empty($record_old_permalink_value) || empty($record_new_permalink_value)) {
-            wp_send_json_error('Invalid permalink values');
-            wp_die();
-        }
-
-        // Database Table Name
-        $grml_table_name = $wpdb->prefix . 'grmlt';
-
-        // Query Database for record update
-        $result = $wpdb->update(
-            $grml_table_name, 
-            array(
-                'old_permalink' => $record_old_permalink_value,
-                'new_permalink' => $record_new_permalink_value
-            ), 
-            array('permalink_id' => $record_id)
-        );
-        
-        if ($result !== false) {
-            wp_send_json_success('Record updated successfully');
-        } else {
-            wp_send_json_error('Failed to update record');
-        }
-    } else {
-        wp_send_json_error('Invalid request');
-    }
-    wp_die();
-}
-// Only register for logged-in users with appropriate permissions
-add_action('wp_ajax_grmlt_database_301_redirect_edit_handler', 'grmlt_database_301_redirect_edit_handler');
-// Removed: add_action('wp_ajax_nopriv_grmlt_database_301_redirect_edit_handler', 'grmlt_database_301_redirect_edit_handler');
-
-// Load the Page Builder Compatibility Layer (WP Bakery, Elementor, Gutenberg, Yoast SEO)
-$grmlt_page_builder_compat = plugin_dir_path(__FILE__) . 'admin/functions/page-builder-compat.php';
-if (file_exists($grmlt_page_builder_compat)) {
-    require_once $grmlt_page_builder_compat;
-}
-
-// Load the Greek Text Analysis functionality
-if (is_admin()) {
-    $grmlt_text_analysis = plugin_dir_path(__FILE__) . 'admin/functions/text-analysis.php';
-    if (file_exists($grmlt_text_analysis)) {
-        require_once $grmlt_text_analysis;
-    }
-}
-
-// Load the Enhanced Greek Search functionality
-$grmlt_enhanced_search = plugin_dir_path(__FILE__) . 'public/grmlt-enhanced-search.php';
-if (file_exists($grmlt_enhanced_search)) {
-    require_once $grmlt_enhanced_search;
-}
-
-// Load the Greek Date Localization functionality
-$grmlt_date_localization = plugin_dir_path(__FILE__) . 'public/grmlt-date-localization.php';
-if (file_exists($grmlt_date_localization)) {
-    require_once $grmlt_date_localization;
-}
-
-// Load the Greek-Friendly Excerpt Generator functionality
-$grmlt_greek_excerpts = plugin_dir_path(__FILE__) . 'admin/functions/greek-excerpts.php';
-if (file_exists($grmlt_greek_excerpts)) {
-    require_once $grmlt_greek_excerpts;
-}
-
-// Load the Feedback tab
-$grmlt_feedback = plugin_dir_path(__FILE__) . 'admin/functions/feedback.php';
-if (file_exists($grmlt_feedback)) {
-    require_once $grmlt_feedback;
-}
-
-// Recovery tool for ACF field keys damaged by the pre-3.4.1 permalink
-// converter. WP-CLI only: the file registers a CLI command and nothing else,
-// so it is never loaded (and exposes nothing) on web requests.
-if (defined('WP_CLI') && WP_CLI) {
-    $grmlt_acf_key_restore = plugin_dir_path(__FILE__) . 'admin/functions/acf-key-restore.php';
-    if (file_exists($grmlt_acf_key_restore)) {
-        require_once $grmlt_acf_key_restore;
-    }
-}
-

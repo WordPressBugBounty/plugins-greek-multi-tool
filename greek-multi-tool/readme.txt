@@ -1,206 +1,201 @@
-=== Greek Multi Tool – Greeklish Slugs, Permalinks & Transliteration ===
+=== Greek Multi Tool ===
 Contributors: bigdropgr, aivazidis
-Author: bigdropgr, aivazidis
-Committers: bigdropgr, aivazidis
-Tags: greeklish slugs, permalinks, transliteration, greek search, seo
+Tags: greek, permalinks, transliteration, greeklish, redirects
 Requires at least: 6.2
+Tested up to: 7.1
 Stable tag: 3.4.1
-Tested up to: 7.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The only lightweight plugin you need for Greek WordPress sites. Auto-convert Greeklish slugs, optimize permalinks, and enhance search without bloat.
+Latin permalinks and media file names for Greek sites (ELOT 743), one-click conversion of old Greek URLs with 301 redirects, and an accent checker.
 
 == Description ==
-Welcome to **Greek Multi Tool**, the modern, all-in-one solution that transforms how WordPress handles the Greek language. If you are worried about plugin bloat, don't be! Our architecture is completely **modular**. You can enable only the features you actually need—like just the Greek Slugs conversion—and leave the rest turned off. This ensures zero impact on your site's speed while giving you professional-grade tools.
 
-Backed by a **5-star rating** and meticulously tested up to the latest WordPress version (7.0.2), Greek Multi Tool solves the complex language problems that older, legacy plugins simply cannot handle.
+Greek Multi Tool does a small number of things that a Greek WordPress site needs and WordPress itself does not do, and it does them with the official Greek transliteration standard.
 
-= Why Install 5 Plugins When You Only Need One? =
+= Greek permalinks =
 
-Stop cluttering your WordPress dashboard with outdated, single-purpose tools. Greek Multi Tool replaces 4-5 different plugins by combining everything into one incredibly optimized package:
+New posts, pages, custom post types, terms and attachments get Latin permalinks as they are created: `Οι καλύτερες ιδέες` becomes `/oi-kalyteres-idees/` instead of `/%ce%bf%ce%b9-...`. Choose the standard:
 
-* **SEO-Friendly URLs (Greeklish Slugs):** Automatically convert complex Greek characters in your Permalinks into clean, search-engine-ready Latin text using our smart Transliteration engine.
-* **Bulletproof SEO Protection:** Changing your existing URLs? Our built-in 301 redirect manager automatically maps your old links to your new ones, protecting your hard-earned SEO rankings.
-* **Flawless WooCommerce Greek Integration:** Seamlessly handles product URLs, media file names, and internal product queries for your e-commerce store.
-* **Intelligent Accent Removal:** Automatically strip unsightly uppercase accents for beautiful, professional typography across any page builder.
-* **Advanced Greek Search:** Dramatically upgrade your internal site search with algorithms that understand Greek diphthongs and ignore accents entirely.
+* **ELOT 743** (default for new installations): the official Greek transliteration standard (ELOT 743:2001, identical to ISO 843:1997), the one used in passports and road signs, as adopted by the United Nations. `μπλούζα → blouza`, `αυτοκίνητο → aftokinito`, `σύγχρονος → synchronos`.
+* **Phonetic**: closer to pronunciation (`αι → e`, `ει/οι → i`, `μπ → b`).
+* **3.x compatibility**: existing installations keep exactly the permalinks version 3.x produced (`μπλούζα → mplouza`). It is offered only while it is selected, so you can switch to ELOT 743 whenever you want; existing permalinks never change by themselves.
 
-= Full Page Builder & SEO Plugin Compatibility =
+Optionally remove one- and two-letter words from permalinks (numbers are never removed) and keep a list of excluded words, matched regardless of accents and letter case.
 
-Greek Multi Tool works seamlessly out of the box with the most popular WordPress tools:
+= Media file names =
 
-* **Page Builders:** Full text extraction, excerpt generation, and typography support for WP Bakery, Elementor, Gutenberg (Block Editor), Divi, Beaver Builder, and Avada/Fusion Builder.
-* **SEO Plugins:** Deep integration with Yoast SEO, Rank Math, and All in One SEO. We feed clean, rendered text directly into their analysis engines so your Greek content gets graded accurately.
-* **Advanced Custom Fields (ACF):** Our transliteration is context-aware. It intelligently detects ACF internal operations and skips them, meaning your field names and keys are never corrupted.
+Uploaded files with Greek names get Latin names with the same standard: `φωτογραφία.jpg → fotografia.jpg`. Files that are already uploaded are not renamed.
 
-= Core Features & Modules =
+= Convert old permalinks, with 301 redirects =
 
-1. **Automatic Greek to Latin URL Conversion:** Transform Greek characters in Permalinks to clean Latin characters.
-2. **Media File Name Conversion:** Automatically convert Greek characters in uploaded media (images, PDFs) to Latin equivalents. ("φωτογραφία.jpg" becomes "fotografia.jpg").
-3. **Smart Diphthong Handling:** Choose between simple and advanced diphthong transliteration.
-4. **Uppercase Accent Removal:** Perfect Greek typography for dynamically loaded page builder content.
-5. **Legacy URL Management:** Convert existing permalinks with a single click (safeguarded by automatic 301 redirects).
-6. **Automatic Menu Builder:** Generate menus following WordPress Post and WooCommerce Product category hierarchies instantly.
-7. **Greek Text Analysis:** Check your content for proper Greek accent rules and linguistic correctness.
-8. **Greek Date Localization:** Display dates in proper Greek format with correct month/day names site-wide.
+Content published before the plugin keeps its Greek permalinks until you convert it. The converter:
 
-== Features ==
-*(Note: See Description for the complete, benefit-driven feature list).*
+* shows a preview first (counts per content type, a sample of old and new URLs, how many will need a numeric suffix) and writes nothing until you confirm you have a backup,
+* works in batches, so it is safe on large sites; an interrupted run can be continued or discarded, and what was converted until then can still be undone,
+* changes only the slug: content, dates and revisions are untouched (no revision is created),
+* keeps the new slug unique and lets WordPress remember the old one as well,
+* records a 301 redirect for every old URL, including child pages and child terms whose URL changed because their parent did. Redirects are always recorded; the "301 redirects" switch only decides whether they are served,
+* can be undone: the previous permalinks come back and the Latin addresses redirect to them (posts through WordPress' own old-slug redirect, pages, other hierarchical content and terms through redirects the undo records). It is also available in WP-CLI.
 
-== Compatibility ==
+Redirects are served only for requests WordPress cannot resolve itself (404s, and feeds of addresses that no longer exist), so a live page is never hijacked. The query string of the old address is carried over. They follow the post or term, so they keep working even if you change the permalink structure later, and they cover paginated and feed URLs of the old address. Check them for missing destinations, chains and loops, edit or delete them, export and import CSV. A term whose Greek slug is changed by hand in wp-admin gets a redirect too, while saving a term or a post without touching its slug keeps the slug as it is, even when it is still Greek. Old Greek addresses of categories and tags that versions 2.x and 3.x converted (they only worked through on-the-fly transliteration) are found and redirected.
 
-= Page Builders - Full Support =
-Greek Multi Tool provides deep, tested compatibility with all major page builders. Every feature works correctly regardless of how you build your pages:
-* **WP Bakery Page Builder (Visual Composer):** Full support, including client-side and server-side extraction and dynamically rendered frontend content.
-* **Elementor:** Full support. Reads Elementor widget data directly from post meta.
-* **WordPress Gutenberg (Block Editor) & Classic Editor:** Full support.
-* **Divi, Beaver Builder, Avada / Fusion Builder:** Fully compatible.
+= Accent check =
 
-= SEO Plugins =
-* **Yoast SEO:** Full support. Provides clean rendered text when page builder shortcodes are detected for accurate readability and SEO analysis.
-* **Rank Math & AIOSEO:** Compatible via standard WordPress hooks.
+A panel in the editor sidebar (and a meta box in the classic editor) points out words whose accent is probably wrong: multi-syllable words without an accent, monosyllables with one, accented capitals, interrogative πού/πώς, and more.
 
-== Translations ==
-Greek Multi Tool is fully translatable:
-* English – default
-* Greek – complete
+= Greek readiness in Site Health =
 
-Want to see your language included? Send us your translation files (po/mo) via our <a href="https://bigdrop.gr/contact-us/">contact page</a>.
+Checks that show up in Tools → Site Health, and in a card on the plugin screen:
+
+* the site language is Greek when the content is,
+* the theme declares `lang="el"` on the page (browsers then drop accents on capitals and screen readers use the right language),
+* the database collation ignores accents in search (verified with a real query, never changed by the plugin),
+* how many posts, terms and media files still have Greek names,
+* whether any redirect is broken.
+
+= Category menus =
+
+Build a navigation menu that follows your category tree: choose the source (post categories, or WooCommerce product categories when WooCommerce is active), give the menu a name, and the plugin creates a WordPress menu with the same hierarchy, ready in Appearance → Menus. Added or moved categories? Build it again with the same name and the "replace" option, and the menu is rebuilt in place.
+
+= Hooks and WP-CLI =
+
+Filters: `grmlt_convertible_post_types`, `grmlt_convertible_taxonomies`, `grmlt_conversion_batch_size`, `grmlt_render_shortcodes_on_frontend`, `grmlt_settings_tabs`.
+Actions: `grmlt_post_slug_converted( $post_id, $old, $new )`, `grmlt_term_slug_converted( $term_id, $taxonomy, $old, $new )`, `grmlt_conversion_finished( $state )`, `grmlt_settings_tab_{$id}`.
+Functions for themes: `grmlt_slugify( $text, $args )`, `grmlt_transliterate_greek( $text )`.
+WP-CLI: `wp grmlt convert [--dry-run]`, `wp grmlt undo-conversion`, `wp grmlt redirects check|export|import`, `wp grmlt acf-restore-keys [--write] [--regenerate-keys] [--undo=<file>]`.
 
 == Installation ==
-**AUTOMATIC INSTALLATION (RECOMMENDED)**
-1. Visit the plugins page within your dashboard and select 'Add New'
-2. Search for 'Greek Multi Tool'
-3. Activate Greek Multi Tool from your Plugins page
-4. That's it! The plugin works out of the box with recommended settings.
 
-**MANUAL INSTALLATION**
-1. Upload the 'greek-multi-tool' folder to the /wp-content/plugins/ directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-
-**CONFIGURATION (OPTIONAL)**
-Our modular design means you control everything:
-1. Navigate to "Greek Multi Tool" in your WordPress admin sidebar.
-2. Toggle on/off individual features to match your exact needs (e.g., enable only Greeklish Slugs).
-3. Save your settings to apply changes.
+1. Install from Plugins → Add New (search for "Greek Multi Tool") or upload the folder to `/wp-content/plugins/`.
+2. Activate it. New permalinks and uploads are converted right away with ELOT 743.
+3. Open **Greek Multi Tool** in the admin menu to pick the standard, exclude words, and convert existing permalinks.
 
 == Frequently Asked Questions ==
-= Is this plugin free? =
-Yes! Greek Multi Tool is completely free with all features available at no cost.
 
-= Will this plugin slow down my website? =
-No. Because Greek Multi Tool is highly modular, you can turn off any features you don't need. It uses efficient code that makes minimal database queries, ensuring the impact on site speed is practically zero.
+= Will my existing permalinks change when I update to 4.0? =
 
-= Will converting my old URLs break my SEO? =
-Not at all! Greek Multi Tool actually enhances your SEO by creating search-engine-friendly URLs, while our automatic 301 redirect system ensures your old URLs forward correctly. Your search rankings are protected.
+No. Existing permalinks only change when you run the converter: the transliteration never touches a slug that already exists, whether Greek or Latin, and saving a post or a term without changing its slug keeps it. Sites updating from 2.x or 3.x keep the transliteration they used for new content ("3.x compatibility" for the former Simple mode, "Phonetic" for Advanced), so nothing changes until you choose ELOT 743 in the settings.
 
-= Does this plugin work with WooCommerce? =
-Absolutely! Greek Multi Tool seamlessly integrates with WooCommerce to handle Greek permalinks, media, accents, and search for your product pages.
+= How do I switch to ELOT 743? =
 
-= Does this plugin work with ACF (Advanced Custom Fields)? =
-Yes. The transliteration engine detects ACF internal operations and skips them, and since 3.4.1 the bulk permalink converter is restricted to publicly visible post types, so it can never touch ACF fields, groups or options pages. Versions before 3.4.1 had a critical bug here - if you were affected, see the recovery FAQ below.
+Greek Multi Tool → Settings → Transliteration standard → ELOT 743 → Save. From then on new permalinks follow the standard. Existing ones stay as they are; convert them with Conversion & redirects if you want them to match.
 
-= Does it convert media/image file names? =
-Yes! Enable the "Media File Name Conversion" toggle to automatically translate uploaded files. For example, "εικόνα-προϊόντος.jpg" becomes "eikona-proiontos.jpg".
+= Where did Greek dates, uppercase accent removal, enhanced search and Greek excerpts go? =
 
-= How do I convert old permalinks? =
-Navigate to Greek Multi Tool → Convert Old Permalinks. Back up your database, click "PREVIEW" to see exactly which slugs would change without writing anything, then click "CONVERT". The plugin handles posts, pages, publicly visible custom post types, media attachments, taxonomy terms, and sets up 301 redirects.
+They were removed in 4.0 because WordPress covers them when the site is set up correctly, and the plugin's versions were worse:
 
-= My ACF fields broke after "Convert All Old Permalinks" - what do I do? =
-First update to 3.4.1 or later, so it cannot happen again. The damaged field keys can usually be restored without a backup: the converter only changed the key stored on the field itself, while every post that ever saved the field still holds the original key. With WP-CLI, run `wp grmlt acf-restore-keys` for a dry-run report, then add `--write` to apply it. If your theme has an `acf-json` folder, prefer ACF → Field Groups → Sync instead: it also restores field group keys, which the command cannot. Fields that were never used on any post cannot be recovered this way. Always back up your database first.
+* **Dates**: with the site language set to Greek, WordPress prints Greek month and day names in the right grammatical case (`wp_date()`, `wp_maybe_decline_date()`).
+* **Capitals without accents**: with `lang="el"` on the page, Chrome, Firefox, Safari and Opera remove the accents themselves when text is set in capitals with CSS.
+* **Search**: the database collation decides whether `πενσα` finds `πένσα`; the plugin's own search never actually worked.
+* **Excerpts**: WordPress trims Greek text by words correctly.
 
-= How does the Greek Search work? =
-Our specialized search algorithms understand Greek linguistic patterns. It handles accented characters, diphthongs, and various word forms to drastically improve internal WordPress search accuracy.
+Site Health now tells you whether your site meets those conditions. Themes that called `grmlt_format_greek_date()` or `grmlt_greek_excerpt()` keep working (the functions are deprecated and now use the WordPress equivalents).
 
-= My page builder pages lost their styling after installing the plugin. What happened? =
-This was a bug in versions 3.3.0 and 3.3.1, fixed in 3.4.0. Please update. If you cannot update immediately, setting a featured image on the affected pages avoids the problem, because the Yoast SEO code path that triggered it only runs on pages that have none.
+= What happens to the redirects if I deactivate or delete the plugin? =
 
-= Why does Yoast SEO no longer find an image on my page builder pages? =
-It never really could. Content images built by page builder shortcodes are not visible to Yoast on the front end, in any plugin, because the shortcodes have not run yet when Yoast looks. Set a featured image, which is the supported way to give Yoast, Google and social networks an image for the page.
+While the plugin is deactivated the redirects do not run. If you delete the plugin, its tables and settings are removed. The old slugs the converter stored in WordPress' own `_wp_old_slug` meta stay, so WordPress itself keeps redirecting old post URLs.
 
-= Can I get the old behaviour back, where shortcodes were rendered on the front end? =
-Yes, but only do this if you know your theme and plugins tolerate it, since it is what caused missing styles in 3.3.x. Add to your child theme's functions.php:
+= Does it work with ACF, WooCommerce and page builders? =
 
-`add_filter( 'grmlt_render_shortcodes_on_frontend', '__return_true' );`
+Yes. ACF internal post types are never converted and ACF operations are skipped by the transliteration. WooCommerce product and category permalinks are converted like any other public content. The accent check reads the text of page builder content (WPBakery, Elementor and others) and the Yoast SEO analysis receives clean text for it.
 
-The filter also receives the post ID as a second argument, so you can enable it for specific posts only:
+= My ACF fields broke after "Convert All Old Permalinks" in an old version. =
 
-`add_filter( 'grmlt_render_shortcodes_on_frontend', function ( $render, $post_id ) { return $post_id === 123; }, 10, 2 );`
+That bug was fixed in 3.4.1. Run `wp grmlt acf-restore-keys` for a report of every damaged field, sub field, field group, post type, taxonomy and options page, and add `--write` to restore the keys; a backup of the changed rows is kept in `wp-content/uploads/grmlt-acf-backups/`, a folder closed to the web, and `--undo` puts it back. Field keys come back from the values stored with them; the keys of groups, post types and taxonomies come back from the site's acf-json folder if it has one, otherwise `--write --regenerate-keys` gives them new keys. Back up the database first. See the Tools tab.
 
 == Screenshots ==
-1. Plugin's Main Settings Dashboard
-2. Greeklish Permalink Configuration
-3. Remove Uppercase Accents Option
-4. Convert Old Permalinks Tool
-5. 301 Redirect Settings
-6. Menu Builder Tool
-7. Greek Text Analysis Tool
-8. Enhanced Greek Excerpts Generator
-9. Greek-Optimized Search Configuration
-10. Greek Date Localization Settings
-11. Enhanced Greek Excerpts And Greek Text Analysis Tool On Post Page
-12. Enhanced Greek Excerpts Generator Settings On Writtings Settings Page
-13. Feedback System
+
+1. Settings: choose the transliteration standard (ELOT 743 by default) and see a live preview of the permalink and file name.
+2. Conversion: preview which old Greek URLs will change before converting.
+3. Redirects: every converted URL gets a 301 redirect, checked for missing destinations, chains and loops.
+4. Tools: build a menu from your category tree and run the WP-CLI commands.
+5. Site Health: checks whether your site is set up for Greek.
+6. Block editor: the accent check panel finds missing or wrong accents in titles and content.
 
 == Changelog ==
+
+= 4.0.0 =
+
+* **High severity fix:** editing a page in the admin could load another post's title/slug/content when Yoast SEO and page-builder shortcodes with post loops were active; saving would then change the page's title and slug without warning.
+
+**What's new in 4.0**: a redesign around the things the plugin does best. Transliteration now follows ELOT 743 on new installations, the converter has a preview, batches and undo, redirects are checked and managed, and Site Health tells you whether your site is set up for Greek.
+
+*Added*
+
+* ELOT 743 (ISO 843 type 2) transliteration standard, named and documented; "Phonetic" is the former "Advanced".
+* Conversion preview, batch processing with progress and cancel, undo of the last conversion (UI and `wp grmlt undo-conversion`).
+* Redirect check (missing destination, chain, loop), inline editing, bulk delete, CSV export/import, visit counters.
+* Redirects for child pages and child terms whose URL changes when a parent slug is converted.
+* Greek readiness checks in Site Health, a Site Health → Info section, and a readiness card on the plugin screen.
+* Live preview of the permalink and file name a title would get, with unsaved settings.
+* Accent check as a block editor sidebar panel (classic editor meta box kept as fallback).
+* `wp grmlt acf-restore-keys` also restores sub field keys, detects damaged field groups, post types, taxonomies and options pages, restores their keys from acf-json, can give them new keys (`--regenerate-keys`), keeps a backup of every write in a folder closed to the web and can undo it (`--undo`). Works with ACF, ACF Pro and Secure Custom Fields.
+* WP-CLI: `wp grmlt convert`, `wp grmlt undo-conversion`, `wp grmlt redirects check|export|import`.
+* Hooks: `grmlt_post_slug_converted`, `grmlt_term_slug_converted`, `grmlt_conversion_finished`, `grmlt_conversion_batch_size`, `grmlt_hide_third_party_notices`.
+
+*Changed*
+
+* New admin screen built with WordPress components and the admin color scheme; tabs are separate URLs; every control is keyboard accessible and labelled.
+* The bulk converter uses exactly the same code as new permalinks, builds the new slug from the existing slug (keeping manual edits), makes it unique, and records the real old URL for every permalink structure.
+* Redirect lookup by indexed hash on a normalized path, only on 404 requests (and on feeds of addresses that no longer exist, which WordPress never flags as 404), with `wp_safe_redirect()`.
+* Settings are registered once with proper defaults; "Settings saved" is shown after saving.
+* The plugin screen no longer shows notices of other plugins, as WooCommerce and others do on theirs; WordPress notices about security and updates are still shown. The `grmlt_hide_third_party_notices` filter turns this off.
+* Excluded words and short words are removed before transliteration, with Unicode word boundaries, regardless of accents and letter case; numbers are never removed.
+* Database tables are created on activation and upgraded once, not checked on every request. The update from 2.x/3.x runs in short steps on the first requests after the update (a few seconds at most for a visitor), continues after an interruption, and never takes the site down: after an error it waits an hour, keeps the 3.x behaviour meanwhile and offers "Retry now".
+* Settings are taken over exactly as 2.x/3.x read them.
+* Minimum WordPress 6.2, PHP 7.4; tested up to WordPress 7.1.
+
+*Fixed*
+
+* Category, tag and other term archives whose slug was still Greek returned 404 while permalink transliteration was enabled, because WordPress transliterated the slug it was looking for.
+* Old Greek addresses of terms converted by 2.x/3.x are redirected (they used to work only through on-the-fly transliteration).
+* Redirects that 3.x recorded for ACF / Secure Custom Fields objects and other internal posts are not carried over: they could only send visitors to the home page. A redirect never targets the home page (an address without a destination gives 404), except the redirect of the page that is the static front page; a manual redirect to the home page is refused.
+* Saving a category or tag whose slug is still Greek, without changing the slug, no longer transliterates it.
+* After an undo, the Latin addresses of pages and terms redirect to the restored ones instead of returning 404, and a later conversion is redirected again even where an older redirect existed.
+* Cancelling a conversion while a batch runs works with the first click, and what was converted can be undone.
+* Letter variants and archaic letters of the Greek block (ϐ, ϑ, ϕ, ϛ, ϝ…) and polytonic text on servers without the intl extension are transliterated.
+* Editing a post, or a term, no longer rewrites a Latin or percent-encoded slug when the short-word options are on.
+* Capital ΑΥ/ΕΥ before Τ, Φ and Ρ were transliterated wrong (ΑΥΤΟΚΙΝΗΤΟ → avtokinito).
+* ΐ and ΰ were left untransliterated in permalinks and file names.
+* ηυ before a vowel or voiced consonant gave "iu" instead of "iv".
+* Excluded words containing a diphthong (και, είναι, ούτε) were never removed, and short excluded words were removed from inside longer words.
+* The "Preview" button of the converter did nothing.
+* The Greek translation that comes with the plugin is used even when an older Greek language pack from translate.wordpress.org is installed: strings the pack does not have are no longer shown in English.
+* The converter produced different slugs from new permalinks (ου → oy) and could create duplicate slugs.
+* Date and time display, search and excerpt features no longer interfere with themes and other plugins (removed, see below).
+
+*Security*
+
+* Entity-encoded markup in post content could reach the editor through the excerpt preview (stored XSS by a contributor). Clean-text extraction now strips tags after decoding, and all editor output is rendered as text.
+* Every input is unslashed and sanitized, every output escaped; no inline scripts; every REST route has a permission callback; redirects use `wp_safe_redirect()` and accept only paths on this site.
+* Direct access guards in every file; uninstall removes every table, option, transient, user meta and ACF key backup on every site of a network.
+
+*Removed*
+
+* Greek date localization: WordPress with the site language set to Greek does it correctly, including the genitive case of month names.
+* Uppercase accent removal: modern browsers remove accents from capitals when the page declares `lang="el"`.
+* Enhanced search: it never changed the search query; accent-insensitive search is a database collation matter, which Site Health now checks.
+* Greek excerpts: WordPress trims Greek text by words correctly; the plugin's generator never ran.
+* Feedback tab, welcome banner, Bootstrap and Popper libraries, source maps, empty front-end assets. The plugin no longer loads anything on the front end.
+
 = 3.4.1 =
-* **Security**: AJAX endpoints now verify the capabilities of the requesting user instead of relying on a nonce alone. The excerpt endpoints require permission to edit the post they touch (and excerpt writes are limited to posts and pages), the excerpt settings sync requires administrator capabilities and is limited to the three options that screen owns, and server-side text analysis requires permission to edit the post being analyzed. All users should update immediately.
-* **Critical Fix**: "Convert All Old Permalinks" destroyed Advanced Custom Fields configuration. The bulk converter ran a direct database query against every post in the site with no post type restriction at all. ACF stores each field as a hidden `acf-field` post whose slug **is** the field key (`field_5f8a1b2c...`), so the converter overwrote those keys with a slug built from the field's label. Every `get_field()` call then returned nothing. Field groups, ACF post types, ACF taxonomies and ACF options pages were affected the same way, in every language, including fields with English labels. The converter is now restricted to publicly visible post types and can never touch ACF or any other plugin's internal post types. Term slug conversion is likewise restricted to public taxonomies.
-* **New**: Recovery tool for sites already affected. The WP-CLI command `wp grmlt acf-restore-keys` reconstructs damaged ACF field keys from data the converter never touched. It is a dry run by default and only writes with an explicit `--write` flag. See the FAQ.
-* **New**: PREVIEW button on the permalink converter. It lists every slug that would change, and writes nothing. The page now also warns to back up first.
-* **Bug Fix**: The converter no longer rewrites slugs that merely contain an underscore. An underscore is a valid WordPress slug character, so slugs such as `my_page` were being renamed unnecessarily.
-* **Bug Fix**: The converter can no longer write an empty slug. Titles that reduce to nothing (for example when made up entirely of stop words) previously left the post with no permalink at all.
-* **Bug Fix**: Slug changes now record `_wp_old_slug`, so WordPress can still serve the old URL, and an undo snapshot is stored in the `grmlt_last_conversion_undo` option before the first write.
-* **Bug Fix**: 301 redirects created by the converter now point from the URL that was actually in use. They were previously built from the post title, which had never been part of the permalink.
-* **Bug Fix**: The 301 redirect matcher now recognizes percent-encoded Greek URLs - the form every browser actually sends. The incoming URL was previously passed through a sanitizer that stripped the encoded characters, so redirects for Greek URLs could never fire.
-* **Bug Fix**: Removed an admin stylesheet enqueue that pointed to a file missing from the plugin package, causing a 404 request on every admin page since 3.2.0. The affected icons now use WordPress Dashicons.
+* Security: AJAX endpoints verify capabilities. Critical fix: the bulk converter no longer touches ACF internal post types; recovery command `wp grmlt acf-restore-keys`. Preview for the converter, undo snapshot, `_wp_old_slug`, percent-encoded redirect matching, removed a 404 stylesheet request.
 
 = 3.4.0 =
-* **Critical Fix**: Missing CSS and broken layouts on page builder pages. Since 3.3.0 the Yoast SEO integration ran the whole page content through `do_shortcode()` inside `wp_head`. Yoast calls that filter on the front end too, not only in the editor, whenever a singular page has **no featured image**. Themes that load per-element CSS on demand (Woodmart, Flatsome, Porto and similar) marked each CSS part as already delivered during that hidden first render, then skipped it during the real one, so the stylesheet never reached the browser. Symptoms: pages that look unstyled or partly unstyled, elements stacked or full width, styling that appears correctly again as soon as the plugin is deactivated. Affected every singular page builder page without a featured image. The content is no longer rendered on the front end.
-* **Bug Fix**: Duplicate Slider Revolution modules. The hidden render produced a second module with the same ID and a second init script on every page view. Sliders that failed to start, or started twice, now behave normally.
-* **Bug Fix**: Yoast SEO can find content images again. The old filter handed Yoast tag-stripped plain text, so the `<img>` tags it looks for had already been removed and its schema and og:image lookup could never succeed. Yoast now receives the real content.
-* **Performance**: Page builder pages no longer execute their shortcodes twice per request. On a representative WP Bakery page this halves the shortcode executions and database round-trips per page view, and removes all of that work from `wp_head`.
-* **New Filter**: `grmlt_render_shortcodes_on_frontend` restores the previous behaviour for anyone who depends on it. See the FAQ.
-* **Compatibility**: Tested up to WordPress 7.0.2. No deprecated or removed WordPress 7.0 APIs are used, and the plugin runs clean under PHP 8.2, 8.3 and 8.4.
-* **Housekeeping**: The internal version constant was out of sync with the plugin header (3.3.0 against 3.3.1), which meant cache-busting version strings on the plugin's own CSS and JS were stale. Both now read 3.4.0.
+* Critical fix: missing CSS on page builder pages when Yoast SEO was active. Duplicate Slider Revolution modules. New filter `grmlt_render_shortcodes_on_frontend`.
 
 = 3.3.1 =
-* Maintenance release: fixes a fatal error introduced in 3.3.0.
+* Fixes a fatal error introduced in 3.3.0.
 
 = 3.3.0 =
-* **New Feature**: Greek Media File Name Conversion - Automatically convert Greek characters in uploaded media file names to SEO-friendly Latin equivalents during upload.
-* **New Feature**: Attachment Slug Conversion - Media attachment slugs are now converted to Latin automatically.
-* **New Feature**: Page Builder Compatibility Layer - New shared content extraction engine for WP Bakery, Elementor, Gutenberg, Divi, Beaver Builder, and Avada.
-* **Bug Fix**: ACF Compatibility - Transliteration engine is now context-aware and skips ACF internal operations.
-* **Bug Fix**: Text Analysis now works perfectly with WP Bakery Page Builder and Elementor.
-* **Improvement**: Smart 301 redirect creation now skips attachments for better performance.
-* **Compatibility**: Yoast SEO integration provides clean rendered content for accurate analysis.
+* Media file name conversion, attachment slug conversion, page builder compatibility layer, ACF compatibility, Yoast SEO integration.
 
 = 3.2.0 =
-* **Critical Fix**: Fixed 301 redirect feature.
-* **Security**: Added nonce verification, fixed XSS vulnerabilities, and removed inline CDN loading of Font Awesome.
-* **Compatibility**: Fixed PHP 8.2+ fatal errors and PHP 8.1+ null deprecation warnings.
-
-= 3.1.0 =
-* Added toggle control for Greek Text Analysis tool.
-* Improved search functionality with separate toggles for enhanced search and accent-insensitive search.
-
-= 3.0.0 =
-* **Major Update**: Added Greek Text Analysis, Enhanced Greek Excerpts, Greek-Optimized Search, Greek Date Localization, and Feedback system.
-
-*(Previous changelog entries truncated for brevity, but all previous versions remain supported and secure).*
+* Fixed 301 redirects, nonce verification, XSS fixes, PHP 8.2 compatibility.
 
 == Upgrade Notice ==
-= 3.4.1 =
-If ACF fields suddenly returned nothing after "Convert All Old Permalinks", 3.4.1 fixes the cause and adds a WP-CLI command that restores the damaged field keys. This is also a security release: AJAX endpoints now verify user permissions. All users should update immediately.
 
-= 3.4.0 =
-Fixes missing CSS and broken layouts on page builder pages with no featured image, caused by 3.3.0/3.3.1 when Yoast SEO is active. If your pages look unstyled and deactivating this plugin fixes them, update now. Also stops duplicate Slider Revolution modules.
-
-= 3.3.0 =
-New features: Automatic Greek media file name conversion on upload, attachment slug conversion, and full ACF compatibility! Full page builder support for WP Bakery and Elementor, plus Yoast SEO integration. Highly recommended update for all Greek websites!
-
-= 3.2.0 =
-Critical security and bug fix release. Fixes 301 redirects, XSS vulnerabilities, SQL injection risks, and PHP 8.2+ compatibility issues. All users should update immediately.
+= 4.0.0 =
+High severity fix: with Yoast SEO and page builder shortcodes that list posts, saving a page could overwrite its title and slug with another post's. Major release: removes Greek dates, uppercase accent removal, enhanced search and excerpts. Permalinks are kept. Back up first.

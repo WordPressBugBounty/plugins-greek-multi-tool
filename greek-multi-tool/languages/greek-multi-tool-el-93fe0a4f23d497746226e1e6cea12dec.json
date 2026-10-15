@@ -1,0 +1,121 @@
+{
+    "translation-revision-date": "2026-10-09 20:00+0300",
+    "generator": "WP-CLI\/2.12.0",
+    "source": "admin\/js\/grmlt-admin.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "el",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "fixed path": [
+                "σταθερή διαδρομή"
+            ],
+            "Run the preview and confirm the backup first.": [
+                "Κάντε πρώτα προεπισκόπηση και επιβεβαιώστε το αντίγραφο ασφαλείας."
+            ],
+            "Cancel": [
+                "Ακύρωση"
+            ],
+            "Something went wrong. Please try again.": [
+                "Κάτι πήγε στραβά. Δοκιμάστε ξανά."
+            ],
+            "Confirm": [
+                "Επιβεβαίωση"
+            ],
+            "Add a word and press Enter": [
+                "Γράψτε μια λέξη και πατήστε Enter"
+            ],
+            "Remove “%s”": [
+                "Αφαίρεση «%s»"
+            ],
+            "Copied": [
+                "Αντιγράφηκε"
+            ],
+            "Nothing to convert with the current selection.": [
+                "Δεν υπάρχει τίποτα για μετατροπή με την τρέχουσα επιλογή."
+            ],
+            "Confirm the database backup to enable the conversion.": [
+                "Επιβεβαιώστε το αντίγραφο ασφαλείας της βάσης για να ενεργοποιηθεί η μετατροπή."
+            ],
+            "%1$s permalinks will change, using the %2$s standard.": [
+                "%1$s σύνδεσμοι θα αλλάξουν, με το πρότυπο %2$s."
+            ],
+            "%s permalink will get a numeric suffix because the Latin slug already exists.": [
+                "%s σύνδεσμος θα πάρει αριθμητική κατάληξη γιατί το λατινικό slug υπάρχει ήδη.",
+                "%s σύνδεσμοι θα πάρουν αριθμητική κατάληξη γιατί το λατινικό slug υπάρχει ήδη."
+            ],
+            "Type": [
+                "Τύπος"
+            ],
+            "Title": [
+                "Τίτλος"
+            ],
+            "Current permalink": [
+                "Τρέχων σύνδεσμος"
+            ],
+            "New permalink": [
+                "Νέος σύνδεσμος"
+            ],
+            "Done: %1$s posts and %2$s terms were converted, %3$s were skipped.": [
+                "Ολοκληρώθηκε: μετατράπηκαν %1$s άρθρα και %2$s όροι, παραλείφθηκαν %3$s."
+            ],
+            "%s is active: run its indexing or optimization so that canonical URLs and sitemaps pick up the new permalinks.": [
+                "Το %s είναι ενεργό: τρέξτε την ευρετηρίαση ή βελτιστοποίησή του ώστε τα canonical URL και τα sitemaps να πάρουν τους νέους συνδέσμους."
+            ],
+            "Reload the page to see the redirects and the undo option.": [
+                "Ανανεώστε τη σελίδα για να δείτε τις ανακατευθύνσεις και την επιλογή αναίρεσης."
+            ],
+            "Converted %1$s of %2$s": [
+                "Μετατράπηκαν %1$s από %2$s"
+            ],
+            "Starting…": [
+                "Εκκίνηση…"
+            ],
+            "Restored %1$s of %2$s": [
+                "Επαναφέρθηκαν %1$s από %2$s"
+            ],
+            "Done: %1$s permalinks were restored, %2$s were skipped because they had changed in the meantime. Reload the page to update the lists.": [
+                "Ολοκληρώθηκε: επαναφέρθηκαν %1$s σύνδεσμοι, παραλείφθηκαν %2$s γιατί είχαν αλλάξει στο μεταξύ. Ανανεώστε τη σελίδα για να ενημερωθούν οι λίστες."
+            ],
+            "Checked %1$s of %2$s": [
+                "Ελέγχθηκαν %1$s από %2$s"
+            ],
+            "Check complete. Reloading…": [
+                "Ο έλεγχος ολοκληρώθηκε. Ανανέωση…"
+            ],
+            "Destination path": [
+                "Διαδρομή προορισμού"
+            ],
+            "Save": [
+                "Αποθήκευση"
+            ],
+            "About %s permalinks will get a numeric suffix because the Latin slug already exists (estimated from the sample).": [
+                "Περίπου %s σύνδεσμοι θα πάρουν αριθμητική κατάληξη γιατί το λατινικό slug υπάρχει ήδη (εκτίμηση από το δείγμα)."
+            ],
+            "Showing a sample of %1$s of %2$s.": [
+                "Εμφανίζεται δείγμα %1$s από %2$s."
+            ],
+            "A conversion is running right now in another window or in WP-CLI (%s permalinks converted so far). Wait for it to finish, or take it over with “Continue”.": [
+                "Μια μετατροπή εκτελείται αυτή τη στιγμή σε άλλο παράθυρο ή στο WP-CLI (%s σύνδεσμοι έχουν μετατραπεί μέχρι τώρα). Περιμένετε να ολοκληρωθεί ή αναλάβετέ την με «Συνέχεια»."
+            ],
+            "A conversion was interrupted after converting %s permalinks. Continue it, or discard it: what was converted stays converted and can be undone.": [
+                "Μια μετατροπή διακόπηκε αφού μετέτρεψε %s συνδέσμους. Συνεχίστε την ή απορρίψτε την: ό,τι μετατράπηκε μένει μετατραπέν και μπορεί να αναιρεθεί."
+            ],
+            "The conversion was cancelled after converting %s permalinks. They stay converted and can be undone from the “Last conversion” card.": [
+                "Η μετατροπή ακυρώθηκε αφού μετέτρεψε %s συνδέσμους. Μένουν μετατραπέντες και μπορούν να αναιρεθούν από την κάρτα «Τελευταία μετατροπή»."
+            ],
+            "Reload the page": [
+                "Ανανέωση σελίδας"
+            ],
+            "Continuing…": [
+                "Συνέχεια…"
+            ],
+            "Cancelling after the current permalink…": [
+                "Ακύρωση μετά τον τρέχοντα σύνδεσμο…"
+            ]
+        }
+    }
+}
